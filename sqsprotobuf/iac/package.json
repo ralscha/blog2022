@@ -1,0 +1,11 @@
+{
+  "name": "iac",
+  "devDependencies": {
+    "@types/node": "17"
+  },
+  "dependencies": {
+    "@pulumi/pulumi": "3.22.1",
+    "@pulumi/aws": "4.34.0",
+    "@pulumi/awsx": "0.32.0"
+  }
+}
