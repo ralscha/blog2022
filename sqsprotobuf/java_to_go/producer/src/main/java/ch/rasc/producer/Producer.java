@@ -16,34 +16,33 @@ import software.amazon.awssdk.services.sqs.model.SendMessageResponse;
 
 public class Producer {
 
-	private final static String queueURL = "https://sqs.us-east-1.amazonaws.com/660461151343/queue-d8494a4";
+  private final static String queueURL = "https://sqs.us-east-1.amazonaws.com/660461151343/queue-d8494a4";
 
-	public static void main(String[] args) {
+  public static void main(String[] args) {
 
-		PhoneNumber pn = PhoneNumber.newBuilder().setType(PhoneType.MOBILE)
-				.setNumber("1111").build();
-		Person person = Person.newBuilder().setId(1).setEmail("john@test.com")
-				.setName("John").addPhones(pn).build();
-		AddressBook book = AddressBook.newBuilder().addPeople(person).build();
+    PhoneNumber pn = PhoneNumber.newBuilder().setType(PhoneType.MOBILE).setNumber("1111")
+        .build();
+    Person person = Person.newBuilder().setId(1).setEmail("john@test.com").setName("John")
+        .addPhones(pn).build();
+    AddressBook book = AddressBook.newBuilder().addPeople(person).build();
 
-		try (ProfileCredentialsProvider awsCredentials = ProfileCredentialsProvider
-				.create("home");
-				SqsClient client = SqsClient.builder().credentialsProvider(awsCredentials)
-						.region(Region.US_EAST_1).build()) {
+    try (
+        ProfileCredentialsProvider awsCredentials = ProfileCredentialsProvider
+            .create("home");
+        SqsClient client = SqsClient.builder().credentialsProvider(awsCredentials)
+            .region(Region.US_EAST_1).build()) {
 
-			SendMessageRequest request = SendMessageRequest.builder().queueUrl(queueURL)
-					.messageBody(" ")
-					.messageAttributes(Map.of("Body",
-							MessageAttributeValue.builder().dataType("Binary")
-									.binaryValue(
-											SdkBytes.fromByteArray(book.toByteArray()))
-									.build()))
-					.build();
+      SendMessageRequest request = SendMessageRequest.builder().queueUrl(queueURL)
+          .messageBody(" ")
+          .messageAttributes(Map.of("Body",
+              MessageAttributeValue.builder().dataType("Binary")
+                  .binaryValue(SdkBytes.fromByteArray(book.toByteArray())).build()))
+          .build();
 
-			SendMessageResponse response = client.sendMessage(request);
-			System.out.println("Message sent: " + response.messageId());
-		}
+      SendMessageResponse response = client.sendMessage(request);
+      System.out.println("Message sent: " + response.messageId());
+    }
 
-	}
+  }
 
 }
