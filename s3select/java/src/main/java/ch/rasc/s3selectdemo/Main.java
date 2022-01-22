@@ -68,11 +68,6 @@ public class Main {
     request.setExpressionType(ExpressionType.SQL);
 
     InputSerialization inputSerialization = new InputSerialization();
-    /*
-     * LINES means that each line in the input data contains a single JSON object.
-     * DOCUMENT means that a single JSON object can span multiple lines in the input.
-     * Using DOCUMENT might result in slower performance in some cases.
-     */
     inputSerialization.setJson(new JSONInput().withType(JSONType.DOCUMENT));
     if (compressed) {
       inputSerialization.setCompressionType(CompressionType.BZIP2);
