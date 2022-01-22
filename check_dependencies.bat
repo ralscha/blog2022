@@ -25,3 +25,12 @@ call make upgrade-libraries
 
 cd D:\ws\blog2022\sqsprotobuf\java_to_go_s3\producer
 call checkdep
+
+cd D:\ws\blog2022\dexiejs-livequery
+call ncu
+
+call D:\ws\blog2022\s3select\go
+call make upgrade-libraries
+
+call D:\ws\blog2022\s3select\java
+call checkdep
