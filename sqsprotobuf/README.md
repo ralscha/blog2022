@@ -1,1 +1,1 @@
-Code for blog post: https://golb.hplar.ch/2022/sqs-protobuf.html
+Code for blog post: https://golb.hplar.ch/2022/01/sqs-protobuf.html
