@@ -3,8 +3,8 @@ import {environment} from '../environments/environment';
 
 export const authCodeFlowConfig: AuthConfig = {
   issuer: environment.ISSUER,
-  redirectUri: 'http://localhost:4200',
-  logoutUrl: 'http://localhost:4200/sign-out',
+  redirectUri: 'http://localhost:8100',
+  logoutUrl: 'http://localhost:8100/sign-out',
   clientId: environment.CLIENT_ID,
   responseType: 'code',
   scope: 'openid',

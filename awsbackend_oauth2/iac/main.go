@@ -99,7 +99,7 @@ func createCognitoUserPool(ctx *pulumi.Context) (pulumi.IDOutput, pulumi.IDOutpu
 	}
 
 	client, err := cognito.NewUserPoolClient(ctx, "client", &cognito.UserPoolClientArgs{
-		CallbackUrls:         pulumi.StringArray{pulumi.String("http://localhost:4200")},
+		CallbackUrls:         pulumi.StringArray{pulumi.String("http://localhost:8100")},
 		AccessTokenValidity:  pulumi.Int(1),
 		IdTokenValidity:      pulumi.Int(1),
 		RefreshTokenValidity: pulumi.Int(30),
