@@ -12,7 +12,13 @@ upgrade:
 	make -C ./awsbackend/lambda upgrade-libraries
 	make -C ./awsbackend_oauth2/iac upgrade-libraries
 	make -C ./awsbackend_oauth2/lambda upgrade-libraries
-
+	make -C ./hibp-go/api_server upgrade-libraries
+	make -C ./hibp-go/bloom upgrade-libraries
+	make -C ./hibp-go/pebble upgrade-libraries
+	make -C ./hibp-go/others/badger upgrade-libraries
+	make -C ./hibp-go/others/bbolt upgrade-libraries
+	make -C ./hibp-go/others/goleveldb upgrade-libraries
+	
 .PHONY: check-dep
 check-dep:
 	cd ./s3select/java && ./mvnw.cmd versions:display-dependency-updates && ./mvnw.cmd versions:display-plugin-updates
