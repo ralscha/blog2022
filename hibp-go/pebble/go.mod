@@ -2,7 +2,7 @@ module hibppebble
 
 go 1.17
 
-require github.com/cockroachdb/pebble v0.0.0-20220207223349-db46dab683e7
+require github.com/cockroachdb/pebble v0.0.0-20220209231437-b2295acd0a15
 
 require (
 	github.com/DataDog/zstd v1.5.0 // indirect
@@ -19,5 +19,5 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rogpeppe/go-internal v1.8.1 // indirect
 	golang.org/x/exp v0.0.0-20220209042442-160e291fcf24 // indirect
-	golang.org/x/sys v0.0.0-20220207234003-57398862261d // indirect
+	golang.org/x/sys v0.0.0-20220209214540-3681064d5158 // indirect
 )
