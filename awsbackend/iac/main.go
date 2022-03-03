@@ -115,7 +115,7 @@ func createApi(ctx *pulumi.Context, lmbda *lambda.Function) (*apigatewayv2.Api, 
 		return "integrations/" + integrationId
 	}).(pulumi.StringOutput)
 
-	todosGetRoute, err := apigatewayv2.NewRoute(ctx, "todos-get", &apigatewayv2.RouteArgs{
+	_, err = apigatewayv2.NewRoute(ctx, "todos-get", &apigatewayv2.RouteArgs{
 		ApiId:    api.ID(),
 		RouteKey: pulumi.String("GET /todos"),
 		Target:   target,
@@ -124,7 +124,7 @@ func createApi(ctx *pulumi.Context, lmbda *lambda.Function) (*apigatewayv2.Api, 
 		return nil, err
 	}
 
-	todosPostRoute, err := apigatewayv2.NewRoute(ctx, "todos-post", &apigatewayv2.RouteArgs{
+	_, err = apigatewayv2.NewRoute(ctx, "todos-post", &apigatewayv2.RouteArgs{
 		ApiId:    api.ID(),
 		RouteKey: pulumi.String("POST /todos"),
 		Target:   target,
@@ -133,7 +133,7 @@ func createApi(ctx *pulumi.Context, lmbda *lambda.Function) (*apigatewayv2.Api, 
 		return nil, err
 	}
 
-	todosDeleteRoute, err := apigatewayv2.NewRoute(ctx, "todos-delete", &apigatewayv2.RouteArgs{
+	_, err = apigatewayv2.NewRoute(ctx, "todos-delete", &apigatewayv2.RouteArgs{
 		ApiId:    api.ID(),
 		RouteKey: pulumi.String("DELETE /todos/{id}"),
 		Target:   target,
@@ -142,20 +142,11 @@ func createApi(ctx *pulumi.Context, lmbda *lambda.Function) (*apigatewayv2.Api, 
 		return nil, err
 	}
 
-	deployment, err := apigatewayv2.NewDeployment(ctx, "todo-apideployment", &apigatewayv2.DeploymentArgs{
-		ApiId:       api.ID(),
-		Description: pulumi.String("TODO API deployment"),
-	}, pulumi.DependsOn([]pulumi.Resource{todosGetRoute, todosPostRoute, todosDeleteRoute}))
-	if err != nil {
-		return nil, err
-	}
-
 	stage, err := apigatewayv2.NewStage(ctx, "todo-v1-stage", &apigatewayv2.StageArgs{
-		ApiId:        api.ID(),
-		AutoDeploy:   pulumi.Bool(true),
-		DeploymentId: deployment.ID(),
-		Description:  pulumi.String("Todo API V1 Stage"),
-		Name:         pulumi.String("v1"),
+		ApiId:       api.ID(),
+		AutoDeploy:  pulumi.Bool(true),
+		Description: pulumi.String("Todo API V1 Stage"),
+		Name:        pulumi.String("v1"),
 		DefaultRouteSettings: &apigatewayv2.StageDefaultRouteSettingsArgs{
 			ThrottlingBurstLimit: pulumi.Int(10),       // maximum number of concurrent requests
 			ThrottlingRateLimit:  pulumi.Float64(50.0), // max requests per seconds
