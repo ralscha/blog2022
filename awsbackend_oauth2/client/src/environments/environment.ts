@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   API_URL: 'https://g3vdezkw6i.execute-api.us-east-1.amazonaws.com/v1',
   ISSUER: 'https://cognito-idp.us-east-1.amazonaws.com/us-east-1_Fq2topm2q',
-  CLIENT_ID: '6ep77orrcm95l64ubv14ge2upe'
+  CLIENT_ID: '6ep77o'
 };
 
 /*
