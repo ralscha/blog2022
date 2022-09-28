@@ -14,11 +14,11 @@ require (
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
-	github.com/google/flatbuffers v2.0.8+incompatible // indirect
-	github.com/klauspost/compress v1.15.9 // indirect
+	github.com/google/flatbuffers v22.9.24+incompatible // indirect
+	github.com/klauspost/compress v1.15.11 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	go.opencensus.io v0.23.0 // indirect
-	golang.org/x/net v0.0.0-20220826154423-83b083e8dc8b // indirect
-	golang.org/x/sys v0.0.0-20220829200755-d48e67d00261 // indirect
+	golang.org/x/net v0.0.0-20220927171203-f486391704dc // indirect
+	golang.org/x/sys v0.0.0-20220927170352-d9d178bc13c6 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 )
