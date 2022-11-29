@@ -9,7 +9,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 
 @Injectable()
-export class TodoService implements Resolve<Todo> {
+export class TodoService implements Resolve<Todo | undefined> {
   private todosMap: Map<string, Todo> = new Map();
 
   private readonly todosSubject = new BehaviorSubject<Todo[]>([]);
@@ -55,10 +55,10 @@ export class TodoService implements Resolve<Todo> {
       )
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Todo> | Promise<Todo> | Todo {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Todo> | Promise<Todo> | Todo | undefined {
     const id = route.paramMap.get('id');
     if (id) {
-      // @ts-ignore
       return this.getTodo(id);
     } else {
       return {

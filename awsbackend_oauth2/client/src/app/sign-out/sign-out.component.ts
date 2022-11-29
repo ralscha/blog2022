@@ -6,7 +6,4 @@ import {Component} from '@angular/core';
   styleUrls: ['./sign-out.component.scss'],
 })
 export class SignOutComponent {
-
-  constructor() {
-  }
 }
