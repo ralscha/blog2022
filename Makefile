@@ -15,7 +15,7 @@ upgrade:
 	make -C ./hibp-go/api_server upgrade-libraries
 	make -C ./hibp-go/bloom upgrade-libraries
 	make -C ./hibp-go/pebble upgrade-libraries
-	make -C ./hibp-go/others/badger upgrade-libraries
+	# make -C ./hibp-go/others/badger upgrade-libraries
 	make -C ./hibp-go/others/bbolt upgrade-libraries
 	make -C ./hibp-go/others/goleveldb upgrade-libraries
 	
