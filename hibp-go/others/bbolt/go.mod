@@ -1,7 +1,7 @@
 module hipbbbolt
 
-go 1.19
+go 1.20
 
-require go.etcd.io/bbolt v1.3.6
+require go.etcd.io/bbolt v1.3.7
 
-require golang.org/x/sys v0.4.0 // indirect
+require golang.org/x/sys v0.5.0 // indirect

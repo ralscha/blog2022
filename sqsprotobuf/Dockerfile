@@ -1,4 +1,4 @@
-FROM golang:1.19.5
+FROM golang:1.20.1
 
 ARG PROTOBUF_VERSION=21.12
 ARG DEBIAN_FRONTEND=noninteractive

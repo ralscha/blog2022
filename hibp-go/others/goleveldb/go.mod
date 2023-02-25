@@ -1,6 +1,6 @@
 module hibpgoleveldb
 
-go 1.19
+go 1.20
 
 require github.com/syndtr/goleveldb v1.0.0
 
