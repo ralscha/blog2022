@@ -22,8 +22,6 @@ const dbPath = "/var/lib/hibp/pebble"
 var db *pebble.DB
 
 func main() {
-	rand.Seed(time.Now().UnixNano())
-
 	var err error
 	db, err = pebble.Open(dbPath, &pebble.Options{})
 	if err != nil {
