@@ -7,7 +7,7 @@ upgrade:
 	make -C ./sqsprotobuf/java_to_go/consumer upgrade-libraries
 	make -C ./sqsprotobuf/java_to_go_s3/consumer upgrade-libraries
 	make -C ./sqsprotobuf/go_to_java/producer upgrade-libraries
-	make -C ./s3select/go upgrade-libraries	
+	make -C ./s3select/go upgrade-libraries
 	make -C ./awsbackend/iac upgrade-libraries
 	make -C ./awsbackend/lambda upgrade-libraries
 	make -C ./awsbackend_oauth2/iac upgrade-libraries
@@ -15,10 +15,7 @@ upgrade:
 	make -C ./hibp-go/api_server upgrade-libraries
 	make -C ./hibp-go/bloom upgrade-libraries
 	make -C ./hibp-go/pebble upgrade-libraries
-	# make -C ./hibp-go/others/badger upgrade-libraries
-	make -C ./hibp-go/others/bbolt upgrade-libraries
-	make -C ./hibp-go/others/goleveldb upgrade-libraries
-	
+
 .PHONY: check-dep
 check-dep:
 	cd ./s3select/java && ./mvnw.cmd versions:display-dependency-updates && ./mvnw.cmd versions:display-plugin-updates
@@ -29,4 +26,4 @@ check-dep:
 	cd ./sqsprotobuf/java_to_go/producer && ./mvnw.cmd versions:display-dependency-updates && ./mvnw.cmd versions:display-plugin-updates
 	cd ./sqsprotobuf/java_to_go_s3/producer && ./mvnw.cmd versions:display-dependency-updates && ./mvnw.cmd versions:display-plugin-updates
 	cd ./awsbackend/client && ncu
-	cd ./awsbackend_oauth2/client && ncu	
+	cd ./awsbackend_oauth2/client && ncu

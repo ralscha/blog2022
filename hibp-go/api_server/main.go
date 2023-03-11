@@ -101,7 +101,12 @@ func hipbPasswordFunc(w http.ResponseWriter, r *http.Request) {
 	counter := 0
 
 	for iter.First(); iter.Valid(); iter.Next() {
-		if writeResult(w, iter.Key(), iter.Value(), hashPrefix) {
+		key := iter.Key()
+		value, err := iter.ValueAndErr()
+		if err != nil {
+			http.Error(w, "getting value failed", http.StatusInternalServerError)
+		}
+		if writeResult(w, key, value, hashPrefix) {
 			return
 		}
 		counter++

@@ -37,7 +37,12 @@ func main() {
 	if err != nil {
 		log.Fatalf("Can't open database %v", err)
 	}
-	defer db.Close()
+	defer func(db *pebble.DB) {
+		err := db.Close()
+		if err != nil {
+			log.Fatalf("Can't close database %v", err)
+		}
+	}(db)
 
 	for _, fileName := range fileNames {
 		file, err := os.Open(inputDir + "/" + fileName)
@@ -45,6 +50,7 @@ func main() {
 		batch := db.NewBatch()
 
 		hashPrefix := strings.Split(fileName, ".")[0]
+
 		scanner := bufio.NewScanner(file)
 		for scanner.Scan() {
 			line := scanner.Text()
@@ -79,6 +85,11 @@ func main() {
 		if err := scanner.Err(); err != nil {
 			log.Fatalf("Scanner failed %v", err)
 		}
+	}
+
+	err = db.Flush()
+	if err != nil {
+		log.Fatalf("Flush failed %v", err)
 	}
 
 }

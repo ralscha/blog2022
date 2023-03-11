@@ -3,7 +3,7 @@ package main
 import (
 	"crypto/sha1"
 	"github.com/bits-and-blooms/bloom/v3"
-	"io/ioutil"
+	"io"
 	"log"
 	"os"
 )
@@ -15,11 +15,11 @@ func main() {
 	}
 	defer file.Close()
 
-	const nPasswords = 847_223_402
+	const nPasswords = 121034
 	const falsePositiveRate = 0.1
 	filter := bloom.NewWithEstimates(nPasswords, falsePositiveRate)
 
-	bytes, err := ioutil.ReadAll(file)
+	bytes, err := io.ReadAll(file)
 	if err != nil {
 		log.Fatal("Can't read pwned file", err)
 	}

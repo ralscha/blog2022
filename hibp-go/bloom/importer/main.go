@@ -7,17 +7,42 @@ import (
 	"github.com/bits-and-blooms/bloom/v3"
 	"log"
 	"os"
+	"sort"
 	"strconv"
+	"strings"
 )
 
 func main() {
-	file, err := os.Open("./pwned-passwords-sha1-ordered-by-hash-v8.txt")
-	if err != nil {
-		log.Fatal("Can't open pwned file", err)
-	}
-	defer file.Close()
+	inputDir := "E:\\_download\\pwned" // "./pwned"
 
-	const nPasswords = 847_223_402
+	files, err := os.ReadDir(inputDir)
+	if err != nil {
+		log.Fatalf("Can't read input directory %v", err)
+	}
+	var fileNames []string
+	for _, file := range files {
+		fileNames = append(fileNames, file.Name())
+	}
+	sort.Strings(fileNames)
+
+	// count number of password hashes
+	var nPasswords uint
+	for _, fileName := range fileNames {
+		file, err := os.Open(inputDir + "/" + fileName)
+		if err != nil {
+			log.Fatalf("Can't open file %s, %v", fileName, err)
+		}
+		scanner := bufio.NewScanner(file)
+		for scanner.Scan() {
+			nPasswords++
+		}
+		err = file.Close()
+		if err != nil {
+			log.Fatalf("Can't close file %s, %v", fileName, err)
+		}
+	}
+
+	fmt.Println("nPasswords: ", nPasswords)
 
 	filters := []*bloom.BloomFilter{
 		bloom.NewWithEstimates(nPasswords, 0.1),
@@ -30,23 +55,32 @@ func main() {
 		bloom.NewWithEstimates(nPasswords, 0.00000001),
 	}
 
-	count := 0
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		line := scanner.Text()
-		hexString := line[0:40]
+	var count uint
 
-		decodedHex, err := hex.DecodeString(hexString)
+	for _, fileName := range fileNames {
+		file, err := os.Open(inputDir + "/" + fileName)
 		if err != nil {
-			log.Fatalf("Failed to decode hex string %s, %v", hexString, err)
+			log.Fatalf("Can't open file %s, %v", fileName, err)
 		}
-		count++
-		for _, filter := range filters {
-			filter.Add(decodedHex)
-		}
+		hashPrefix := strings.Split(fileName, ".")[0]
+		scanner := bufio.NewScanner(file)
+		for scanner.Scan() {
+			line := scanner.Text()
+			line = hashPrefix + line
+			hexString := line[0:40]
 
-		if count%8_500_000 == 0 {
-			fmt.Println(count*100/nPasswords, "%")
+			decodedHex, err := hex.DecodeString(hexString)
+			if err != nil {
+				log.Fatalf("Failed to decode hex string %s, %v", hexString, err)
+			}
+			count++
+			for _, filter := range filters {
+				filter.Add(decodedHex)
+			}
+
+			if count%10_000_000 == 0 {
+				fmt.Println(count*100/nPasswords, "%")
+			}
 		}
 	}
 
@@ -57,7 +91,7 @@ func main() {
 			log.Fatal("gob encode failed", err)
 		}
 
-		file, err = os.Create("./pwned-passwords-sha1-ordered-by-hash-v8_" + strconv.Itoa(ix+1) + ".gob")
+		file, err := os.Create("./pwned-passwords-sha1-ordered-by-hash-v8_" + strconv.Itoa(ix+1) + ".gob")
 		if err != nil {
 			log.Fatal("Can't create bloom file", err)
 		}
@@ -68,7 +102,11 @@ func main() {
 		}
 
 		fmt.Println("bytes: ", len(encode))
-		file.Close()
+		err = file.Close()
+		if err != nil {
+			log.Fatal("Can't close bloom file", err)
+		}
+		fmt.Println()
 	}
 
 }
