@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	inputDir := "E:\\_download\\pwned" // "./pwned"
+	inputDir := "./pwned"
 
 	files, err := os.ReadDir(inputDir)
 	if err != nil {
@@ -44,48 +44,12 @@ func main() {
 
 	fmt.Println("nPasswords: ", nPasswords)
 
-	filters := []*bloom.BloomFilter{
-		bloom.NewWithEstimates(nPasswords, 0.1),
-		bloom.NewWithEstimates(nPasswords, 0.01),
-		bloom.NewWithEstimates(nPasswords, 0.001),
-		bloom.NewWithEstimates(nPasswords, 0.0001),
-		bloom.NewWithEstimates(nPasswords, 0.00001),
-		bloom.NewWithEstimates(nPasswords, 0.000001),
-		bloom.NewWithEstimates(nPasswords, 0.0000001),
-		bloom.NewWithEstimates(nPasswords, 0.00000001),
-	}
+	fps := []float64{0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001, 0.0000001, 0.00000001}
+	for ix, fp := range fps {
+		fmt.Println("count: ", fp)
+		filter := bloom.NewWithEstimates(nPasswords, fp)
+		insert(fileNames, inputDir, filter, nPasswords)
 
-	var count uint
-
-	for _, fileName := range fileNames {
-		file, err := os.Open(inputDir + "/" + fileName)
-		if err != nil {
-			log.Fatalf("Can't open file %s, %v", fileName, err)
-		}
-		hashPrefix := strings.Split(fileName, ".")[0]
-		scanner := bufio.NewScanner(file)
-		for scanner.Scan() {
-			line := scanner.Text()
-			line = hashPrefix + line
-			hexString := line[0:40]
-
-			decodedHex, err := hex.DecodeString(hexString)
-			if err != nil {
-				log.Fatalf("Failed to decode hex string %s, %v", hexString, err)
-			}
-			count++
-			for _, filter := range filters {
-				filter.Add(decodedHex)
-			}
-
-			if count%10_000_000 == 0 {
-				fmt.Println(count*100/nPasswords, "%")
-			}
-		}
-	}
-
-	for ix, filter := range filters {
-		fmt.Println("count: ", filter.BitSet().Count())
 		encode, err := filter.GobEncode()
 		if err != nil {
 			log.Fatal("gob encode failed", err)
@@ -109,4 +73,32 @@ func main() {
 		fmt.Println()
 	}
 
+}
+
+func insert(fileNames []string, inputDir string, filter *bloom.BloomFilter, nPasswords uint) {
+	var count uint
+	for _, fileName := range fileNames {
+		file, err := os.Open(inputDir + "/" + fileName)
+		if err != nil {
+			log.Fatalf("Can't open file %s, %v", fileName, err)
+		}
+		hashPrefix := strings.Split(fileName, ".")[0]
+		scanner := bufio.NewScanner(file)
+		for scanner.Scan() {
+			line := scanner.Text()
+			line = hashPrefix + line
+			hexString := line[0:40]
+
+			decodedHex, err := hex.DecodeString(hexString)
+			if err != nil {
+				log.Fatalf("Failed to decode hex string %s, %v", hexString, err)
+			}
+			count++
+			filter.Add(decodedHex)
+
+			if count%10_000_000 == 0 {
+				fmt.Println(count*100/nPasswords, "%")
+			}
+		}
+	}
 }

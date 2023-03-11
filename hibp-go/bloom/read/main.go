@@ -15,7 +15,7 @@ func main() {
 	}
 	defer file.Close()
 
-	const nPasswords = 121034
+	const nPasswords = 851_082_816
 	const falsePositiveRate = 0.1
 	filter := bloom.NewWithEstimates(nPasswords, falsePositiveRate)
 
