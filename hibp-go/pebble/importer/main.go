@@ -8,6 +8,7 @@ import (
 	"os"
 	"sort"
 	"strconv"
+	"strings"
 
 	"github.com/cockroachdb/pebble"
 )
@@ -43,9 +44,11 @@ func main() {
 
 		batch := db.NewBatch()
 
+		hashPrefix := strings.Split(fileName, ".")[0]
 		scanner := bufio.NewScanner(file)
 		for scanner.Scan() {
 			line := scanner.Text()
+			line = hashPrefix + line
 			hexString := line[0:40]
 			appears, err := strconv.ParseUint(line[41:], 10, 32)
 			if err != nil {
