@@ -14,16 +14,17 @@
         [ngFormOptions]="{updateOn: 'submit'}" novalidate>
 
     <ion-list>
-      <ion-item fill="outline">
-        <ion-label position="floating">Task</ion-label>
-        <ion-input #description="ngModel" [ngModel]="selectedTodo.description" [required]="true"
+      <ion-item lines="none">
+        <ion-input [ngModel]="selectedTodo.description" [required]="true"
+                   errorText="Task is required" label="Task"
+                   labelPlacement="floating"
                    name="description"></ion-input>
-        <span *ngIf="!description.valid && todoForm.submitted" slot="error">Task is required</span>
       </ion-item>
 
-      <ion-item class="ion-margin-top" fill="outline">
-        <ion-label position="floating">Priority</ion-label>
-        <ion-select #priority="ngModel" [ngModel]="selectedTodo.priority" [required]="true" name="priority">
+      <ion-item class="ion-margin-top">
+        <ion-select #priority="ngModel" [ngModel]="selectedTodo.priority" [required]="true"
+                    label="Priority" labelPlacement="floating"
+                    name="priority">
           <ion-select-option value="low">Low</ion-select-option>
           <ion-select-option value="normal">Normal</ion-select-option>
           <ion-select-option value="high">High</ion-select-option>
@@ -31,9 +32,9 @@
         <span *ngIf="!priority.valid && todoForm.submitted" slot="error">Task is required</span>
       </ion-item>
 
-      <ion-item class="ion-margin-top" fill="outline">
-        <ion-label position="floating">Due Date</ion-label>
+      <ion-item class="ion-margin-top">
         <ion-input (click)="showCalendar=true" [ngModel]="dueDate" [readonly]="true" [required]="true"
+                   label="Due Date" labelPlacement="floating"
                    name="dueDate"></ion-input>
         <ion-modal [isOpen]="showCalendar">
           <ng-template>

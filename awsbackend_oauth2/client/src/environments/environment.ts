@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  API_URL: 'https://g3vdezkw6i.execute-api.us-east-1.amazonaws.com/v1',
-  ISSUER: 'https://cognito-idp.us-east-1.amazonaws.com/us-east-1_Fq2topm2q',
-  CLIENT_ID: '6ep77o'
+  API_URL: 'https://2m706iho0j.execute-api.us-east-1.amazonaws.com/v1',
+  ISSUER: 'https://cognito-idp.us-east-1.amazonaws.com/us-east-1_L0C5wdEVM',
+  CLIENT_ID: '6epfjfg0j2dc5bq2sa4lk60r05'
 };
 
 /*

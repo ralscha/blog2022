@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {inject, NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {StartComponent} from './start/start.component';
 import {AuthGuard} from './auth.guard';
@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'todo',
-    canActivate: [AuthGuard],
+    canActivate: [() => inject(AuthGuard).canActivate()],
     loadChildren: () => import('./todo/todo.module').then(m => m.TodoModule)
   },
   {path: '**', redirectTo: 'start'}

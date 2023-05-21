@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {v4 as uuidv4} from 'uuid';
 import {add, format} from 'date-fns'
@@ -9,7 +9,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 
 @Injectable()
-export class TodoService implements Resolve<Todo | undefined> {
+export class TodoService {
   private todosMap: Map<string, Todo> = new Map();
 
   private readonly todosSubject = new BehaviorSubject<Todo[]>([]);

@@ -8,7 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/aws-sdk-go-v2/service/sqs"
-	"github.com/bxcodec/faker/v3"
+	"github.com/bxcodec/faker/v4"
 	"github.com/google/uuid"
 	"google.golang.org/protobuf/proto"
 	"log"

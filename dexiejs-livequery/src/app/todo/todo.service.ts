@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
 import {v4 as uuidv4} from 'uuid';
 import {add, format} from 'date-fns'
 import {Todo, TodoDb} from './todo-db';
 
 @Injectable()
-export class TodoService implements Resolve<Todo | undefined> {
+export class TodoService {
 
   private readonly db: TodoDb;
 
