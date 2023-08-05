@@ -1,0 +1,37 @@
+div.content {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+  width: 90vw;
+}
+
+button {
+  font-family: sans-serif;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-size: 1.5rem;
+  border-radius: 0.5rem;
+  border: 0;
+  background-color: green;
+  color: white;
+}
+
+button.unsubscribe {
+  background-color: red;
+}
+
+div.info {
+  text-align: center;
+  font-family: sans-serif;
+  width: 100%;
+  max-width: 250px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-size: 1.5rem;
+  background-color: lightgray;
+}
