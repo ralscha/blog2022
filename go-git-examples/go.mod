@@ -1,6 +1,6 @@
 module gogitexamples
 
-go 1.20
+go 1.21
 
 require (
 	github.com/go-git/go-git/v5 v5.8.1
