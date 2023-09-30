@@ -9,9 +9,7 @@
 	<name>s3selectdemo</name>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>17</maven.compiler.source>
-		<maven.compiler.target>17</maven.compiler.target>
+		<java.version>21</java.version>
 	</properties>
 
 	<dependencyManagement>
@@ -19,7 +17,7 @@
 			<dependency>
 				<groupId>com.amazonaws</groupId>
 				<artifactId>aws-java-sdk-bom</artifactId>
-				<version>1.12.541</version>
+				<version>1.12.560</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
