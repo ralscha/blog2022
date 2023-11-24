@@ -99,10 +99,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "webpushdemo:build:production"
+              "buildTarget": "webpushdemo:build:production"
             },
             "development": {
-              "browserTarget": "webpushdemo:build:development"
+              "buildTarget": "webpushdemo:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -110,7 +110,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "webpushdemo:build"
+            "buildTarget": "webpushdemo:build"
           }
         }
       }
