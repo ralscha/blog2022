@@ -21,11 +21,11 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/client_golang v1.19.0 // indirect
 	github.com/prometheus/client_model v0.6.0 // indirect
-	github.com/prometheus/common v0.49.0 // indirect
-	github.com/prometheus/procfs v0.12.0 // indirect
+	github.com/prometheus/common v0.51.1 // indirect
+	github.com/prometheus/procfs v0.13.0 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
-	golang.org/x/exp v0.0.0-20240222234643-814bf88cf225 // indirect
-	golang.org/x/sys v0.17.0 // indirect
+	golang.org/x/exp v0.0.0-20240325151524-a685a6edb6d8 // indirect
+	golang.org/x/sys v0.18.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
-	google.golang.org/protobuf v1.32.0 // indirect
+	google.golang.org/protobuf v1.33.0 // indirect
 )
