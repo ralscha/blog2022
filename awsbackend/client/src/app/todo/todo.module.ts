@@ -7,7 +7,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {TodoService} from './todo.service';
 import {EditPage} from './edit/edit.page';
 import {MessagesService} from './messages.service';
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 
 const routes: Routes = [
@@ -36,16 +36,9 @@ const routes: Routes = [
   }
 ];
 
-@NgModule({
-  imports: [
-    HttpClientModule,
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [ListPage, EditPage],
-  providers: [TodoService, MessagesService]
-})
+@NgModule({ declarations: [ListPage, EditPage], imports: [CommonModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild(routes)], providers: [TodoService, MessagesService, provideHttpClient(withInterceptorsFromDi())] })
 export class TodoModule {
 }

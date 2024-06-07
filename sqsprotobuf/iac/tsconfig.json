@@ -4,7 +4,7 @@
     "outDir": "bin",
     "target": "es2016",
     "module": "commonjs",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "sourceMap": true,
     "experimentalDecorators": true,
     "pretty": true,

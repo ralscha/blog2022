@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TodoService} from '../todo.service';
 import {MessagesService} from '../messages.service';
 import {NgForm} from '@angular/forms';
-import {HttpErrorResponse} from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import {TodoPostResponse} from '../todo-post-response';
 import {Todo} from '../todo';
 
