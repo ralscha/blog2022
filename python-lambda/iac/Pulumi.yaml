@@ -1,0 +1,10 @@
+name: iac
+runtime:
+  name: python
+  options:
+    toolchain: poetry
+description: Lambda S3 Demo
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-python
