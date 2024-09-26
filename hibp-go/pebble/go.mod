@@ -1,6 +1,6 @@
 module hibppebble
 
-go 1.23.0
+go 1.23.1
 
 require github.com/cockroachdb/pebble v1.1.2
 
