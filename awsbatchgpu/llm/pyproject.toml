@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "demo"
+version = "0.1.0"
+description = ""
+authors = ["Ralph Schaer <ralphschaer@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+vllm = "0.6.2"
+mistral-common = {extras = ["opencv"], version = "1.4.4"}
+boto3 = {extras = ["s3"], version = "1.35.29"}
+boto3-stubs = {extras = ["s3"], version = "1.35.29"}
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "0.6.8"
+mypy = "1.11.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

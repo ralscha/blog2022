@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "demo"
+version = "0.1.0"
+description = ""
+authors = ["Ralph Schaer <ralphschaer@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+boto3 = {extras = ["s3"], version = "1.35.30"}
+boto3-stubs = {extras = ["s3"], version = "1.35.30"}
+pandas = "2.2.3"
+scikit-learn = "1.5.2"
+catboost = "1.2.7"
+traitlets = "5.14.3"
+pandas-stubs = "2.2.2.240909"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "0.6.8"
+mypy = "1.11.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
