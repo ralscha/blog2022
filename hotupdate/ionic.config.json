@@ -1,0 +1,7 @@
+{
+  "name": "hotupdate",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

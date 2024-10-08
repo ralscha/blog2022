@@ -1,0 +1,53 @@
+{
+  "name": "hotupdate",
+  "version": "0.0.2",
+  "author": "Ionic Framework",
+  "homepage": "https://ionicframework.com/",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "lint": "ng lint",
+    "prebundle": "npm run build",
+    "bundle": "node ./zip.js"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "18.2.7",
+    "@angular/common": "18.2.7",
+    "@angular/compiler": "18.2.7",
+    "@angular/core": "18.2.7",
+    "@angular/forms": "18.2.7",
+    "@angular/platform-browser": "18.2.7",
+    "@angular/platform-browser-dynamic": "18.2.7",
+    "@angular/router": "18.2.7",
+    "@capacitor/android": "6.1.2",
+    "@capacitor/app": "6.0.1",
+    "@capacitor/core": "6.1.2",
+    "@capacitor/dialog": "^6.0.1",
+    "@capacitor/haptics": "6.0.1",
+    "@capacitor/ios": "6.1.2",
+    "@capacitor/keyboard": "6.0.2",
+    "@capacitor/splash-screen": "6.0.2",
+    "@capacitor/status-bar": "6.0.1",
+    "@capgo/capacitor-updater": "6.2.9",
+    "@ionic/angular": "8.3.2",
+    "ionicons": "7.4.0",
+    "rxjs": "7.8.1",
+    "tslib": "2.7.0",
+    "zone.js": "0.14.10"
+  },
+  "devDependencies": {
+    "@angular/build": "18.2.7",
+    "@angular/cli": "18.2.7",
+    "@angular/compiler-cli": "18.2.7",
+    "@capacitor/cli": "6.1.2",
+    "@ionic/angular-toolkit": "12.1.1",
+    "angular-eslint": "18.3.1",
+    "eslint": "9.12.0",
+    "typescript": "5.5.4",
+    "typescript-eslint": "8.8.1",
+    "archiver": "7.0.1"
+  }
+}
