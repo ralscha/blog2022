@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "convert"
+version = "0.1.0"
+description = ""
+authors = ["Ralph Schaer <ralphschaer@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+transformers = "^4.46.0"
+onnxruntime = "^1.19.2"
+optimum = "^1.23.2"
+onnx = "^1.17.0"
+tqdm = "^4.66.5"
+onnx-graphsurgeon = "^0.5.2"
+onnxslim = "^0.1.35"
+accelerate = "^1.0.1"
+torch = "^2.5.0"
+dill = "^0.3.9"
+fsspec = "^2024.10.0"
+multiprocess = "^0.70.17"
+onnxconverter-common = "^1.14.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,18 @@
+.grid-container {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  height: 80vh;
+}
+
+.grid-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.sql-output {
+  font-family: monospace;
+}
+
+.country-list {
+  overflow-y: auto;
+}

@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      World Factbook
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="isWebGPUAvailable()">
+
+  <div class="grid-container">
+    <div class="grid-item">
+      <ion-input [disabled]="!db || !generator || working" placeholder="Search" [(ngModel)]="searchTerm"
+                 (ionChange)="generateSQL()"></ion-input>
+    </div>
+    <div class="grid-item sql-output">
+      <code>{{ selectStatement }}</code>
+    </div>
+    <div class="grid-item country-list">
+      @if (working) {
+        <ion-spinner></ion-spinner>
+      } @else {
+        @for (fact of countries; track fact.id) {
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{ fact.name }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p><strong>Area:</strong> {{ fact.area }}</p>
+              <p><strong>Land Area:</strong> {{ fact.area_land }}</p>
+              <p><strong>Water Area:</strong> {{ fact.area_water }}</p>
+              <p><strong>Population:</strong> {{ fact.population }}</p>
+              <p><strong>Population Growth:</strong> {{ fact.population_growth }}</p>
+              <p><strong>Birth Rate:</strong> {{ fact.birth_rate }}</p>
+              <p><strong>Death Rate:</strong> {{ fact.death_rate }}</p>
+              <p><strong>Migration Rate:</strong> {{ fact.migration_rate }}</p>
+            </ion-card-content>
+          </ion-card>
+        }
+      }
+    </div>
+  </div>
+
+</ion-content>
+
+<ion-content class="ion-padding" *ngIf="!isWebGPUAvailable()">
+  <div class="ion-text-center">
+    <h1>WebGPU is not available in your browser</h1>
+  </div>
+</ion-content>
