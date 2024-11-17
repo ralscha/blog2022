@@ -4,8 +4,8 @@
     "@types/node": "22"
   },
   "dependencies": {
-    "@pulumi/pulumi": "3.137.0",
-    "@pulumi/aws": "6.56.1",
-    "@pulumi/awsx": "2.16.1"
+    "@pulumi/pulumi": "3.138.0",
+    "@pulumi/aws": "6.58.0",
+    "@pulumi/awsx": "2.17.0"
   }
 }
