@@ -44,10 +44,10 @@
     "@angular/compiler-cli": "18.2.7",
     "@capacitor/cli": "6.1.2",
     "@ionic/angular-toolkit": "12.1.1",
-    "angular-eslint": "18.4.0",
+    "angular-eslint": "18.4.3",
     "eslint": "9.17.0",
     "typescript": "5.5.4",
-    "typescript-eslint": "8.18.0",
+    "typescript-eslint": "8.18.2",
     "archiver": "7.0.1"
   }
 }
