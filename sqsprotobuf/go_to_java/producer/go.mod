@@ -5,7 +5,7 @@ go 1.23.4
 require (
 	github.com/aws/aws-sdk-go-v2 v1.32.7
 	github.com/aws/aws-sdk-go-v2/config v1.28.7
-	github.com/aws/aws-sdk-go-v2/service/sqs v1.37.3
+	github.com/aws/aws-sdk-go-v2/service/sqs v1.37.4
 	google.golang.org/protobuf v1.36.1
 )
 

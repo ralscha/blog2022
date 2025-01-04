@@ -6,9 +6,10 @@ import {Todo} from '../todo';
 import {OAuthService} from 'angular-oauth2-oidc';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.page.html',
-  styleUrls: ['./list.page.scss'],
+    selector: 'app-list',
+    templateUrl: './list.page.html',
+    styleUrls: ['./list.page.scss'],
+    standalone: false
 })
 export class ListPage implements OnInit {
   todos$!: Observable<Todo[]>;

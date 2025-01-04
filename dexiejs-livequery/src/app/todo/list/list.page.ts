@@ -5,9 +5,10 @@ import {MessagesService} from '../messages.service';
 import {liveQuery, Observable} from 'dexie';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.page.html',
-  styleUrls: ['./list.page.scss'],
+    selector: 'app-list',
+    templateUrl: './list.page.html',
+    styleUrls: ['./list.page.scss'],
+    standalone: false
 })
 export class ListPage {
   public readonly todos$: Observable<Todo[]>;

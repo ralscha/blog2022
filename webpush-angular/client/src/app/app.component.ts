@@ -1,17 +1,14 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {RouterOutlet} from '@angular/router';
+
 import {HttpClient} from "@angular/common/http";
 import {SwPush} from "@angular/service-worker";
 import {firstValueFrom, lastValueFrom} from "rxjs";
 import {environment} from "../environments/environment";
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet],
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.css'],
+    selector: 'app-root',
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.css']
 })
 export class AppComponent implements OnInit {
   subscribed = false;

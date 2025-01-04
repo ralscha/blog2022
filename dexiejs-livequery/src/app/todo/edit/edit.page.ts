@@ -6,9 +6,10 @@ import {NgForm} from '@angular/forms';
 import {Todo} from '../todo-db';
 
 @Component({
-  selector: 'app-edit-page',
-  templateUrl: './edit.page.html',
-  styleUrls: ['./edit.page.scss'],
+    selector: 'app-edit-page',
+    templateUrl: './edit.page.html',
+    styleUrls: ['./edit.page.scss'],
+    standalone: false
 })
 export class EditPage implements OnInit {
 

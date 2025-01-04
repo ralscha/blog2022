@@ -8,9 +8,10 @@ import {TodoPostResponse} from '../todo-post-response';
 import {Todo} from '../todo';
 
 @Component({
-  selector: 'app-edit-page',
-  templateUrl: './edit.page.html',
-  styleUrls: ['./edit.page.scss'],
+    selector: 'app-edit-page',
+    templateUrl: './edit.page.html',
+    styleUrls: ['./edit.page.scss'],
+    standalone: false
 })
 export class EditPage implements OnInit {
 

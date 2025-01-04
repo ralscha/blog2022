@@ -5,9 +5,10 @@ import {Observable} from 'rxjs';
 import {Todo} from '../todo';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.page.html',
-  styleUrls: ['./list.page.scss'],
+    selector: 'app-list',
+    templateUrl: './list.page.html',
+    styleUrls: ['./list.page.scss'],
+    standalone: false
 })
 export class ListPage implements OnInit {
   todos$!: Observable<Todo[]>;

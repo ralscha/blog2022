@@ -4,8 +4,9 @@ import {authCodeFlowConfig} from '../auth.config';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-start',
-  templateUrl: './start.component.html'
+    selector: 'app-start',
+    templateUrl: './start.component.html',
+    standalone: false
 })
 export class StartComponent implements OnInit {
 

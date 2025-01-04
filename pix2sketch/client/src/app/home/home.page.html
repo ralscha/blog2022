@@ -3,7 +3,9 @@
     <ion-title>
       pix2sketch
     </ion-title>
-    <ion-progress-bar *ngIf="processing" type="indeterminate"></ion-progress-bar>
+    @if (processing) {
+      <ion-progress-bar type="indeterminate"></ion-progress-bar>
+    }
   </ion-toolbar>
 </ion-header>
 
@@ -20,12 +22,16 @@
       Select Image
     </ion-button>
     <div>
-      <img class="selectedImage" *ngIf="image" [src]="imageData" alt="selected_image"/>
+      @if (image) {
+        <img class="selectedImage" [src]="imageData" alt="selected_image"/>
+      }
     </div>
     @if (sketchResponse) {
       <img class="sketch" [src]="'data:image/jpg;base64,' +sketchResponse.imageBase64" alt="generated drawing"/>
       <p class="ion-margin">{{ sketchResponse.description }}</p>
     }
-    <p class="ion-margin error" *ngIf="error">{{ error }}</p>
+    @if (error) {
+      <p class="ion-margin error">{{ error }}</p>
+    }
   </div>
 </ion-content>

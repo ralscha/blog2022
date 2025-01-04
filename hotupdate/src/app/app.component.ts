@@ -13,10 +13,9 @@ type UpdateInfo = {
 }
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  standalone: true,
-  imports: [IonApp, IonRouterOutlet],
+    selector: 'app-root',
+    templateUrl: 'app.component.html',
+    imports: [IonApp, IonRouterOutlet]
 })
 export class AppComponent {
   constructor(private readonly httpClient: HttpClient) {

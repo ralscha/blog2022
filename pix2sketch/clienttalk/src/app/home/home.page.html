@@ -3,7 +3,9 @@
     <ion-title>
       Talk to GPT
     </ion-title>
-    <ion-progress-bar *ngIf="processing" type="indeterminate"></ion-progress-bar>
+    @if (processing) {
+      <ion-progress-bar type="indeterminate"></ion-progress-bar>
+    }
   </ion-toolbar>
 </ion-header>
 
@@ -15,23 +17,35 @@
   </ion-header>
 
   <div class="container">
-    <ion-button *ngIf="!recording" [disabled]="processing" (click)="startRecording()" color="success">
-      <ion-icon slot="start" icon="svg/mic-circle-outline.svg"></ion-icon>
-      Start Recording
-    </ion-button>
-    <ion-button *ngIf="recording" (click)="stopRecording()" color="danger">
-      <ion-icon slot="start" icon="svg/stop-circle-outline.svg"></ion-icon>
-      Stop Recording
-    </ion-button>
+    @if (!recording) {
+      <ion-button [disabled]="processing" (click)="startRecording()" color="success">
+        <ion-icon slot="start" icon="svg/mic-circle-outline.svg"></ion-icon>
+        Start Recording
+      </ion-button>
+    }
+    @if (recording) {
+      <ion-button (click)="stopRecording()" color="danger">
+        <ion-icon slot="start" icon="svg/stop-circle-outline.svg"></ion-icon>
+        Stop Recording
+      </ion-button>
+    }
 
-    <p *ngIf="speechToTextResponse" class="ion-margin">{{ speechToTextResponse }}</p>
-    <p *ngIf="chatGPT4Response" class="ion-margin">{{ chatGPT4Response }}</p>
+    @if (speechToTextResponse) {
+      <p class="ion-margin">{{ speechToTextResponse }}</p>
+    }
+    @if (chatGPT4Response) {
+      <p class="ion-margin">{{ chatGPT4Response }}</p>
+    }
 
-    <ion-button *ngIf="textToSpeechResponse" (click)="speak()" color="success">
-      <ion-icon slot="start" icon="svg/play-circle-outline.svg"></ion-icon>
-      Speak
-    </ion-button>
+    @if (textToSpeechResponse) {
+      <ion-button (click)="speak()" color="success">
+        <ion-icon slot="start" icon="svg/play-circle-outline.svg"></ion-icon>
+        Speak
+      </ion-button>
+    }
 
-    <p class="ion-margin error" *ngIf="error">{{ error }}</p>
+    @if (error) {
+      <p class="ion-margin error">{{ error }}</p>
+    }
   </div>
 </ion-content>

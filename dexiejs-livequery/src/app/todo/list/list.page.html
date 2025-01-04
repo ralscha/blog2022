@@ -9,35 +9,34 @@
 
 <ion-content [fullscreen]="true">
   <ion-card *ngFor="let todo of todos$ | async; trackBy: todoTrackBy" class="ion-margin">
-    <ion-card-header>
-
-      <div>
-        <ion-icon *ngIf="todo.priority === 'high'" color="danger" name="ellipse" size="small"></ion-icon>
-        <ion-icon *ngIf="todo.priority === 'low'" color="success" name="ellipse" size="small"></ion-icon>
-        <ion-icon *ngIf="todo.priority === 'normal'" color="warning" name="ellipse" size="small"></ion-icon>
-        <ion-label> {{ todo.description }}</ion-label>
-      </div>
-
-    </ion-card-header>
-
-    <ion-card-content>
-      <ion-label>Due {{todo.dueDate | date:'yyyy-MM-dd'}}</ion-label>
-    </ion-card-content>
-
-    <ion-row>
-
-      <ion-item [routerLink]="['./edit', todo.id]" routerDirection="forward">
-        <ion-icon name="pencil-outline"></ion-icon>
-        <p>Update</p>
-      </ion-item>
-
-      <ion-item (click)="deleteTodo(todo.id)">
-        <ion-icon name="trash-outline"></ion-icon>
-        <p>Delete</p>
-      </ion-item>
-    </ion-row>
-
-  </ion-card>
+      <ion-card-header>
+        <div>
+          @if (todo.priority === 'high') {
+            <ion-icon color="danger" name="ellipse" size="small"></ion-icon>
+          }
+          @if (todo.priority === 'low') {
+            <ion-icon color="success" name="ellipse" size="small"></ion-icon>
+          }
+          @if (todo.priority === 'normal') {
+            <ion-icon color="warning" name="ellipse" size="small"></ion-icon>
+          }
+          <ion-label> {{ todo.description }}</ion-label>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label>Due {{todo.dueDate | date:'yyyy-MM-dd'}}</ion-label>
+      </ion-card-content>
+      <ion-row>
+        <ion-item [routerLink]="['./edit', todo.id]" routerDirection="forward">
+          <ion-icon name="pencil-outline"></ion-icon>
+          <p>Update</p>
+        </ion-item>
+        <ion-item (click)="deleteTodo(todo.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+          <p>Delete</p>
+        </ion-item>
+      </ion-row>
+    </ion-card>
   <ion-fab horizontal="end" slot="fixed" vertical="bottom">
     <ion-fab-button routerDirection="forward" routerLink="./edit">
       <ion-icon name="add"></ion-icon>

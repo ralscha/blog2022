@@ -8,17 +8,16 @@ import {
   IonTitle,
   IonToolbar
 } from '@ionic/angular/standalone';
-import {NgIf} from "@angular/common";
+
 import { HttpClient } from "@angular/common/http";
 import {environment} from "../../environments/environment";
 
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
-  standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, NgIf, IonProgressBar],
+    selector: 'app-home',
+    templateUrl: 'home.page.html',
+    styleUrls: ['home.page.scss'],
+    imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonProgressBar]
 })
 export class HomePage {
   recording = false;

@@ -1,9 +1,19 @@
-<div *ngIf="webPushSupported" class="content">
-  <button (click)="subscribe()" *ngIf="!subscribed && !permissionDenied">Subscribe</button>
-  <div *ngIf="permissionDenied">Permission denied</div>
-  <button (click)="unsubscribe()" *ngIf="subscribed && !permissionDenied" class="unsubscribe">Unsubscribe</button>
-</div>
+@if (webPushSupported) {
+  <div class="content">
+    @if (!subscribed && !permissionDenied) {
+      <button (click)="subscribe()">Subscribe</button>
+    }
+    @if (permissionDenied) {
+      <div>Permission denied</div>
+    }
+    @if (subscribed && !permissionDenied) {
+      <button (click)="unsubscribe()" class="unsubscribe">Unsubscribe</button>
+    }
+  </div>
+}
 
-<div *ngIf="!webPushSupported" class="content">
-  <div class="info">Web Push not supported</div>
-</div>
+@if (!webPushSupported) {
+  <div class="content">
+    <div class="info">Web Push not supported</div>
+  </div>
+}
