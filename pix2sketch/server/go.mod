@@ -1,6 +1,6 @@
 module pix2sketch
 
-go 1.23.4
+go 1.23.5
 
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/ai/azopenai v0.7.1

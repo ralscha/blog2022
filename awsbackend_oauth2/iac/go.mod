@@ -1,6 +1,6 @@
 module iac
 
-go 1.23.4
+go 1.23.5
 
 require (
 	github.com/pulumi/pulumi-aws/sdk/v4 v4.38.1

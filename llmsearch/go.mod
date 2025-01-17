@@ -1,6 +1,6 @@
 module llmsearch
 
-go 1.23.4
+go 1.23.5
 
 require (
 	github.com/go-shiori/go-readability v0.0.0-20241012063810-92284fa8a71f
