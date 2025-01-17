@@ -1,0 +1,11 @@
+environment: development
+
+http:
+  addr: localhost:8080
+
+session:
+  secureCookie: false
+
+passwordless:
+  apiUrl: v4.passwordless.dev
+  secretApiKey: 

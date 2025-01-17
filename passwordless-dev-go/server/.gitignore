@@ -1,0 +1,5 @@
+bin
+.idea
+/migrate
+/.task
+/migrate.exe
