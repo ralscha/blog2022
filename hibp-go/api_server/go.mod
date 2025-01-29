@@ -2,7 +2,7 @@ module hibpapi
 
 go 1.23.5
 
-require github.com/cockroachdb/pebble v1.1.3
+require github.com/cockroachdb/pebble v1.1.4
 
 require (
 	github.com/DataDog/zstd v1.5.6 // indirect
