@@ -39,7 +39,7 @@ public class WebPushController {
 
     WebClient client = WebClient.builder().baseUrl("https://api.chucknorris.io").build();
     HttpServiceProxyFactory factory = HttpServiceProxyFactory
-        .builder(WebClientAdapter.forClient(client)).build();
+    	.builderFor(WebClientAdapter.create(client)).build();
     this.chuckNorrisJokeService = factory.createClient(ChuckNorrisJokeService.class);
 
     this.httpClient = HttpClient.newHttpClient();
