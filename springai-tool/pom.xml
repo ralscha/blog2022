@@ -9,9 +9,9 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>springaifunction</artifactId>
 	<version>0.0.1</version>
-	<name>demo</name>
+	<name>springaifunction</name>
 	<description>Demo project for Spring AI</description>
 	<properties>
 		<java.version>23</java.version>
