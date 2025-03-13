@@ -111,7 +111,7 @@ public class DemoApplication implements CommandLineRunner {
         .description("Get the current temperature of a location")
         .inputType(Location.class).build();
 
-    var response = this.chatClient.prompt().user(prompt).functions(callback).call()
+    var response = this.chatClient.prompt().user(prompt).tools(callback).call()
         .chatResponse();
     Generation generation = response.getResult();
     if (generation != null) {
