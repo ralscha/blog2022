@@ -5,11 +5,11 @@ go 1.24.1
 require (
 	github.com/docker/docker v28.0.1+incompatible
 	github.com/google/generative-ai-go v0.19.0
-	google.golang.org/api v0.224.0
+	google.golang.org/api v0.225.0
 )
 
 require (
-	cloud.google.com/go v0.118.3 // indirect
+	cloud.google.com/go v0.119.0 // indirect
 	cloud.google.com/go/ai v0.10.0 // indirect
 	cloud.google.com/go/auth v0.15.0 // indirect
 	cloud.google.com/go/auth/oauth2adapt v0.2.7 // indirect
@@ -48,8 +48,8 @@ require (
 	golang.org/x/sys v0.31.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
 	golang.org/x/time v0.11.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20250303144028-a0af3efb3deb // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250303144028-a0af3efb3deb // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250311190419-81fb87f6b8bf // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250311190419-81fb87f6b8bf // indirect
 	google.golang.org/grpc v1.71.0 // indirect
 	google.golang.org/protobuf v1.36.5 // indirect
 	gotest.tools/v3 v3.5.1 // indirect
