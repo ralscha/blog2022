@@ -3,7 +3,7 @@ module bskyearthquake
 go 1.24.1
 
 require (
-	github.com/bluesky-social/indigo v0.0.0-20250313000755-d9a74f690c90
+	github.com/bluesky-social/indigo v0.0.0-20250319110316-21a5ded3b8e6
 	github.com/cockroachdb/pebble v1.1.4
 	github.com/joho/godotenv v1.5.1
 )
@@ -58,8 +58,8 @@ require (
 	github.com/polydawn/refmt v0.89.1-0.20221221234430-40501e09de1f // indirect
 	github.com/prometheus/client_golang v1.21.1 // indirect
 	github.com/prometheus/client_model v0.6.1 // indirect
-	github.com/prometheus/common v0.62.0 // indirect
-	github.com/prometheus/procfs v0.15.1 // indirect
+	github.com/prometheus/common v0.63.0 // indirect
+	github.com/prometheus/procfs v0.16.0 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/whyrusleeping/cbor-gen v0.3.1 // indirect

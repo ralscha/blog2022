@@ -3,7 +3,7 @@ module bskyhello
 go 1.24.1
 
 require (
-	github.com/bluesky-social/indigo v0.0.0-20250313000755-d9a74f690c90
+	github.com/bluesky-social/indigo v0.0.0-20250319110316-21a5ded3b8e6
 	github.com/joho/godotenv v1.5.1
 )
 

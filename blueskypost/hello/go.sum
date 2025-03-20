@@ -1,7 +1,7 @@
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/benbjohnson/clock v1.1.0/go.mod h1:J11/hYXuz8f4ySSvYwY0FKfm+ezbsZBKZxNJlLklBHA=
-github.com/bluesky-social/indigo v0.0.0-20250313000755-d9a74f690c90 h1:lSo7V6ut0FrLmFyv3TfvXrqwcPNDXRC1hNvS04pLgfA=
-github.com/bluesky-social/indigo v0.0.0-20250313000755-d9a74f690c90/go.mod h1:NVBwZvbBSa93kfyweAmKwOLYawdVHdwZ9s+GZtBBVLA=
+github.com/bluesky-social/indigo v0.0.0-20250319110316-21a5ded3b8e6 h1:68HOOZZsU7nDbJbdtRhjPKAps8Lyc5Ypzj66pqDBGvQ=
+github.com/bluesky-social/indigo v0.0.0-20250319110316-21a5ded3b8e6/go.mod h1:NVBwZvbBSa93kfyweAmKwOLYawdVHdwZ9s+GZtBBVLA=
 github.com/carlmjohnson/versioninfo v0.22.5 h1:O00sjOLUAFxYQjlN/bzYTuZiS0y6fWDQjMRvwtKgwwc=
 github.com/carlmjohnson/versioninfo v0.22.5/go.mod h1:QT9mph3wcVfISUKd0i9sZfVrPviHuSF+cUtLjm2WSf8=
 github.com/cpuguy83/go-md2man/v2 v2.0.0-20190314233015-f79a8a8ca69d/go.mod h1:maD7wRr/U5Z6m/iR4s+kqSMx2CaBsrgA7czyZG/E6dU=
