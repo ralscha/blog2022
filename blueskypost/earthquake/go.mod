@@ -3,13 +3,13 @@ module bskyearthquake
 go 1.24.1
 
 require (
-	github.com/bluesky-social/indigo v0.0.0-20250319110316-21a5ded3b8e6
+	github.com/bluesky-social/indigo v0.0.0-20250329002016-0eb2aaa7beaf
 	github.com/cockroachdb/pebble v1.1.4
 	github.com/joho/godotenv v1.5.1
 )
 
 require (
-	github.com/DataDog/zstd v1.5.6 // indirect
+	github.com/DataDog/zstd v1.5.7 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/carlmjohnson/versioninfo v0.22.5 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
@@ -76,6 +76,6 @@ require (
 	golang.org/x/sys v0.31.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
-	google.golang.org/protobuf v1.36.5 // indirect
+	google.golang.org/protobuf v1.36.6 // indirect
 	lukechampine.com/blake3 v1.4.0 // indirect
 )
