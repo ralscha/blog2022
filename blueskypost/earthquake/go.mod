@@ -1,10 +1,10 @@
 module bskyearthquake
 
-go 1.24.1
+go 1.24.2
 
 require (
-	github.com/bluesky-social/indigo v0.0.0-20250329002016-0eb2aaa7beaf
-	github.com/cockroachdb/pebble v1.1.4
+	github.com/bluesky-social/indigo v0.0.0-20250407014525-dca7d0d26bf6
+	github.com/cockroachdb/pebble v1.1.5
 	github.com/joho/godotenv v1.5.1
 )
 
@@ -71,10 +71,10 @@ require (
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
-	golang.org/x/crypto v0.36.0 // indirect
+	golang.org/x/crypto v0.37.0 // indirect
 	golang.org/x/exp v0.0.0-20250305212735-054e65f0b394 // indirect
-	golang.org/x/sys v0.31.0 // indirect
-	golang.org/x/text v0.23.0 // indirect
+	golang.org/x/sys v0.32.0 // indirect
+	golang.org/x/text v0.24.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	lukechampine.com/blake3 v1.4.0 // indirect
