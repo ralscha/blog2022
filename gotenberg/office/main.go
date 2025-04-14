@@ -1,7 +1,9 @@
 package main
 
 import (
-	"github.com/dcaraxes/gotenberg-go-client/v8"
+	"context"
+	"github.com/starwalkn/gotenberg-go-client/v8"
+	"github.com/starwalkn/gotenberg-go-client/v8/document"
 	"log"
 	"net/http"
 	"time"
@@ -42,35 +44,40 @@ func main() {
 	httpClient := &http.Client{
 		Timeout: 5 * time.Second,
 	}
-	client := &gotenberg.Client{Hostname: "http://localhost:3000", HTTPClient: httpClient}
-
-	xlsFile, err := gotenberg.NewDocumentFromPath("demo.xlsx", "demo.xlsx")
+	client, err := gotenberg.NewClient("http://localhost:3000", httpClient)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	req := gotenberg.NewOfficeRequest(xlsFile)
-	err = client.Store(req, "demo.pdf")
+	xlsFile, err := document.FromPath("demo.xlsx", "demo.xlsx")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	ctx := context.Background()
+
+	req := gotenberg.NewLibreOfficeRequest(xlsFile)
+	err = client.Store(ctx, req, "demo.pdf")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Multiple files
 
-	xlsFile2, err := gotenberg.NewDocumentFromPath("demo2.xlsx", "demo.xlsx")
+	xlsFile2, err := document.FromPath("demo2.xlsx", "demo.xlsx")
 	if err != nil {
 		log.Fatal(err)
 	}
-	req = gotenberg.NewOfficeRequest(xlsFile, xlsFile2)
-	err = client.Store(req, "demo.zip")
+	req = gotenberg.NewLibreOfficeRequest(xlsFile, xlsFile2)
+	err = client.Store(ctx, req, "demo.zip")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Merge files
-	req = gotenberg.NewOfficeRequest(xlsFile, xlsFile2)
+	req = gotenberg.NewLibreOfficeRequest(xlsFile, xlsFile2)
 	req.Merge()
-	err = client.Store(req, "demo_merged.pdf")
+	err = client.Store(ctx, req, "demo_merged.pdf")
 	if err != nil {
 		log.Fatal(err)
 	}

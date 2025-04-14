@@ -1,7 +1,9 @@
 package main
 
 import (
-	"github.com/dcaraxes/gotenberg-go-client/v8"
+	"context"
+	"github.com/starwalkn/gotenberg-go-client/v8"
+	"github.com/starwalkn/gotenberg-go-client/v8/document"
 	"io"
 	"log"
 	"net/http"
@@ -54,19 +56,24 @@ func main() {
 		log.Fatal(err)
 	}
 
-	client := &gotenberg.Client{Hostname: "http://localhost:3000", HTTPClient: httpClient}
-
-	index, err := gotenberg.NewDocumentFromString("index.html", html)
+	client, err := gotenberg.NewClient("http://localhost:3000", httpClient)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	style, err := gotenberg.NewDocumentFromString("style.css", css)
+	ctx := context.Background()
+
+	index, err := document.FromString("index.html", html)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	gopher, err := gotenberg.NewDocumentFromBytes("gopher.png", gopherBytes)
+	style, err := document.FromString("style.css", css)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	gopher, err := document.FromBytes("gopher.png", gopherBytes)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -76,7 +83,7 @@ func main() {
 	req.PaperSize(gotenberg.A4)
 	req.Margins(gotenberg.NoMargins)
 
-	err = client.Store(req, "my.pdf")
+	err = client.Store(ctx, req, "my.pdf")
 	if err != nil {
 		log.Fatal(err)
 	}

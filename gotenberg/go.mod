@@ -3,7 +3,7 @@ module gotenbergdemo
 go 1.24.2
 
 require (
-	github.com/dcaraxes/gotenberg-go-client/v8 v8.6.3
+	github.com/starwalkn/gotenberg-go-client/v8 v8.9.1
 	github.com/xuri/excelize/v2 v2.9.0
 )
 
@@ -14,6 +14,6 @@ require (
 	github.com/xuri/efp v0.0.0-20250227110027-3491fafc2b79 // indirect
 	github.com/xuri/nfp v0.0.0-20250226145837-86d5fc24b2ba // indirect
 	golang.org/x/crypto v0.37.0 // indirect
-	golang.org/x/net v0.38.0 // indirect
+	golang.org/x/net v0.39.0 // indirect
 	golang.org/x/text v0.24.0 // indirect
 )
