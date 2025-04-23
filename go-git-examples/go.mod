@@ -3,7 +3,7 @@ module gogitexamples
 go 1.24.2
 
 require (
-	github.com/go-git/go-git/v5 v5.15.0
+	github.com/go-git/go-git/v5 v5.16.0
 	github.com/google/go-github/v53 v53.2.0
 	golang.org/x/oauth2 v0.29.0
 )

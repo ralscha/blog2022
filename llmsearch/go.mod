@@ -4,7 +4,7 @@ go 1.24.2
 
 require (
 	github.com/go-shiori/go-readability v0.0.0-20250217085726-9f5bf5ca7612
-	github.com/ollama/ollama v0.6.5
+	github.com/ollama/ollama v0.6.6
 )
 
 require (

@@ -4,7 +4,7 @@ go 1.24.2
 
 require (
 	github.com/pulumi/pulumi-aws/sdk/v4 v4.38.1
-	github.com/pulumi/pulumi/sdk/v3 v3.162.0
+	github.com/pulumi/pulumi/sdk/v3 v3.163.0
 )
 
 require (
@@ -32,7 +32,7 @@ require (
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
 	github.com/go-git/gcfg v1.5.1-0.20230307220236-3a3c6141e376 // indirect
 	github.com/go-git/go-billy/v5 v5.6.2 // indirect
-	github.com/go-git/go-git/v5 v5.15.0 // indirect
+	github.com/go-git/go-git/v5 v5.16.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/glog v1.2.4 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
@@ -85,8 +85,8 @@ require (
 	golang.org/x/term v0.31.0 // indirect
 	golang.org/x/text v0.24.0 // indirect
 	golang.org/x/tools v0.32.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250409194420-de1ac958c67a // indirect
-	google.golang.org/grpc v1.71.1 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250422160041-2d3770c4ea7f // indirect
+	google.golang.org/grpc v1.72.0 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

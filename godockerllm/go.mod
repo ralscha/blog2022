@@ -3,18 +3,18 @@ module godockerllm
 go 1.24.2
 
 require (
-	github.com/docker/docker v28.0.4+incompatible
+	github.com/docker/docker v28.1.1+incompatible
 	github.com/google/generative-ai-go v0.19.0
-	google.golang.org/api v0.228.0
+	google.golang.org/api v0.230.0
 )
 
 require (
-	cloud.google.com/go v0.120.0 // indirect
-	cloud.google.com/go/ai v0.10.1 // indirect
-	cloud.google.com/go/auth v0.15.0 // indirect
+	cloud.google.com/go v0.120.1 // indirect
+	cloud.google.com/go/ai v0.10.2 // indirect
+	cloud.google.com/go/auth v0.16.1 // indirect
 	cloud.google.com/go/auth/oauth2adapt v0.2.8 // indirect
 	cloud.google.com/go/compute/metadata v0.6.0 // indirect
-	cloud.google.com/go/longrunning v0.6.6 // indirect
+	cloud.google.com/go/longrunning v0.6.7 // indirect
 	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/containerd/log v0.1.0 // indirect
 	github.com/distribution/reference v0.6.0 // indirect
@@ -29,6 +29,7 @@ require (
 	github.com/googleapis/enterprise-certificate-proxy v0.3.6 // indirect
 	github.com/googleapis/gax-go/v2 v2.14.1 // indirect
 	github.com/moby/docker-image-spec v1.3.1 // indirect
+	github.com/moby/sys/atomicwriter v0.1.0 // indirect
 	github.com/moby/term v0.5.2 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
@@ -48,9 +49,9 @@ require (
 	golang.org/x/sys v0.32.0 // indirect
 	golang.org/x/text v0.24.0 // indirect
 	golang.org/x/time v0.11.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20250409194420-de1ac958c67a // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250409194420-de1ac958c67a // indirect
-	google.golang.org/grpc v1.71.1 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250422160041-2d3770c4ea7f // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250422160041-2d3770c4ea7f // indirect
+	google.golang.org/grpc v1.72.0 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gotest.tools/v3 v3.5.1 // indirect
 )
