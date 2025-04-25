@@ -3,7 +3,7 @@ module bskyearthquake
 go 1.24.2
 
 require (
-	github.com/bluesky-social/indigo v0.0.0-20250422211149-093d81912e91
+	github.com/bluesky-social/indigo v0.0.0-20250424090236-d6fa2c23ad1f
 	github.com/cockroachdb/pebble v1.1.5
 	github.com/joho/godotenv v1.5.1
 )
