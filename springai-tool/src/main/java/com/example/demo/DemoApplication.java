@@ -42,7 +42,7 @@ public class DemoApplication implements CommandLineRunner {
   }
 
   private void newsDemoWithoutFunction() {
-    String prompt = "Who won the 2024 Men's ATP Tennis tournament in Rome?";
+    String prompt = "Who won the 2025 Men's ATP Tennis tournament Barcelona Open?";
     var response = this.chatClient.prompt().user(prompt).call().chatResponse();
     Generation generation = response.getResult();
     if (generation != null) {
@@ -57,7 +57,7 @@ public class DemoApplication implements CommandLineRunner {
   private WikipediaArticleFetcher wikipediaArticleFetcher;
 
   private void newsDemo() {
-    String prompt = "Who won the 2024 Men's ATP Tennis tournament in Rome?";
+    String prompt = "Who won the 2025 Men's ATP Tennis tournament Barcelona Open?";
     var response = this.chatClient.prompt().user(prompt)
         .tools(this.wikipediaArticleFetcher).call().chatResponse();
     Generation generation = response.getResult();
@@ -111,7 +111,7 @@ public class DemoApplication implements CommandLineRunner {
         .description("Get the current temperature of a location")
         .inputType(Location.class).build();
 
-    var response = this.chatClient.prompt().user(prompt).tools(callback).call()
+    var response = this.chatClient.prompt().user(prompt).toolCallbacks(callback).call()
         .chatResponse();
     Generation generation = response.getResult();
     if (generation != null) {
