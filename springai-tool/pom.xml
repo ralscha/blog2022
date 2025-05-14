@@ -15,7 +15,7 @@
 	<description>Demo project for Spring AI</description>
 	<properties>
 		<java.version>24</java.version>
-		<spring-ai.version>1.0.0-M8</spring-ai.version>
+		<spring-ai.version>1.0.0-RC1</spring-ai.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -34,7 +34,7 @@
 		<dependency>
 		    <groupId>org.jsoup</groupId>
 		    <artifactId>jsoup</artifactId>
-		    <version>1.19.1</version>
+		    <version>1.20.1</version>
 		</dependency>		
 	</dependencies>
 	<dependencyManagement>
