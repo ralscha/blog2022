@@ -116,10 +116,13 @@ func main() {
 
 		isoTimestamp := t.Format("2006-01-02 15:04:05 UTC")
 
-		msg := fmt.Sprintf("%.1f magnitude %s\n%s\n%s\nhttps://earthquake.usgs.gov/earthquakes/eventpage/%s/executive",
-			q.Mag, q.Type, isoTimestamp, q.Place, q.ID)
+		fullURL := fmt.Sprintf("https://earthquake.usgs.gov/earthquakes/eventpage/%s/executive", q.ID)
+		shortURL := fmt.Sprintf("earthquake.usgs.gov/%s", q.ID)
 
-		if err := postToBluesky(msg); err != nil {
+		msg := fmt.Sprintf("%.1f magnitude %s #%s\n%s\n%s\n\n%s",
+			q.Mag, earthquakeTypeByMagnitude(q.Mag), q.Type, isoTimestamp, q.Place, shortURL)
+
+		if err := postToBluesky(msg, q.Type, fullURL, shortURL); err != nil {
 			log.Printf("Failed to post for ID %s: %v", q.ID, err)
 			continue
 		}
@@ -131,7 +134,7 @@ func main() {
 	_ = db.Flush()
 }
 
-func postToBluesky(text string) error {
+func postToBluesky(text string, earthquakeType string, fullURL string, shortURL string) error {
 	client := &xrpc.Client{Host: "https://me.rasc.ch"}
 
 	auth, err := atproto.ServerCreateSession(
@@ -151,15 +154,14 @@ func postToBluesky(text string) error {
 		Auth: &xrpc.AuthInfo{AccessJwt: auth.AccessJwt},
 	}
 
-	linkStartPos := strings.Index(text, "https://")
-	linkEndPos := len(text)
-	link := text[linkStartPos:linkEndPos]
+	linkStartPos := strings.Index(text, shortURL)
+	linkEndPos := linkStartPos + len(shortURL)
 
 	linkFacet := &bsky.RichtextFacet{
 		Features: []*bsky.RichtextFacet_Features_Elem{
 			{
 				RichtextFacet_Link: &bsky.RichtextFacet_Link{
-					Uri: link,
+					Uri: fullURL,
 				},
 			},
 		},
@@ -169,11 +171,33 @@ func postToBluesky(text string) error {
 		},
 	}
 
+	facets := []*bsky.RichtextFacet{linkFacet}
+
+	tagStartPos := strings.Index(text, "#"+earthquakeType)
+	if tagStartPos != -1 {
+		tagEndPos := tagStartPos + len(earthquakeType) + 1
+
+		tagFacet := &bsky.RichtextFacet{
+			Features: []*bsky.RichtextFacet_Features_Elem{
+				{
+					RichtextFacet_Tag: &bsky.RichtextFacet_Tag{
+						Tag: earthquakeType,
+					},
+				},
+			},
+			Index: &bsky.RichtextFacet_ByteSlice{
+				ByteEnd:   int64(tagEndPos),
+				ByteStart: int64(tagStartPos),
+			},
+		}
+		facets = append(facets, tagFacet)
+	}
+
 	post := &bsky.FeedPost{
 		Text:      text,
 		Langs:     []string{"en"},
 		CreatedAt: time.Now().Format(time.RFC3339),
-		Facets:    []*bsky.RichtextFacet{linkFacet},
+		Facets:    facets,
 	}
 
 	_, err = atproto.RepoCreateRecord(
@@ -186,4 +210,19 @@ func postToBluesky(text string) error {
 		},
 	)
 	return err
+}
+
+func earthquakeTypeByMagnitude(mag float64) string {
+	switch {
+	case mag >= 8.0:
+		return "great"
+	case mag >= 7.0:
+		return "major"
+	case mag >= 6.0:
+		return "strong"
+	case mag >= 5.0:
+		return "moderate"
+	default:
+		return ""
+	}
 }
