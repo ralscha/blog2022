@@ -1,6 +1,6 @@
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/bluesky-social/indigo v0.0.0-20250512184841-3edc6e261feb h1:qfkNGUq//RzFBRFNBVwRKcFwyXS+1jQ5VnLW9Jfh6Vc=
-github.com/bluesky-social/indigo v0.0.0-20250512184841-3edc6e261feb/go.mod h1:ovyxp8AMO1Hoe838vMJUbqHTZaAR8ABM3g3TXu+A5Ng=
+github.com/bluesky-social/indigo v0.0.0-20250516010818-f8de501bd6a0 h1:dvlM3xGxp4gHAUuJwrL2Y6cW12UBJiRrE9b11meTqwg=
+github.com/bluesky-social/indigo v0.0.0-20250516010818-f8de501bd6a0/go.mod h1:ovyxp8AMO1Hoe838vMJUbqHTZaAR8ABM3g3TXu+A5Ng=
 github.com/carlmjohnson/versioninfo v0.22.5 h1:O00sjOLUAFxYQjlN/bzYTuZiS0y6fWDQjMRvwtKgwwc=
 github.com/carlmjohnson/versioninfo v0.22.5/go.mod h1:QT9mph3wcVfISUKd0i9sZfVrPviHuSF+cUtLjm2WSf8=
 github.com/cpuguy83/go-md2man/v2 v2.0.0-20190314233015-f79a8a8ca69d/go.mod h1:maD7wRr/U5Z6m/iR4s+kqSMx2CaBsrgA7czyZG/E6dU=
