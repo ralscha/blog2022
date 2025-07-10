@@ -3,9 +3,8 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/Azure/azure-sdk-for-go/sdk/ai/azopenai"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/h2non/filetype"
+	"github.com/openai/openai-go"
 	ffmpeg "github.com/u2takey/ffmpeg-go"
 	"io"
 	"net/http"
@@ -69,13 +68,12 @@ func (app *application) speechToText(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// send to whisper to convert speech to text
-	resp, err := app.azureOpenAIClient.GetAudioTranscription(r.Context(),
-		azopenai.AudioTranscriptionOptions{
-			File:           audioDataInput,
-			ResponseFormat: to.Ptr(azopenai.AudioTranscriptionFormatText),
-			DeploymentName: to.Ptr("whisper"),
-			Temperature:    to.Ptr(float32(0.0)),
-		}, nil)
+	resp, err := app.azureOpenAIClient.Audio.Transcriptions.New(r.Context(), openai.AudioTranscriptionNewParams{
+		Model:          "whisper",
+		File:           bytes.NewReader(audioDataInput),
+		ResponseFormat: openai.AudioResponseFormatText,
+		Temperature:    openai.Float(0.0),
+	})
 
 	if err != nil {
 		app.serverError(w, r, err)
@@ -84,7 +82,7 @@ func (app *application) speechToText(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "plain/text")
 	w.WriteHeader(http.StatusOK)
-	_, err = w.Write([]byte(*resp.Text))
+	_, err = w.Write([]byte(resp.Text))
 	if err != nil {
 		app.serverError(w, r, err)
 		return
@@ -103,21 +101,27 @@ func (app *application) chatWithGPT4(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(prompt)
 
 	// send to gpt-4-turbo
-	resp, err := app.azureOpenAIClient.GetChatCompletions(r.Context(), azopenai.ChatCompletionsOptions{
-		Messages: []azopenai.ChatRequestMessageClassification{
-			&azopenai.ChatRequestUserMessage{Content: azopenai.NewChatRequestUserMessageContent(prompt)},
+	resp, err := app.azureOpenAIClient.Chat.Completions.New(r.Context(), openai.ChatCompletionNewParams{
+		Messages: []openai.ChatCompletionMessageParamUnion{
+			{
+				OfUser: &openai.ChatCompletionUserMessageParam{
+					Content: openai.ChatCompletionUserMessageParamContentUnion{
+						OfString: openai.String(prompt),
+					},
+				},
+			},
 		},
-		MaxTokens:      to.Ptr(int32(4096)),
-		DeploymentName: to.Ptr("gpt-turbo-2024-04-09"),
-		N:              to.Ptr(int32(1)),
-		Temperature:    to.Ptr(float32(0.0)),
+		MaxTokens:   openai.Int(4096),
+		Model:       "gpt-turbo-2024-04-09",
+		N:           openai.Int(1),
+		Temperature: openai.Float(0.0),
 	}, nil)
 
 	if err != nil {
 		app.serverError(w, r, err)
 		return
 	}
-	gptResponse := *resp.Choices[0].Message.Content
+	gptResponse := resp.Choices[0].Message.Content
 
 	w.Header().Set("Content-Type", "plain/text")
 	w.WriteHeader(http.StatusOK)
@@ -140,13 +144,12 @@ func (app *application) textToSpeech(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(input)
 
 	// send to tts-hd to convert text to speech
-	resp, err := app.azureOpenAIClient.GenerateSpeechFromText(r.Context(),
-		azopenai.SpeechGenerationOptions{
-			Input:          to.Ptr(input),
-			Voice:          to.Ptr(azopenai.SpeechVoiceNova),
-			DeploymentName: to.Ptr("tts-hd"),
-			ResponseFormat: to.Ptr(azopenai.SpeechGenerationResponseFormatMp3),
-		}, nil)
+	resp, err := app.azureOpenAIClient.Audio.Speech.New(r.Context(), openai.AudioSpeechNewParams{
+		Model:          "tts-hd",
+		Input:          input,
+		Voice:          openai.AudioSpeechNewParamsVoiceNova,
+		ResponseFormat: openai.AudioSpeechNewParamsResponseFormatMP3,
+	})
 
 	if err != nil {
 		app.serverError(w, r, err)

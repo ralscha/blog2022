@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import sqlite3InitModule from '@sqlite.org/sqlite-wasm';
 import {HttpClient} from "@angular/common/http";
 import {env, pipeline, TextGenerationPipeline} from "@huggingface/transformers";
@@ -21,9 +21,11 @@ type Country = {
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  styleUrl: './home.page.scss',
 })
 export class HomePage {
+  readonly httpClient = inject(HttpClient);
+
   selectStatement = 'select * from countries;';
   countries: Country[] = [];
   searchTerm = '';
@@ -58,7 +60,9 @@ export class HomePage {
     Return only the query. Do not include any comments or extra whitespace.
     `;
 
-  constructor(readonly httpClient: HttpClient) {
+  constructor() {
+    const httpClient = this.httpClient;
+
     const start = (sqlite3: any) => {
       httpClient.get('assets/countries.sqlite3', {responseType: 'arraybuffer'}).subscribe((data) => {
         const p = sqlite3.wasm.allocFromTypedArray(data);
@@ -94,19 +98,6 @@ export class HomePage {
     initializeSQLite();
     this.#initializeLLM();
 
-  }
-
-  async #initializeLLM() {
-    env.localModelPath = '/assets';
-    env.allowLocalModels = true;
-    env.allowRemoteModels = false;
-    env.backends.onnx.wasm!.wasmPaths = 'transformers-wasm/';
-
-    this.generator = await pipeline('text-generation', 'onnx-community/Llama-3.2-1B-Instruct-q4f16', {
-      device: 'webgpu',
-      dtype: 'q4f16',
-      local_files_only: true,
-    });
   }
 
   async generateSQL(): Promise<void> {
@@ -148,5 +139,18 @@ export class HomePage {
     } catch {
       return false;
     }
+  }
+
+  async #initializeLLM() {
+    env.localModelPath = '/assets';
+    env.allowLocalModels = true;
+    env.allowRemoteModels = false;
+    env.backends.onnx.wasm!.wasmPaths = 'transformers-wasm/';
+
+    this.generator = await pipeline('text-generation', 'onnx-community/Llama-3.2-1B-Instruct-q4f16', {
+      device: 'webgpu',
+      dtype: 'q4f16',
+      local_files_only: true,
+    });
   }
 }

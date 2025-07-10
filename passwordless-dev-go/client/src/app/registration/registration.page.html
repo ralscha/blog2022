@@ -17,9 +17,9 @@
       <ion-row>
         <ion-col>
           <ion-item lines="none">
-            <ion-input #username="ngModel" errorText="Username is required"
-                       [required]="true" [spellcheck]="false"
-                       autocapitalize="off" autocomplete="username"
+            <ion-input #username="ngModel" [required]="true"
+                       [spellcheck]="false" autocapitalize="off"
+                       autocomplete="username" errorText="Username is required"
                        label="Username" labelPlacement="stacked"
                        name="username"
                        ngModel type="text"></ion-input>

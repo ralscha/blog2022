@@ -1,11 +1,7 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs';
-import {v4 as uuidv4} from 'uuid';
-import {add, format} from 'date-fns'
 import {Todo, TodoDb} from './todo-db';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class TodoService {
 
   private readonly db: TodoDb;
@@ -30,20 +26,5 @@ export class TodoService {
     return this.db.todos.get(id);
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Todo | undefined> | Promise<Todo | undefined> | Todo | undefined {
-    const id = route.paramMap.get('id');
-    if (id) {
-      return this.getTodo(id);
-    } else {
-      return {
-        id: uuidv4(),
-        description: "",
-        priority: "normal",
-        dueDate: format(add(new Date(), {
-          days: 3,
-        }), "yyyy-MM-dd")
-      }
-    }
-  }
 
 }

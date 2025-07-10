@@ -1,9 +1,8 @@
 import {Component, inject} from '@angular/core';
-import {NavController} from '@ionic/angular';
 import {MessagesService} from '../messages.service';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-// @ts-expect-error - This package does not have typescript definitions
+
 import {Client} from '@passwordlessdev/passwordless-client';
 import {SigninInput} from "../api/types";
 import {RouterLink} from '@angular/router';
@@ -16,7 +15,8 @@ import {
   IonRouterLink,
   IonRow,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  NavController
 } from "@ionic/angular/standalone";
 
 @Component({

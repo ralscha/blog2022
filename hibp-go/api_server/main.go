@@ -2,12 +2,13 @@ package main
 
 import (
 	"context"
+	cryptorand "crypto/rand"
 	"encoding/binary"
 	"encoding/hex"
 	"errors"
 	"github.com/cockroachdb/pebble"
 	"log"
-	"math/rand"
+	"math/rand/v2"
 	"net/http"
 	"os"
 	"os/signal"
@@ -93,10 +94,15 @@ func hipbPasswordFunc(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	iter := db.NewIter(&pebble.IterOptions{
+	iter, err := db.NewIter(&pebble.IterOptions{
 		LowerBound: lower,
 		UpperBound: upper,
 	})
+
+	if err != nil {
+		http.Error(w, "creating iterator failed", http.StatusInternalServerError)
+		return
+	}
 
 	counter := 0
 
@@ -129,7 +135,7 @@ func hipbPasswordFunc(w http.ResponseWriter, r *http.Request) {
 	if addPaddingHeader == "true" {
 
 		minimum := 800 - counter
-		random := rand.Intn(200)
+		random := rand.IntN(200)
 		for i := 0; i < minimum+random; i++ {
 
 			rh, err := randomHex(18)
@@ -174,7 +180,7 @@ func isValidHashPrefix(hashPrefix string) bool {
 
 func randomHex(n int) (string, error) {
 	bytes := make([]byte, n)
-	if _, err := rand.Read(bytes); err != nil {
+	if _, err := cryptorand.Read(bytes); err != nil {
 		return "", err
 	}
 	return strings.ToUpper(hex.EncodeToString(bytes)), nil

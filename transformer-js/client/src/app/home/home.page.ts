@@ -1,7 +1,21 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import sqlite3InitModule from '@sqlite.org/sqlite-wasm';
 import {HttpClient} from "@angular/common/http";
-import {env, pipeline, TextGenerationPipeline} from "@huggingface/transformers";
+import {env, pipeline} from "@huggingface/transformers";
+import {FormsModule} from '@angular/forms';
+import {AsyncPipe} from '@angular/common';
+import {
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardTitle,
+  IonContent,
+  IonHeader,
+  IonInput,
+  IonSpinner,
+  IonTitle,
+  IonToolbar
+} from "@ionic/angular/standalone";
 
 type Country = {
   id: number,
@@ -19,17 +33,19 @@ type Country = {
 
 
 @Component({
-    selector: 'app-home',
-    templateUrl: 'home.page.html',
-    styleUrls: ['home.page.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrl: './home.page.scss',
+  imports: [FormsModule, AsyncPipe, IonHeader, IonToolbar, IonTitle, IonContent, IonInput, IonSpinner, IonCard, IonCardHeader, IonCardContent, IonCardTitle]
 })
 export class HomePage {
+  readonly httpClient = inject(HttpClient);
+
   selectStatement = 'select * from countries;';
   countries: Country[] = [];
   searchTerm = '';
   db: any | undefined;
-  generator: TextGenerationPipeline | undefined;
+  generator: any;
   working = false;
 
   readonly #prompt_template = `You are given a database schema and a question.
@@ -54,7 +70,9 @@ Question:
 {question}
 `;
 
-  constructor(readonly httpClient: HttpClient) {
+  constructor() {
+    const httpClient = this.httpClient;
+
     const start = (sqlite3: any) => {
       httpClient.get('assets/countries.sqlite3', {responseType: 'arraybuffer'}).subscribe((data) => {
         const p = sqlite3.wasm.allocFromTypedArray(data);
@@ -90,19 +108,6 @@ Question:
     initializeSQLite();
     this.#initializeLLM();
 
-  }
-
-  async #initializeLLM() {
-    env.localModelPath = '/assets';
-    env.allowLocalModels = true;
-    env.allowRemoteModels = false;
-    env.backends.onnx.wasm!.wasmPaths = 'transformers-wasm/';
-
-    this.generator = await pipeline('text-generation', 'ralscha/Llama-3.2-1B-Instruct-Country-SQL', {
-      device: 'wasm',
-      dtype: 'q4f16',
-      local_files_only: true,
-    });
   }
 
   async generateSQL(): Promise<void> {
@@ -144,5 +149,18 @@ Question:
     } catch {
       return false;
     }
+  }
+
+  async #initializeLLM() {
+    env.localModelPath = '/assets';
+    env.allowLocalModels = true;
+    env.allowRemoteModels = false;
+    env.backends.onnx.wasm!.wasmPaths = 'transformers-wasm/';
+
+    this.generator = await pipeline('text-generation', 'ralscha/Llama-3.2-1B-Instruct-Country-SQL', {
+      device: 'wasm',
+      dtype: 'q4f16',
+      local_files_only: true,
+    });
   }
 }

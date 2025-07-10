@@ -11,20 +11,20 @@
 
 <ion-content class="ion-padding">
   <form #todoForm="ngForm" (ngSubmit)="todoForm.valid && save(todoForm)"
-    [ngFormOptions]="{updateOn: 'submit'}" novalidate>
+        [ngFormOptions]="{updateOn: 'submit'}" novalidate>
 
     <ion-list>
       <ion-item lines="none">
         <ion-input [ngModel]="selectedTodo.description" [required]="true"
-          errorText="Task is required" label="Task"
-          labelPlacement="floating"
-        name="description"></ion-input>
+                   errorText="Task is required" label="Task"
+                   labelPlacement="floating"
+                   name="description"></ion-input>
       </ion-item>
 
       <ion-item class="ion-margin-top">
         <ion-select #priority="ngModel" [ngModel]="selectedTodo.priority" [required]="true"
-          label="Priority" labelPlacement="floating"
-          name="priority">
+                    label="Priority" labelPlacement="floating"
+                    name="priority">
           <ion-select-option value="low">Low</ion-select-option>
           <ion-select-option value="normal">Normal</ion-select-option>
           <ion-select-option value="high">High</ion-select-option>
@@ -36,17 +36,17 @@
 
       <ion-item class="ion-margin-top">
         <ion-input (click)="showCalendar=true" [ngModel]="dueDate" [readonly]="true" [required]="true"
-          label="Due Date" labelPlacement="floating"
-        name="dueDate"></ion-input>
+                   label="Due Date" labelPlacement="floating"
+                   name="dueDate"></ion-input>
         <ion-modal [isOpen]="showCalendar">
           <ng-template>
             <ion-content>
               <ion-datetime (ionCancel)="showCalendar=false"
-                (ionChange)="dateChanged($event)"
-                [showClearButton]="true"
-                [showDefaultButtons]="true"
-                [value]="dueDate"
-              presentation="date"></ion-datetime>
+                            (ionChange)="dateChanged($event)"
+                            [showClearButton]="true"
+                            [showDefaultButtons]="true"
+                            [value]="dueDate"
+                            presentation="date"></ion-datetime>
             </ion-content>
           </ng-template>
         </ion-modal>

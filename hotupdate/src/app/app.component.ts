@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {IonApp, IonRouterOutlet} from '@ionic/angular/standalone';
 import {CapacitorUpdater} from '@capgo/capacitor-updater'
 import {HttpClient} from "@angular/common/http";
@@ -18,7 +18,9 @@ type UpdateInfo = {
     imports: [IonApp, IonRouterOutlet]
 })
 export class AppComponent {
-  constructor(private readonly httpClient: HttpClient) {
+  private readonly httpClient = inject(HttpClient);
+
+  constructor() {
     CapacitorUpdater.notifyAppReady()
 
     App.addListener('appStateChange', (state: AppState) => {

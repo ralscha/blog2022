@@ -19,13 +19,13 @@
   <div class="container">
     @if (!recording) {
       <ion-button [disabled]="processing" (click)="startRecording()" color="success">
-        <ion-icon slot="start" icon="svg/mic-circle-outline.svg"></ion-icon>
+        <ion-icon slot="start" name="mic-circle-outline"></ion-icon>
         Start Recording
       </ion-button>
     }
     @if (recording) {
       <ion-button (click)="stopRecording()" color="danger">
-        <ion-icon slot="start" icon="svg/stop-circle-outline.svg"></ion-icon>
+        <ion-icon slot="start" name="stop-circle-outline"></ion-icon>
         Stop Recording
       </ion-button>
     }
@@ -39,7 +39,7 @@
 
     @if (textToSpeechResponse) {
       <ion-button (click)="speak()" color="success">
-        <ion-icon slot="start" icon="svg/play-circle-outline.svg"></ion-icon>
+        <ion-icon slot="start" name="play-circle-outline"></ion-icon>
         Speak
       </ion-button>
     }

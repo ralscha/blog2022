@@ -1,12 +1,11 @@
-import {Injectable} from '@angular/core';
-import {LoadingController, ToastController} from '@ionic/angular';
+import {inject, Injectable} from '@angular/core';
+import {LoadingController, ToastController} from '@ionic/angular/standalone';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class MessagesService {
+  private readonly toastCtrl = inject(ToastController);
+  private readonly loadingCtrl = inject(LoadingController);
 
-  constructor(private readonly toastCtrl: ToastController,
-              private readonly loadingCtrl: LoadingController) {
-  }
 
   async showLoading(message = 'Working'): Promise<HTMLIonLoadingElement> {
     const loading = await this.loadingCtrl.create({

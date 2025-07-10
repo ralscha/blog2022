@@ -4,12 +4,11 @@ import (
 	"bytes"
 	"encoding/base64"
 	"encoding/json"
-	"github.com/Azure/azure-sdk-for-go/sdk/ai/azopenai"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/bedrockruntime"
+	"github.com/openai/openai-go"
 	"net/http"
 )
 
@@ -30,34 +29,40 @@ func (app *application) sketch(w http.ResponseWriter, r *http.Request) {
 	base64Image := base64.StdEncoding.EncodeToString(imageData.Bytes())
 	imageUrl := "data:image/png;base64," + base64Image
 
-	content := azopenai.NewChatRequestUserMessageContent([]azopenai.ChatCompletionRequestMessageContentPartClassification{
-		&azopenai.ChatCompletionRequestMessageContentPartText{
-			Text: to.Ptr("What's in this image? Return a detailed description:"),
-		},
-		&azopenai.ChatCompletionRequestMessageContentPartImage{
-			ImageURL: &azopenai.ChatCompletionRequestMessageContentPartImageURL{
-				URL: &imageUrl,
+	resp, err := app.azureOpenAIClient.Chat.Completions.New(r.Context(), openai.ChatCompletionNewParams{
+		Model: "gpt-4o",
+		Messages: []openai.ChatCompletionMessageParamUnion{
+			{
+				OfUser: &openai.ChatCompletionUserMessageParam{
+					Content: openai.ChatCompletionUserMessageParamContentUnion{
+						OfArrayOfContentParts: []openai.ChatCompletionContentPartUnionParam{
+							{
+								OfText: &openai.ChatCompletionContentPartTextParam{
+									Text: "What's in this image? Return a detailed description:",
+								},
+							},
+							{
+								OfImageURL: &openai.ChatCompletionContentPartImageParam{
+									ImageURL: openai.ChatCompletionContentPartImageImageURLParam{
+										URL: imageUrl,
+									},
+								},
+							},
+						},
+					},
+				},
 			},
 		},
+		MaxTokens:   openai.Int(4096),
+		N:           openai.Int(1),
+		Temperature: openai.Float(0.0),
 	})
-
-	resp, err := app.azureOpenAIClient.GetChatCompletions(r.Context(), azopenai.ChatCompletionsOptions{
-		Messages: []azopenai.ChatRequestMessageClassification{
-			&azopenai.ChatRequestUserMessage{
-				Content: content,
-			},
-		},
-		MaxTokens:      to.Ptr(int32(4096)),
-		DeploymentName: to.Ptr("gpt-4o"),
-		N:              to.Ptr(int32(1)),
-		Temperature:    to.Ptr(float32(0.0)),
-	}, nil)
 
 	if err != nil {
 		app.serverError(w, r, err)
 		return
 	}
-	imageDescription := *resp.Choices[0].Message.Content
+	imageDescription := resp.Choices[0].Message.Content
 
 	// send request to stability on aws bedrock to generate a sketch based on the description
 

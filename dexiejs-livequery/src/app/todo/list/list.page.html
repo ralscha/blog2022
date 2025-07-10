@@ -8,7 +8,8 @@
 
 
 <ion-content [fullscreen]="true">
-  <ion-card *ngFor="let todo of todos$ | async; trackBy: todoTrackBy" class="ion-margin">
+  @for (todo of (todos$ | async); track todoTrackBy($index, todo)) {
+    <ion-card class="ion-margin">
       <ion-card-header>
         <div>
           @if (todo.priority === 'high') {
@@ -24,7 +25,7 @@
         </div>
       </ion-card-header>
       <ion-card-content>
-        <ion-label>Due {{todo.dueDate | date:'yyyy-MM-dd'}}</ion-label>
+        <ion-label>Due {{ todo.dueDate | date:'yyyy-MM-dd' }}</ion-label>
       </ion-card-content>
       <ion-row>
         <ion-item [routerLink]="['./edit', todo.id]" routerDirection="forward">
@@ -37,6 +38,7 @@
         </ion-item>
       </ion-row>
     </ion-card>
+  }
   <ion-fab horizontal="end" slot="fixed" vertical="bottom">
     <ion-fab-button routerDirection="forward" routerLink="./edit">
       <ion-icon name="add"></ion-icon>

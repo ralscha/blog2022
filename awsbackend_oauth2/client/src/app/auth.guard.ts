@@ -1,11 +1,12 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {OAuthService} from 'angular-oauth2-oidc';
 
 @Injectable()
 export class AuthGuard {
-  constructor(private readonly router: Router, private readonly oauthService: OAuthService) {
-  }
+  private readonly router = inject(Router);
+  private readonly oauthService = inject(OAuthService);
+
 
   canActivate() {
     if (

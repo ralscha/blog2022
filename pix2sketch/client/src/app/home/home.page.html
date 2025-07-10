@@ -17,8 +17,8 @@
   </ion-header>
 
   <div class="container">
-    <ion-button [disabled]="processing" (click)="selectImage()">
-      <ion-icon slot="start" icon="svg/camera-outline.svg"></ion-icon>
+    <ion-button (click)="selectImage()" [disabled]="processing">
+      <ion-icon name="camera-outline" slot="start"></ion-icon>
       Select Image
     </ion-button>
     <div>

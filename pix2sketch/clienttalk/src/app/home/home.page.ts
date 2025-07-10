@@ -1,4 +1,4 @@
-import {Component, NgZone} from '@angular/core';
+import {Component, inject, NgZone} from '@angular/core';
 import {
   IonButton,
   IonContent,
@@ -9,15 +9,17 @@ import {
   IonToolbar
 } from '@ionic/angular/standalone';
 
-import { HttpClient } from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
+import {addIcons} from "ionicons";
+import {micCircleOutline, playCircleOutline, stopCircleOutline} from "ionicons/icons";
 
 
 @Component({
-    selector: 'app-home',
-    templateUrl: 'home.page.html',
-    styleUrls: ['home.page.scss'],
-    imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonProgressBar]
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrl: './home.page.scss',
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonProgressBar]
 })
 export class HomePage {
   recording = false;
@@ -28,8 +30,11 @@ export class HomePage {
   error: string | null = null;
   mediaRecorder: MediaRecorder | null = null;
   chunks: Blob[] = [];
+  private readonly httpClient = inject(HttpClient);
+  private readonly zone = inject(NgZone);
 
-  constructor(private readonly httpClient: HttpClient, private readonly zone: NgZone) {
+  constructor() {
+    addIcons({micCircleOutline, stopCircleOutline, playCircleOutline});
   }
 
   speechToTextRequest(blob: Blob) {

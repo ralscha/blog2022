@@ -1,6 +1,28 @@
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {provideRouter, RouteReuseStrategy, Routes, withHashLocation} from '@angular/router';
+import {IonicRouteStrategy, provideIonicAngular} from '@ionic/angular/standalone';
+import {bootstrapApplication} from '@angular/platform-browser';
+import {provideHttpClient} from '@angular/common/http';
+import {AppComponent} from './app/app.component';
+import {HomePage} from "./app/home/home.page";
 
-import {AppModule} from './app/app.module';
+const routes: Routes = [
+  {
+    path: 'home',
+    component: HomePage
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+];
 
-platformBrowserDynamic().bootstrapModule(AppModule)
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideIonicAngular(),
+    provideHttpClient(),
+    provideRouter(routes, withHashLocation()),
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+  ]
+})
   .catch(err => console.log(err));

@@ -1,22 +1,18 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import {inject, Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, tap} from 'rxjs';
-import {v4 as uuidv4} from 'uuid';
-import {add, format} from 'date-fns'
 import {Todo} from './todo';
 import {TodoPostResponse} from './todo-post-response';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class TodoService {
+  private readonly httpClient = inject(HttpClient);
+
   private todosMap: Map<string, Todo> = new Map();
 
   private readonly todosSubject = new BehaviorSubject<Todo[]>([]);
   private readonly todos$ = this.todosSubject.asObservable();
-
-  constructor(private readonly httpClient: HttpClient) {
-  }
 
   loadTodos(): void {
     this.httpClient.get<Todo[]>(`${environment.API_URL}/todos`).subscribe(todos => {
@@ -53,23 +49,6 @@ export class TodoService {
           this.publish();
         })
       )
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Todo> | Promise<Todo> | Todo | undefined {
-    const id = route.paramMap.get('id');
-    if (id) {
-      return this.getTodo(id);
-    } else {
-      return {
-        id: uuidv4(),
-        description: "",
-        priority: "normal",
-        dueDate: format(add(new Date(), {
-          days: 3,
-        }), "yyyy-MM-dd")
-      }
-    }
   }
 
   private publish(): void {

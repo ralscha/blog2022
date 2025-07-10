@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {MessagesService} from '../messages.service';
 import {environment} from '../../environments/environment';
 import {Router} from "@angular/router";
-// @ts-expect-error - This package does not have typescript definitions
+
 import {Client} from '@passwordlessdev/passwordless-client';
 import {CreateTokenInput, CreateTokenOutput} from "../api/types";
 import {FormsModule} from '@angular/forms';

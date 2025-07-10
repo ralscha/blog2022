@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {
   IonButton,
   IonContent,
@@ -9,9 +9,11 @@ import {
   IonToolbar
 } from '@ionic/angular/standalone';
 
-import { HttpClient } from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {finalize} from "rxjs";
+import {addIcons} from "ionicons";
+import {cameraOutline} from "ionicons/icons";
 
 interface SketchResponse {
   description: string;
@@ -19,10 +21,10 @@ interface SketchResponse {
 }
 
 @Component({
-    selector: 'app-home',
-    templateUrl: 'home.page.html',
-    styleUrls: ['home.page.scss'],
-    imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonProgressBar]
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrl: './home.page.scss',
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonProgressBar]
 })
 export class HomePage {
   image: ArrayBuffer | undefined;
@@ -30,8 +32,10 @@ export class HomePage {
   error: string | undefined;
   sketchResponse: SketchResponse | undefined;
   processing = false;
+  private readonly httpClient = inject(HttpClient);
 
-  constructor(private readonly httpClient: HttpClient) {
+  constructor() {
+    addIcons({cameraOutline});
   }
 
   selectImage() {

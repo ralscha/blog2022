@@ -1,10 +1,9 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {AuthService} from '../auth.service';
-import {NavController} from '@ionic/angular';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {SecretOutput} from "../api/types";
-import {IonButton, IonContent, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
+import {IonButton, IonContent, IonHeader, IonTitle, IonToolbar, NavController} from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-home',

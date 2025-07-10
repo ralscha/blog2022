@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/Azure/azure-sdk-for-go/sdk/ai/azopenai"
-	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
 	"github.com/lmittmann/tint"
+	"github.com/openai/openai-go"
+	"github.com/openai/openai-go/azure"
 	"github.com/spf13/viper"
 	"log/slog"
 	"os"
@@ -13,7 +13,7 @@ import (
 type application struct {
 	config            Config
 	logger            *slog.Logger
-	azureOpenAIClient *azopenai.Client
+	azureOpenAIClient openai.Client
 }
 
 func main() {
@@ -33,11 +33,10 @@ func run(logger *slog.Logger) error {
 		return err
 	}
 
-	keyCredential := azcore.NewKeyCredential(cfg.AzureOpenAIKey)
-	client, err := azopenai.NewClientWithKeyCredential(cfg.AzureOpenAIEndpoint, keyCredential, nil)
-	if err != nil {
-		return err
-	}
+	client := openai.NewClient(
+		azure.WithEndpoint(cfg.AzureOpenAIEndpoint, "2024-10-21"),
+		azure.WithAPIKey(cfg.AzureOpenAIKey),
+	)
 
 	app := &application{
 		config:            cfg,

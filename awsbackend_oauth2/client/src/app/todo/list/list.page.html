@@ -30,7 +30,7 @@
         </div>
       </ion-card-header>
       <ion-card-content>
-        <ion-label>Due {{todo.dueDate | date:'yyyy-MM-dd'}}</ion-label>
+        <ion-label>Due {{ todo.dueDate | date:'yyyy-MM-dd' }}</ion-label>
       </ion-card-content>
       <ion-row>
         <ion-item [routerLink]="['./edit', todo.id]" routerDirection="forward">
