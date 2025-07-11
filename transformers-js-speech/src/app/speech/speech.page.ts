@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, viewChild} from '@angular/core';
 import {IonContent, IonHeader, IonLabel, IonTitle, IonToolbar} from '@ionic/angular/standalone';
 import {AudioAnalyzer} from "./audio-analyzer";
 
@@ -13,7 +13,7 @@ export class SpeechPage implements OnDestroy {
 
   static readonly SAMPLING_RATE = 16_000;
 
-  @ViewChild('canvas', {static: true}) canvas!: ElementRef;
+  readonly canvas = viewChild.required<ElementRef>('canvas');
   modelReady = false;
   private ctx!: CanvasRenderingContext2D;
   private snakeSize = 10;
@@ -53,7 +53,7 @@ export class SpeechPage implements OnDestroy {
   }
 
   async startListen(): Promise<void> {
-    this.ctx = this.canvas.nativeElement.getContext('2d');
+    this.ctx = this.canvas().nativeElement.getContext('2d');
     if (!navigator.mediaDevices.getUserMedia) {
       console.error("getUserMedia not supported on your browser!");
       return
