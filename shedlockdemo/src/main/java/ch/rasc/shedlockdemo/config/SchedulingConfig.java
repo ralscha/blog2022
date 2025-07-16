@@ -14,8 +14,8 @@ import net.javacrumbs.shedlock.spring.annotation.EnableSchedulerLock;
 @EnableSchedulerLock(defaultLockAtMostFor = "10m")
 public class SchedulingConfig {
 
-	@Bean
-	LockProvider getLockProvider(DSLContext dslContext) {
-		return new JooqLockProvider(dslContext);
-	}
+  @Bean
+  LockProvider getLockProvider(DSLContext dslContext) {
+    return new JooqLockProvider(dslContext);
+  }
 }
