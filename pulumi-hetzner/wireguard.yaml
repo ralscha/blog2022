@@ -1,0 +1,61 @@
+#cloud-config
+
+packages:
+  - wireguard
+  - ufw
+
+runcmd:
+  - |
+    umask 077
+    wg genkey | tee /etc/wireguard/server_private.key | wg pubkey > /etc/wireguard/server_public.key
+    chmod 600 /etc/wireguard/server_private.key
+
+  - echo 'net.ipv4.ip_forward = 1' | tee -a /etc/sysctl.conf
+  - sysctl -p
+
+  - ufw allow 22/tcp
+  - ufw allow WIREGUARD_SERVER_LISTEN_PORT_PLACEHOLDER/udp
+  # Set default policies: deny all incoming traffic by default, allow all outgoing.
+  - ufw default deny incoming
+  - ufw default allow outgoing
+  - ufw enable
+  - ufw reload
+
+  - |
+    cp /etc/ufw/before.rules /etc/ufw/before.rules.bak
+
+    sed -i '/# Don'"'"'t delete these required lines, or there may be errors/i\
+    *nat\
+    :POSTROUTING ACCEPT [0:0]\
+    -A POSTROUTING -o eth0 -j MASQUERADE\
+    COMMIT' /etc/ufw/before.rules
+
+    sed -i '/# Don'"'"'t delete these required lines, or there may be errors/i\
+    *filter\
+    :FORWARD ACCEPT [0:0]\
+    -A FORWARD -i wg0 -j ACCEPT\
+    -A FORWARD -o wg0 -j ACCEPT\
+    COMMIT' /etc/ufw/before.rules
+
+    ufw reload
+
+  - systemctl enable wg-quick@wg0
+  - systemctl start wg-quick@wg0
+
+write_files:
+  - path: /etc/wireguard/wg0.conf
+    permissions: '0644'
+    content: |
+      [Interface]
+      Address = WIREGUARD_SERVER_PRIVATE_IP_PLACEHOLDER
+      ListenPort = WIREGUARD_SERVER_LISTEN_PORT_PLACEHOLDER
+
+      PostUp = wg set %i private-key /etc/wireguard/server_private.key
+      PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -A FORWARD -o wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+      PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -D FORWARD -o wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+
+      DNS = 193.110.81.0, 185.253.5.0
+
+      [Peer]
+      PublicKey = WIREGUARD_CLIENT_PUBLIC_KEY_PLACEHOLDER
+      AllowedIPs = WIREGUARD_CLIENT_IP_PLACEHOLDER

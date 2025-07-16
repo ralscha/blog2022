@@ -1,0 +1,10 @@
+encryptionsalt: v1:4c3usx5uOgY=:v1:6YVfHxjjsRgCwfRM:CNmv6Uk8HQ0TYxGHpBgcDT825izvUg==
+config:
+  hcloud:token:
+    secure: v1:nDrIhVC/Bt
+  hetznerdemo:wireguardClientPublicKey:
+    secure: v1:WEIMztxivJ
+  hetznerdemo:wireguardServerPrivateIp: 10.0.0.1/24
+  hetznerdemo:wireguardServerListenPort: "51820"
+  hetznerdemo:serverRegion: hel1
+  hetznerdemo:wireguardClientIp: 10.0.0.3/32

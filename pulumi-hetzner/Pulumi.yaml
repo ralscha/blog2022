@@ -1,0 +1,10 @@
+name: hetznerdemo
+description: A Pulumi/Hetzner demo
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: typescript
