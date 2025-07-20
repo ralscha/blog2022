@@ -1,4 +1,5 @@
 import * as aws from "@pulumi/aws";
+import * as pulumi from "@pulumi/pulumi";
 
 const queue = new aws.sqs.Queue("queue", {
   delaySeconds: 0,
@@ -18,5 +19,5 @@ const bucket = new aws.s3.Bucket("messages", {
   }]
 });
 
-export const queueArn = queue.url
-export const bucketName = bucket.id
+export const queueUrl = queue.url
+export const bucketName = bucket.bucket
