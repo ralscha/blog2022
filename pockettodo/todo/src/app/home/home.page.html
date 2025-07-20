@@ -1,0 +1,64 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Pocket-Todo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Pocket-Todo</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-lg="6" size-md="8">
+        <ion-card class="welcome-card">
+          <ion-card-header>
+            <ion-card-title>Welcome to PocketTodo</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-text>
+              <p>Your simple and powerful todo management app.</p>
+              <p>Organize your tasks, set due dates, and stay productive!</p>
+            </ion-text>
+
+            <div class="button-container">
+              <ion-button
+                class="ion-margin-bottom"
+                expand="block"
+                routerLink="/login">
+                Login
+              </ion-button>
+
+              <ion-button expand="block" fill="outline" routerLink="/register">
+                Create Account
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Features</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-text>
+              <ul>
+                <li>Create and manage your todos</li>
+                <li>Set due dates for important tasks</li>
+                <li>Mark tasks as complete</li>
+                <li>Secure user authentication</li>
+                <li>Password reset functionality</li>
+                <li>Profile management</li>
+              </ul>
+            </ion-text>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

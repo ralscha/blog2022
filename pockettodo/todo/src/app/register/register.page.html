@@ -1,0 +1,88 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Create Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Create Account</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-lg="4" size-md="6">
+        <ion-card>
+          <ion-card-content>
+            <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+              <ion-input
+                [errorText]="formErrorService.getErrorMessage(email, 'email')"
+                fill="outline"
+                formControlName="email"
+                label="Email"
+                labelPlacement="stacked"
+                placeholder="Enter your email"
+                type="email" />
+
+              <ion-input
+                fill="outline"
+                formControlName="name"
+                label="Name (Optional)"
+                labelPlacement="stacked"
+                placeholder="Enter your name"
+                type="text" />
+
+              <ion-input
+                [errorText]="
+                  formErrorService.getErrorMessage(password, 'password')
+                "
+                fill="outline"
+                formControlName="password"
+                label="Password"
+                labelPlacement="stacked"
+                placeholder="Enter your password"
+                type="password" />
+
+              <ion-input
+                [errorText]="
+                  formErrorService.getErrorMessage(
+                    passwordConfirm,
+                    'passwordConfirm'
+                  )
+                "
+                fill="outline"
+                formControlName="passwordConfirm"
+                label="Confirm Password"
+                labelPlacement="stacked"
+                placeholder="Confirm your password"
+                type="password" />
+
+              <ion-button
+                [disabled]="registerForm.invalid || isLoading()"
+                class="ion-margin-top"
+                expand="block"
+                type="submit">
+                @if (isLoading()) {
+                  Creating Account...
+                } @else {
+                  Register
+                }
+              </ion-button>
+            </form>
+
+            <div class="ion-text-center ion-margin-top">
+              <ion-text>
+                <p>
+                  Already have an account?
+                  <a class="link" routerLink="/login">Login here</a>
+                </p>
+              </ion-text>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

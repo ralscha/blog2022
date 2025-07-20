@@ -1,0 +1,95 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/todos" />
+    </ion-buttons>
+    <ion-title>
+      @if (isEditing()) {
+        Edit Todo
+      } @else {
+        Create Todo
+      }
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">
+        @if (isEditing()) {
+          Edit Todo
+        } @else {
+          Create Todo
+        }
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  @if (isLoading() && isEditing()) {
+    <div class="loading-container">
+      <ion-text>Loading todo...</ion-text>
+    </div>
+  } @else {
+    <ion-card>
+      <ion-card-content>
+        <form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
+          <ion-input
+            type="text"
+            formControlName="title"
+            fill="outline"
+            label="Title *"
+            labelPlacement="stacked"
+            placeholder="Enter todo title"
+            [errorText]="formErrorService.getErrorMessage(title, 'title')" />
+
+          <ion-textarea
+            formControlName="description"
+            label="Description"
+            fill="outline"
+            labelPlacement="stacked"
+            placeholder="Enter todo description (optional)"
+            rows="4"
+            [errorText]="
+              formErrorService.getErrorMessage(description, 'description')
+            " />
+
+          <ion-datetime
+            formControlName="due_date"
+            presentation="date"
+            [min]="getCurrentDate()"
+            slot="end">
+            <ion-label slot="start">Due Date</ion-label>
+          </ion-datetime>
+
+          @if (isEditing()) {
+            <ion-checkbox formControlName="completed" labelPlacement="end">
+              Completed
+            </ion-checkbox>
+          }
+
+          <div class="button-container">
+            <ion-button
+              expand="block"
+              type="submit"
+              [disabled]="todoForm.invalid || isLoading()">
+              @if (isLoading()) {
+                @if (isEditing()) {
+                  Updating...
+                } @else {
+                  Creating...
+                }
+              } @else {
+                @if (isEditing()) {
+                  Update Todo
+                } @else {
+                  Create Todo
+                }
+              }
+            </ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  }
+</ion-content>

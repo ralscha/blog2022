@@ -1,0 +1,53 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
+  padding: 2rem;
+}
+
+.empty-state h2 {
+  margin-bottom: 1rem;
+  color: var(--ion-color-medium);
+}
+
+.empty-state p {
+  color: var(--ion-color-medium);
+  line-height: 1.5;
+}
+
+.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.todo-meta {
+  font-size: 0.8rem;
+  color: var(--ion-color-medium);
+}
+
+ion-item-sliding {
+  margin-bottom: 1px;
+}
+
+ion-checkbox {
+  margin-right: 1rem;
+}
+
+h2 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  margin: 0.25rem 0;
+}

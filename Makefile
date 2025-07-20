@@ -36,7 +36,7 @@ check-dep:
 	cd ./transformer-js/client && ncu
 	cd ./pix2sketch/clienttalk && ncu
 	cd ./pix2sketch/client && ncu
-	cd ./transformer-js/client && ncu./
+	cd ./transformer-js/client && ncu
 	cd ./transformers-js-speech && ncu	
 	cd ./webpush-angular/client && ncu
 	cd ./webpush-angular/server && ./mvnw.cmd versions:display-dependency-updates && ./mvnw.cmd versions:display-plugin-updates
