@@ -59,7 +59,7 @@
 			<artifactId>bcprov-jdk18on</artifactId>
 			<version>1.81</version>
 		</dependency>
-		<dependency>
+        <dependency>
             <groupId>org.javers</groupId>
             <artifactId>javers-persistence-sql</artifactId>
             <version>7.8.0</version>
