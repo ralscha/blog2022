@@ -9,7 +9,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/bedrockruntime v1.31.1
 	github.com/h2non/filetype v1.1.3
 	github.com/lmittmann/tint v1.1.2
-	github.com/openai/openai-go v1.11.0
+	github.com/openai/openai-go v1.11.1
 	github.com/spf13/viper v1.20.1
 	github.com/u2takey/ffmpeg-go v0.5.0
 )
