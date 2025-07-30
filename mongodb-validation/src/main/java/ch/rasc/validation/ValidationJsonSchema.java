@@ -24,38 +24,38 @@ public class ValidationJsonSchema {
     db.drop();
     var jsonSchema = Document.parse(
         """
-                  {
-                    $jsonSchema: {
-                      type: "object",
-                      required: [ "username", "status", "address" ],
-                      additionalProperties: false,
-                      properties: {
-                         _id: { bsonType: "objectId" },
-                            username: { type: "string", minLength: 1, description: "username" },
-                            firstName: { type: ["string", "null"] },
-                            lastName: { type: "string" },
-                            email: { type: "string", pattern: "^.+@.+$"},
-                            birthYear: { bsonType: "int", minimum: 1900, maximum: 2025 },
-                            hobbies: {
-                              type: "array",
-                              items: [ { "type": "string", "enum": ["Reading", "Swimming", "Cycling", "Hiking", "Painting"] } ],
-                  	     minItems: 1,
-                  	     uniqueItems: true
-                            },
-                            status: { type: "string", enum: [ "active", "inactive" ] },
-                            address: {
-                              type: "object",
-                              required: [ "city" ],
-                              additionalProperties: false,
-                              properties: {
-                                city: { type: "string", minLength: 1 },
-                                street: { type: "string" },
-                                postalCode: { bsonType: "int" }
-                              }
-                            }
-                      }
+        {
+          $jsonSchema: {
+            type: "object",
+            required: [ "username", "status", "address" ],
+            additionalProperties: false,
+            properties: {
+               _id: { bsonType: "objectId" },
+                  username: { type: "string", minLength: 1, description: "username" },
+                  firstName: { type: ["string", "null"] },
+                  lastName: { type: "string" },
+                  email: { type: "string", pattern: "^.+@.+$"},
+                  birthYear: { bsonType: "int", minimum: 1900, maximum: 2025 },
+                  hobbies: {
+                    type: "array",
+                    items: [ { "type": "string", "enum": ["Reading", "Swimming", "Cycling", "Hiking", "Painting"] } ],
+               minItems: 1,
+               uniqueItems: true
+                  },
+                  status: { type: "string", enum: [ "active", "inactive" ] },
+                  address: {
+                    type: "object",
+                    required: [ "city" ],
+                    additionalProperties: false,
+                    properties: {
+                      city: { type: "string", minLength: 1 },
+                      street: { type: "string" },
+                      postalCode: { bsonType: "int" }
                     }
-            }""");
+                  }
+            }
+          }
+  }""");
 
     var validationOptions = new ValidationOptions();
     validationOptions.validator(jsonSchema);
