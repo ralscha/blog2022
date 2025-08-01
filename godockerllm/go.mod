@@ -3,9 +3,9 @@ module godockerllm
 go 1.24.5
 
 require (
-	github.com/docker/docker v28.3.2+incompatible
+	github.com/docker/docker v28.3.3+incompatible
 	github.com/google/generative-ai-go v0.20.1
-	google.golang.org/api v0.243.0
+	google.golang.org/api v0.244.0
 )
 
 require (

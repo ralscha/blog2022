@@ -3,7 +3,7 @@ module bskyhello
 go 1.24.5
 
 require (
-	github.com/bluesky-social/indigo v0.0.0-20250728163042-01ae6633b28c
+	github.com/bluesky-social/indigo v0.0.0-20250729223159-573ae927246a
 	github.com/joho/godotenv v1.5.1
 )
 
@@ -18,7 +18,7 @@ require (
 	github.com/hashicorp/go-retryablehttp v0.7.8 // indirect
 	github.com/hashicorp/golang-lru v1.0.2 // indirect
 	github.com/ipfs/bbloom v0.0.4 // indirect
-	github.com/ipfs/boxo v0.33.0 // indirect
+	github.com/ipfs/boxo v0.33.1 // indirect
 	github.com/ipfs/go-block-format v0.2.2 // indirect
 	github.com/ipfs/go-cid v0.5.0 // indirect
 	github.com/ipfs/go-datastore v0.8.2 // indirect
@@ -27,7 +27,7 @@ require (
 	github.com/ipfs/go-ipld-cbor v0.2.1 // indirect
 	github.com/ipfs/go-ipld-format v0.6.2 // indirect
 	github.com/ipfs/go-log v1.0.5 // indirect
-	github.com/ipfs/go-log/v2 v2.6.0 // indirect
+	github.com/ipfs/go-log/v2 v2.8.0 // indirect
 	github.com/ipfs/go-metrics-interface v0.3.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.3.0 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
