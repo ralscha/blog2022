@@ -5,8 +5,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.4</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>3.5.5</version>
+		<relativePath/>
 	</parent>
 	<groupId>ch.rasc</groupId>
 	<artifactId>javersdemo</artifactId>
@@ -62,28 +62,28 @@
         <dependency>
             <groupId>org.javers</groupId>
             <artifactId>javers-persistence-sql</artifactId>
-            <version>7.8.0</version>
+            <version>7.8.4</version>
         </dependency>
         <dependency>
             <groupId>org.javers</groupId>
             <artifactId>javers-spring-jpa</artifactId>
-            <version>7.8.0</version>
+            <version>7.8.4</version>
         </dependency>               
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
-            <version>0.12.6</version>
+            <version>0.13.0</version>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
-            <version>0.12.6</version>
+            <version>0.13.0</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
-            <version>0.12.6</version>
+            <version>0.13.0</version>
             <scope>runtime</scope>
         </dependency>
 	</dependencies>
