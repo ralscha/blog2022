@@ -7,17 +7,22 @@ import (
 	"log"
 	"os"
 
-	"github.com/google/generative-ai-go/genai"
-	"google.golang.org/api/option"
+	"google.golang.org/genai"
 )
 
 func main() {
 	ctx := context.Background()
-	client, err := genai.NewClient(ctx, option.WithAPIKey(os.Getenv("GEMINI_API_KEY")))
+	apiKey, ok := os.LookupEnv("GEMINI_API_KEY")
+	if !ok {
+		log.Fatalln("Environment variable GEMINI_API_KEY not set")
+	}
+	client, err := genai.NewClient(ctx, &genai.ClientConfig{
+		APIKey:  apiKey,
+		Backend: genai.BackendGeminiAPI,
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer client.Close()
 
 	schema := &genai.Schema{
 		Type: genai.TypeObject,
@@ -41,53 +46,68 @@ It returns the output of the code execution. `,
 		}},
 	}
 
-	model := client.GenerativeModel("gemini-2.0-flash-exp")
-
-	model.Tools = []*genai.Tool{generalPurposeTool}
-	session := model.StartChat()
-	// userPrompt := "What is the current date and time"
 	userPrompt := "Is the number 1201281 prime? List all divisors of this number?"
-	res, err := session.SendMessage(ctx, genai.Text(userPrompt))
+
+	modelName := "gemini-2.5-flash"
+	contents := []*genai.Content{
+		{Parts: []*genai.Part{{Text: userPrompt}}, Role: "user"},
+	}
+	config := &genai.GenerateContentConfig{
+		Temperature: genai.Ptr(float32(0.7)),
+		Tools:       []*genai.Tool{generalPurposeTool},
+	}
+
+	resp, err := client.Models.GenerateContent(ctx, modelName, contents, config)
 	if err != nil {
-		log.Fatalf("session.SendMessage: %v", err)
+		log.Fatalf("Error generating content: %v", err)
 	}
 
-	part := res.Candidates[0].Content.Parts[0]
-	funcall, ok := part.(genai.FunctionCall)
-	if !ok {
-		fmt.Println("No Function Calling")
-		fmt.Println(part)
-		return
-	}
-
-	if funcall.Name != generalPurposeTool.FunctionDeclarations[0].Name {
-		log.Fatalf("expected %q, got %q", generalPurposeTool.FunctionDeclarations[0].Name, funcall.Name)
-	}
-
-	description, ok := funcall.Args["detailedDescription"].(string)
-	if !ok {
-		log.Fatalf("expected string: %v", funcall.Args["detailedDescription"])
-	}
-
-	result, err := internal.GenRunWithRetries(description, 3)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	res, err = session.SendMessage(ctx, genai.FunctionResponse{
-		Name: generalPurposeTool.FunctionDeclarations[0].Name,
-		Response: map[string]any{
-			"result": result,
-		},
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
-	for _, cand := range res.Candidates {
+	var funcCall *genai.FunctionCall
+	for _, cand := range resp.Candidates {
 		if cand.Content != nil {
-			for _, part2 := range cand.Content.Parts {
-				fmt.Println(part2)
+			for _, part := range cand.Content.Parts {
+				if part.FunctionCall != nil {
+					funcCall = part.FunctionCall
+					break
+				}
 			}
 		}
 	}
+	if funcCall == nil {
+		fmt.Println("No Function Calling")
+		fmt.Println(resp.Text())
+		return
+	}
+
+	description, ok := funcCall.Args["detailedDescription"].(string)
+	if !ok {
+		log.Fatalf("expected string: %v", funcCall.Args["detailedDescription"])
+	}
+	fmt.Println("Generated code description:", description)
+
+	genresult, err := internal.GenRunWithRetries(description, 3)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	contents = append(contents, &genai.Content{
+		Parts: []*genai.Part{{FunctionCall: funcCall}},
+		Role:  "model",
+	})
+	contents = append(contents, &genai.Content{
+		Parts: []*genai.Part{{FunctionResponse: &genai.FunctionResponse{
+			Name: funcCall.Name,
+			Response: map[string]any{
+				"result": genresult,
+			},
+		}}},
+		Role: "function",
+	})
+
+	resp, err = client.Models.GenerateContent(ctx, modelName, contents, config)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(resp.Text())
 }

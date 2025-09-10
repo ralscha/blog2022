@@ -13,6 +13,8 @@ import (
 	"github.com/docker/docker/pkg/stdcopy"
 )
 
+const dockerImage = "golang:1.25.1-alpine3.22"
+
 func RunCodeInDocker(code string, timeout time.Duration) (string, string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
@@ -23,7 +25,7 @@ func RunCodeInDocker(code string, timeout time.Duration) (string, string, error)
 	}
 	defer cli.Close()
 
-	reader, err := cli.ImagePull(ctx, "docker.io/library/golang:1.23-alpine3.21", image.PullOptions{})
+	reader, err := cli.ImagePull(ctx, "docker.io/library/"+dockerImage, image.PullOptions{})
 	if err != nil {
 		return "", "", err
 	}
@@ -35,7 +37,7 @@ func RunCodeInDocker(code string, timeout time.Duration) (string, string, error)
 	}
 
 	resp, err := cli.ContainerCreate(ctx, &container.Config{
-		Image: "golang:1.23-alpine3.21",
+		Image: dockerImage,
 		Cmd: []string{
 			"/bin/sh",
 			"-c",

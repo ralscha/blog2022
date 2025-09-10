@@ -2,8 +2,9 @@ package internal
 
 import (
 	"fmt"
-	"github.com/google/generative-ai-go/genai"
 	"time"
+
+	"google.golang.org/genai"
 )
 
 func GenRunWithRetries(userPrompt string, maxRetries int) (string, error) {
@@ -43,11 +44,11 @@ func GenRunWithRetries(userPrompt string, maxRetries int) (string, error) {
 			history = append(history,
 				&genai.Content{
 					Role:  "user",
-					Parts: []genai.Part{genai.Text(userPrompt)},
+					Parts: []*genai.Part{{Text: userPrompt}},
 				},
 				&genai.Content{
 					Role:  "model",
-					Parts: []genai.Part{genai.Text(generatedCode)},
+					Parts: []*genai.Part{{Text: generatedCode}},
 				})
 
 			userPrompt = fmt.Sprintf(

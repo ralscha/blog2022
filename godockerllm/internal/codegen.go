@@ -3,11 +3,11 @@ package internal
 import (
 	"context"
 	"fmt"
-	"github.com/google/generative-ai-go/genai"
-	"google.golang.org/api/option"
 	"log"
 	"os"
 	"strings"
+
+	"google.golang.org/genai"
 )
 
 func GenCode(userPrompt string, history []*genai.Content) string {
@@ -17,16 +17,13 @@ func GenCode(userPrompt string, history []*genai.Content) string {
 		log.Fatalln("Environment variable GEMINI_API_KEY not set")
 	}
 
-	client, err := genai.NewClient(ctx, option.WithAPIKey(apiKey))
+	client, err := genai.NewClient(ctx, &genai.ClientConfig{
+		APIKey:  apiKey,
+		Backend: genai.BackendGeminiAPI,
+	})
 	if err != nil {
 		log.Fatalf("Error creating client: %v", err)
 	}
-	defer client.Close()
-
-	model := client.GenerativeModel("gemini-2.0-flash-exp")
-	model.SetTemperature(0.7)
-	model.SetMaxOutputTokens(8192)
-	model.ResponseMIMEType = "text/plain"
 
 	systemPrompt := `
 Write a Go program that meets the following requirements:
@@ -37,21 +34,25 @@ Write a Go program that meets the following requirements:
 - Do not comment the code
 - Only return the Go code. Nothing else should be returned.
 `
-	model.SystemInstruction = &genai.Content{
-		Parts: []genai.Part{genai.Text(systemPrompt)},
+	var parts []*genai.Part
+	for _, h := range history {
+		parts = append(parts, h.Parts...)
 	}
+	parts = append(parts, &genai.Part{Text: userPrompt})
 
-	session := model.StartChat()
-	session.History = history
-	resp, err := session.SendMessage(ctx, genai.Text(userPrompt))
+	result, err := client.Models.GenerateContent(ctx, "gemini-2.5-flash", []*genai.Content{{Parts: parts}}, &genai.GenerateContentConfig{
+		Temperature:       genai.Ptr(float32(0.7)),
+		MaxOutputTokens:   8192,
+		SystemInstruction: &genai.Content{Parts: []*genai.Part{{Text: systemPrompt}}},
+	})
 	if err != nil {
-		log.Fatalf("Error sending message to LLM: %v", err)
+		log.Fatalf("Error generating content: %v", err)
 	}
 
-	if len(resp.Candidates) > 0 && len(resp.Candidates[0].Content.Parts) > 0 {
+	if len(result.Candidates) > 0 && len(result.Candidates[0].Content.Parts) > 0 {
 		llmOutput := ""
-		for _, part := range resp.Candidates[0].Content.Parts {
-			llmOutput += fmt.Sprintf("%v", part)
+		for _, part := range result.Candidates[0].Content.Parts {
+			llmOutput += fmt.Sprintf("%v", part.Text)
 		}
 
 		return cleanup(llmOutput)
@@ -63,5 +64,7 @@ Write a Go program that meets the following requirements:
 
 func cleanup(code string) string {
 	updatedCode := strings.TrimPrefix(code, "```go")
-	return strings.TrimSuffix(updatedCode, "```\n")
+	updatedCode = strings.TrimSuffix(updatedCode, "\n")
+	updatedCode = strings.TrimSuffix(updatedCode, "```")
+	return updatedCode
 }
