@@ -1,13 +1,14 @@
 package main
 
 import (
+	"log/slog"
+	"os"
+	"runtime/debug"
+
 	"github.com/lmittmann/tint"
 	"github.com/openai/openai-go"
 	"github.com/openai/openai-go/azure"
 	"github.com/spf13/viper"
-	"log/slog"
-	"os"
-	"runtime/debug"
 )
 
 type application struct {

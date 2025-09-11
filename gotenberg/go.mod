@@ -1,6 +1,6 @@
 module gotenbergdemo
 
-go 1.25.0
+go 1.25.1
 
 require (
 	github.com/starwalkn/gotenberg-go-client/v8 v8.11.0
@@ -13,7 +13,7 @@ require (
 	github.com/tiendc/go-deepcopy v1.6.1 // indirect
 	github.com/xuri/efp v0.0.1 // indirect
 	github.com/xuri/nfp v0.0.1 // indirect
-	golang.org/x/crypto v0.41.0 // indirect
-	golang.org/x/net v0.43.0 // indirect
-	golang.org/x/text v0.28.0 // indirect
+	golang.org/x/crypto v0.42.0 // indirect
+	golang.org/x/net v0.44.0 // indirect
+	golang.org/x/text v0.29.0 // indirect
 )

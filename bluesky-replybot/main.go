@@ -3,6 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
+	"os"
+	"strings"
+	"time"
+
 	"github.com/bluesky-social/indigo/api/atproto"
 	"github.com/bluesky-social/indigo/api/bsky"
 	"github.com/bluesky-social/indigo/lex/util"
@@ -11,10 +16,6 @@ import (
 	"github.com/firebase/genkit/go/genkit"
 	"github.com/firebase/genkit/go/plugins/googlegenai"
 	"github.com/joho/godotenv"
-	"log"
-	"os"
-	"strings"
-	"time"
 )
 
 func main() {
@@ -23,13 +24,10 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	genkitInstance, err := genkit.Init(context.Background(),
+	genkitInstance := genkit.Init(context.Background(),
 		genkit.WithPlugins(&googlegenai.GoogleAI{}),
 		genkit.WithDefaultModel("googleai/gemini-2.5-flash"),
 	)
-	if err != nil {
-		log.Fatalf("could not initialize Genkit: %v", err)
-	}
 
 	ticker := time.NewTicker(1 * time.Minute)
 	defer ticker.Stop()

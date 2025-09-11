@@ -3,12 +3,13 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/h2non/filetype"
-	"github.com/openai/openai-go"
-	ffmpeg "github.com/u2takey/ffmpeg-go"
 	"io"
 	"net/http"
 	"os"
+
+	"github.com/h2non/filetype"
+	"github.com/openai/openai-go"
+	ffmpeg "github.com/u2takey/ffmpeg-go"
 )
 
 func (app *application) speechToText(w http.ResponseWriter, r *http.Request) {
@@ -147,7 +148,7 @@ func (app *application) textToSpeech(w http.ResponseWriter, r *http.Request) {
 	resp, err := app.azureOpenAIClient.Audio.Speech.New(r.Context(), openai.AudioSpeechNewParams{
 		Model:          "tts-hd",
 		Input:          input,
-		Voice:          openai.AudioSpeechNewParamsVoiceNova,
+		Voice:          openai.AudioSpeechNewParamsVoiceAsh,
 		ResponseFormat: openai.AudioSpeechNewParamsResponseFormatMP3,
 	})
 

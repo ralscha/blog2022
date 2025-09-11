@@ -4,7 +4,7 @@ go 1.25.1
 
 require (
 	github.com/docker/docker v28.4.0+incompatible
-	google.golang.org/genai v1.23.0
+	google.golang.org/genai v1.24.0
 )
 
 require (
