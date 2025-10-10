@@ -12,7 +12,7 @@ import (
 	"log"
 )
 
-const bucketName = "select-demo"
+const bucketName = "rasc-select-demo"
 
 func main() {
 	// on AWS
@@ -70,7 +70,7 @@ func runSelect(query string, s3Client *s3.Client, useCompressedFile bool) {
 		case *types.SelectObjectContentEventStreamMemberRecords:
 			fmt.Println(string(v.Value.Payload))
 		case *types.SelectObjectContentEventStreamMemberStats:
-			fmt.Println("Processed", v.Value.Details.BytesProcessed, "bytes")
+			fmt.Println("Processed", *v.Value.Details.BytesProcessed, "bytes")
 		case *types.SelectObjectContentEventStreamMemberEnd:
 			fmt.Println("SelectObjectContent completed")
 		}

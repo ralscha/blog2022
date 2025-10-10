@@ -2,119 +2,87 @@ package ch.rasc.s3selectdemo;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.concurrent.CompletableFuture;
 
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicSessionCredentials;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.CompressionType;
-import com.amazonaws.services.s3.model.ExpressionType;
-import com.amazonaws.services.s3.model.InputSerialization;
-import com.amazonaws.services.s3.model.JSONInput;
-import com.amazonaws.services.s3.model.JSONOutput;
-import com.amazonaws.services.s3.model.JSONType;
-import com.amazonaws.services.s3.model.OutputSerialization;
-import com.amazonaws.services.s3.model.SelectObjectContentEvent;
-import com.amazonaws.services.s3.model.SelectObjectContentEvent.RecordsEvent;
-import com.amazonaws.services.s3.model.SelectObjectContentEventStream;
-import com.amazonaws.services.s3.model.SelectObjectContentEventVisitor;
-import com.amazonaws.services.s3.model.SelectObjectContentRequest;
-import com.amazonaws.services.s3.model.SelectObjectContentResult;
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3AsyncClient;
+import software.amazon.awssdk.services.s3.model.CompressionType;
+import software.amazon.awssdk.services.s3.model.ExpressionType;
+import software.amazon.awssdk.services.s3.model.InputSerialization;
+import software.amazon.awssdk.services.s3.model.JSONInput;
+import software.amazon.awssdk.services.s3.model.JSONOutput;
+import software.amazon.awssdk.services.s3.model.JSONType;
+import software.amazon.awssdk.services.s3.model.OutputSerialization;
+import software.amazon.awssdk.services.s3.model.SelectObjectContentRequest;
+import software.amazon.awssdk.services.s3.model.SelectObjectContentResponseHandler;
 
 public class Main {
-  public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 
-    String accessKey = "";
-    String secretKey = "";
-    String sessionToken = "";
+		try (ProfileCredentialsProvider profileCredential = ProfileCredentialsProvider
+				.create("home");
+				S3AsyncClient s3Client = S3AsyncClient.builder().region(Region.US_EAST_1)
+						.credentialsProvider(profileCredential).build()) {
+			String query = "select p.id,p.name from S3Object[*].pokemon[*] p";
+			selectObject(s3Client, query, false);
 
-    AmazonS3 s3Client = AmazonS3Client.builder().withRegion(Regions.US_EAST_1)
-        .withCredentials(new AWSStaticCredentialsProvider(
-            new BasicSessionCredentials(accessKey, secretKey, sessionToken)))
-        .build();
+			query = "select p.id,p.name,p.type from S3Object[*].pokemon[*] p where p.type[0] = 'Fire' or p.type[1] = 'Fire'";
+			selectObject(s3Client, query, false);
 
-    // if the application runs on AWS
-    // AmazonS3 s3Client = AmazonS3Client.builder().build();
+			query = "select p from S3Object[*].pokemon[*] p where p.name = 'Charmander'";
+			selectObject(s3Client, query, false);
 
-    String query = "select p.id,p.name from S3Object[*].pokemon[*] p";
-    selectObject(s3Client, query, false);
+			query = "select count(*) from S3Object[*].pokemon[*] p";
+			selectObject(s3Client, query, true);
+		}
 
-    query = "select p.id,p.name,p.type from S3Object[*].pokemon[*] p where p.type[0] = 'Fire' or p.type[1] = 'Fire'";
-    selectObject(s3Client, query, false);
+		// if the application runs on AWS
+		// S3AsyncClient s3Client = S3AsyncClient.builder().build();
 
-    query = "select p from S3Object[*].pokemon[*] p where p.name = 'Charmander'";
-    selectObject(s3Client, query, false);
+	}
 
-    query = "select count(*) from S3Object[*].pokemon[*] p";
-    selectObject(s3Client, query, true);
-  }
+	private static void selectObject(S3AsyncClient s3Client, String query,
+			boolean compressed) {
+		String bucket = "rasc-select-demo";
+		String keyUncompressed = "pokedex.json";
+		String keyCompressed = "pokedex.json.bz2";
 
-  private static void selectObject(AmazonS3 s3Client, String query, boolean compressed)
-      throws IOException {
-    String bucket = "select-demo";
-    String keyUncompressed = "pokedex.json";
-    String keyCompressed = "pokedex.json.bz2";
-    SelectObjectContentRequest request = new SelectObjectContentRequest();
-    request.setBucketName(bucket);
-    if (compressed) {
-      request.setKey(keyCompressed);
-    }
-    else {
-      request.setKey(keyUncompressed);
-    }
-    request.setExpression(query);
-    request.setExpressionType(ExpressionType.SQL);
+		SelectObjectContentRequest request = SelectObjectContentRequest.builder()
+				.bucket(bucket).key(compressed ? keyCompressed : keyUncompressed)
+				.expression(query).expressionType(ExpressionType.SQL)
+				.inputSerialization(InputSerialization.builder()
+						.json(JSONInput.builder().type(JSONType.DOCUMENT).build())
+						.compressionType(
+								compressed ? CompressionType.BZIP2 : CompressionType.NONE)
+						.build())
+				.outputSerialization(OutputSerialization.builder()
+						.json(JSONOutput.builder().build()).build())
+				.build();
 
-    InputSerialization inputSerialization = new InputSerialization();
-    inputSerialization.setJson(new JSONInput().withType(JSONType.DOCUMENT));
-    if (compressed) {
-      inputSerialization.setCompressionType(CompressionType.BZIP2);
-    }
-    else {
-      inputSerialization.setCompressionType(CompressionType.NONE);
-    }
-    request.setInputSerialization(inputSerialization);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-    OutputSerialization outputSerialization = new OutputSerialization();
-    outputSerialization.setJson(new JSONOutput());
-    request.setOutputSerialization(outputSerialization);
+		SelectObjectContentResponseHandler.Visitor visitor = SelectObjectContentResponseHandler.Visitor
+				.builder().onRecords(r -> {
+					System.out.println("record event");
+					try {
+						baos.write(r.payload().asByteArray());
+					}
+					catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+				}).onStats(se -> {
+					System.out.println("stats event: ");
+					System.out
+							.println("bytes processed: " + se.details().bytesProcessed());
+				}).onEnd(_ -> System.out.println("end event")).build();
 
-    SelectObjectContentEventVisitor listener = new SelectObjectContentEventVisitor() {
-      @Override
-      public void visit(RecordsEvent event) {
-        System.out.println("record event");
-      }
+		SelectObjectContentResponseHandler handler = SelectObjectContentResponseHandler
+				.builder().subscriber(visitor).build();
 
-      @Override
-      public void visit(SelectObjectContentEvent.StatsEvent event) {
-        System.out.println("stats event: ");
-        System.out.println(
-            "uncompressed bytes processed: " + event.getDetails().getBytesProcessed());
-      }
+		CompletableFuture<Void> future = s3Client.selectObjectContent(request, handler);
+		future.join();
 
-      @Override
-      public void visit(SelectObjectContentEvent.EndEvent event) {
-        System.out.println("end event");
-      }
-    };
-
-    try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        SelectObjectContentResult result = s3Client.selectObjectContent(request);
-        SelectObjectContentEventStream payload = result.getPayload();
-        InputStream is = payload.getRecordsInputStream(listener)) {
-      is.transferTo(baos);
-      System.out.println(new String(baos.toByteArray()));
-    }
-
-    // without visitor
-    try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        SelectObjectContentResult result = s3Client.selectObjectContent(request);
-        SelectObjectContentEventStream payload = result.getPayload();
-        InputStream is = payload.getRecordsInputStream()) {
-      is.transferTo(baos);
-      System.out.println(new String(baos.toByteArray()));
-    }
-  }
+		System.out.println(new String(baos.toByteArray()));
+	}
 }
