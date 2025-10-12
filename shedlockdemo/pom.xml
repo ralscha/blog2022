@@ -14,7 +14,7 @@
 	<name>shedlockdemo</name>
 	<description>Demo project</description>
 	<properties>
-		<java.version>24</java.version>
+		<java.version>25</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

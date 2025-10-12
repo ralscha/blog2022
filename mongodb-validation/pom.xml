@@ -27,8 +27,8 @@
 				<version>3.14.0</version>
 				<configuration>
 					<debug>true</debug>
-					<source>24</source>
-					<target>24</target>
+					<source>25</source>
+					<target>25</target>
 					<parameters>true</parameters>
 				</configuration>
 			</plugin>
