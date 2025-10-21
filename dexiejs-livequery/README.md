@@ -1,1 +1,1 @@
-Code for blog post: https://golb.hplar.ch/2022/01/dexiejs-livequery.html
+Code for blog post: https://blog.rasc.ch/2022/01/dexiejs-livequery.html

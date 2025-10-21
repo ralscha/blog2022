@@ -1,10 +1,10 @@
 module llmsearch
 
-go 1.25.2
+go 1.25.3
 
 require (
 	github.com/go-shiori/go-readability v0.0.0-20250217085726-9f5bf5ca7612
-	github.com/ollama/ollama v0.12.5
+	github.com/ollama/ollama v0.12.6
 )
 
 require (

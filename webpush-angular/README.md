@@ -1,1 +1,1 @@
-Code for blog post: https://golb.hplar.ch/2023/08/webpush-angular.html
+Code for blog post: https://blog.rasc.ch/2023/08/webpush-angular.html
