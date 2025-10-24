@@ -3,7 +3,7 @@ module replybot
 go 1.25.3
 
 require (
-	github.com/bluesky-social/indigo v0.0.0-20251014222321-1e8718ae9f33
+	github.com/bluesky-social/indigo v0.0.0-20251021193747-543ab1124beb
 	github.com/firebase/genkit/go v1.1.0
 	github.com/joho/godotenv v1.5.1
 )
@@ -22,7 +22,7 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/goccy/go-yaml v1.18.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
-	github.com/google/dotprompt/go v0.0.0-20251016195250-f9183f819725 // indirect
+	github.com/google/dotprompt/go v0.0.0-20251024044225-3f7ffb43be55 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/s2a-go v0.1.9 // indirect
 	github.com/google/uuid v1.6.0 // indirect
@@ -80,8 +80,8 @@ require (
 	golang.org/x/sys v0.37.0 // indirect
 	golang.org/x/text v0.30.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
-	google.golang.org/genai v1.31.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20251014184007-4626949a642f // indirect
+	google.golang.org/genai v1.32.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20251022142026-3a174f9686a8 // indirect
 	google.golang.org/grpc v1.76.0 // indirect
 	google.golang.org/protobuf v1.36.10 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
