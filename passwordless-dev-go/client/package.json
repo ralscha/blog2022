@@ -28,7 +28,7 @@
     "@angular/cli": "20.3.7",
     "@angular/compiler-cli": "20.3.7",
     "@ionic/angular-toolkit": "12.3.0",
-    "angular-eslint": "20.4.0",
+    "angular-eslint": "20.5.0",
     "eslint": "9.38.0",
     "typescript": "5.9.3",
     "typescript-eslint": "8.46.2"

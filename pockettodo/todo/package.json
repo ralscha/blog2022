@@ -38,7 +38,7 @@
     "@angular/router": "20.3.7",
     "@ionic/angular": "8.7.7",
     "ionicons": "8.0.13",
-    "pocketbase": "0.26.2",
+    "pocketbase": "0.26.3",
     "rxjs": "7.8.2",
     "tslib": "2.8.1",
     "zone.js": "0.15.1"
