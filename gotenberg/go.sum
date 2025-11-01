@@ -7,8 +7,8 @@ github.com/richardlehane/mscfb v1.0.4/go.mod h1:YzVpcZg9czvAuhk9T+a3avCpcFPMUWm7
 github.com/richardlehane/msoleps v1.0.1/go.mod h1:BWev5JBpU9Ko2WAgmZEuiz4/u3ZYTKbjLycmwiWUfWg=
 github.com/richardlehane/msoleps v1.0.4 h1:WuESlvhX3gH2IHcd8UqyCuFY5yiq/GR/yqaSM/9/g00=
 github.com/richardlehane/msoleps v1.0.4/go.mod h1:BWev5JBpU9Ko2WAgmZEuiz4/u3ZYTKbjLycmwiWUfWg=
-github.com/starwalkn/gotenberg-go-client/v8 v8.11.0 h1:9hKCcoWegZ0yrZ0tEl5gKlMyH2YraYO0R7zDyL0ZL/U=
-github.com/starwalkn/gotenberg-go-client/v8 v8.11.0/go.mod h1:5q9nAJ3/lub4hSCT6QYl8cOjnfQ/B+spEzC4TAPVXd8=
+github.com/starwalkn/gotenberg-go-client/v8 v8.11.1 h1:rfBtX3B7qiQaM6t+x2Zr9L7pXE60/Mvp0QFXQjGC8+s=
+github.com/starwalkn/gotenberg-go-client/v8 v8.11.1/go.mod h1:5q9nAJ3/lub4hSCT6QYl8cOjnfQ/B+spEzC4TAPVXd8=
 github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu7U=
 github.com/stretchr/testify v1.11.1/go.mod h1:wZwfW3scLgRK+23gO65QZefKpKQRnfz6sD981Nm4B6U=
 github.com/tiendc/go-deepcopy v1.7.1 h1:LnubftI6nYaaMOcaz0LphzwraqN8jiWTwm416sitff4=

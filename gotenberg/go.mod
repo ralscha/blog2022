@@ -3,7 +3,7 @@ module gotenbergdemo
 go 1.25.3
 
 require (
-	github.com/starwalkn/gotenberg-go-client/v8 v8.11.0
+	github.com/starwalkn/gotenberg-go-client/v8 v8.11.1
 	github.com/xuri/excelize/v2 v2.10.0
 )
 
