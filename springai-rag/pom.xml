@@ -46,7 +46,7 @@
 			<groupId>org.springframework.ai</groupId>
 			<artifactId>spring-ai-advisors-vector-store</artifactId>
 		</dependency>		
-		<dependency>RestClientAutoConfiguration
+		<dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-rag</artifactId>
         </dependency>                 
