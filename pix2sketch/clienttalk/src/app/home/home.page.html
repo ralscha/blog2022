@@ -4,7 +4,7 @@
       Talk to GPT
     </ion-title>
     @if (processing) {
-      <ion-progress-bar type="indeterminate"></ion-progress-bar>
+      <ion-progress-bar type="indeterminate" />
     }
   </ion-toolbar>
 </ion-header>
@@ -19,13 +19,13 @@
   <div class="container">
     @if (!recording) {
       <ion-button [disabled]="processing" (click)="startRecording()" color="success">
-        <ion-icon slot="start" name="mic-circle-outline"></ion-icon>
+        <ion-icon slot="start" name="mic-circle-outline" />
         Start Recording
       </ion-button>
     }
     @if (recording) {
       <ion-button (click)="stopRecording()" color="danger">
-        <ion-icon slot="start" name="stop-circle-outline"></ion-icon>
+        <ion-icon slot="start" name="stop-circle-outline" />
         Stop Recording
       </ion-button>
     }
@@ -39,7 +39,7 @@
 
     @if (textToSpeechResponse) {
       <ion-button (click)="speak()" color="success">
-        <ion-icon slot="start" name="play-circle-outline"></ion-icon>
+        <ion-icon slot="start" name="play-circle-outline" />
         Speak
       </ion-button>
     }

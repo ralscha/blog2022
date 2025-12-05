@@ -7,12 +7,12 @@ import {OAuthModule} from 'angular-oauth2-oidc';
 import {environment} from './environments/environment';
 import {routes} from './app/app.routes';
 import {AppComponent} from './app/app.component';
-import {importProvidersFrom} from '@angular/core';
+import {importProvidersFrom, provideZoneChangeDetection} from '@angular/core';
 
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(OAuthModule.forRoot({
+    provideZoneChangeDetection(),importProvidersFrom(OAuthModule.forRoot({
       resourceServer: {
         allowedUrls: [environment.API_URL],
         sendAccessToken: true

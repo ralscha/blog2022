@@ -13,13 +13,13 @@
       <ion-card-header>
         <div>
           @if (todo.priority === 'high') {
-            <ion-icon color="danger" name="ellipse" size="small"></ion-icon>
+            <ion-icon color="danger" name="ellipse" size="small" />
           }
           @if (todo.priority === 'low') {
-            <ion-icon color="success" name="ellipse" size="small"></ion-icon>
+            <ion-icon color="success" name="ellipse" size="small" />
           }
           @if (todo.priority === 'normal') {
-            <ion-icon color="warning" name="ellipse" size="small"></ion-icon>
+            <ion-icon color="warning" name="ellipse" size="small" />
           }
           <ion-label> {{ todo.description }}</ion-label>
         </div>
@@ -29,11 +29,11 @@
       </ion-card-content>
       <ion-row>
         <ion-item [routerLink]="['./edit', todo.id]" routerDirection="forward">
-          <ion-icon name="pencil-outline"></ion-icon>
+          <ion-icon name="pencil-outline" />
           <p>Update</p>
         </ion-item>
         <ion-item (click)="deleteTodo(todo.id)">
-          <ion-icon name="trash-outline"></ion-icon>
+          <ion-icon name="trash-outline" />
           <p>Delete</p>
         </ion-item>
       </ion-row>
@@ -41,7 +41,7 @@
   }
   <ion-fab horizontal="end" slot="fixed" vertical="bottom">
     <ion-fab-button routerDirection="forward" routerLink="./edit">
-      <ion-icon name="add"></ion-icon>
+      <ion-icon name="add" />
     </ion-fab-button>
   </ion-fab>
 </ion-content>

@@ -4,7 +4,7 @@
       pix2sketch
     </ion-title>
     @if (processing) {
-      <ion-progress-bar type="indeterminate"></ion-progress-bar>
+      <ion-progress-bar type="indeterminate" />
     }
   </ion-toolbar>
 </ion-header>
@@ -18,7 +18,7 @@
 
   <div class="container">
     <ion-button (click)="selectImage()" [disabled]="processing">
-      <ion-icon name="camera-outline" slot="start"></ion-icon>
+      <ion-icon name="camera-outline" slot="start" />
       Select Image
     </ion-button>
     <div>

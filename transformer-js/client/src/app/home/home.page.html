@@ -11,14 +11,14 @@
     <div class="grid-container">
       <div class="grid-item">
         <ion-input [disabled]="!db || !generator || working" placeholder="Search" [(ngModel)]="searchTerm"
-                   (ionChange)="generateSQL()"></ion-input>
+                   (ionChange)="generateSQL()" />
       </div>
       <div class="grid-item sql-output">
         <code>{{ selectStatement }}</code>
       </div>
       <div class="grid-item country-list">
         @if (working) {
-          <ion-spinner></ion-spinner>
+          <ion-spinner />
         } @else {
           @for (fact of countries; track fact.id) {
             <ion-card>
