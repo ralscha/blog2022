@@ -3,7 +3,7 @@ module replybot
 go 1.25.5
 
 require (
-	github.com/bluesky-social/indigo v0.0.0-20251203031309-bdbb48c13b04
+	github.com/bluesky-social/indigo v0.0.0-20251206005924-d49b45419635
 	github.com/firebase/genkit/go v1.2.0
 	github.com/joho/godotenv v1.5.1
 )

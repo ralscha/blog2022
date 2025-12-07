@@ -25,7 +25,7 @@
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
-			<version>4.33.1</version>
+			<version>4.33.2</version>
 		</dependency>
 		<dependency>
 			<groupId>software.amazon.awssdk</groupId>
@@ -55,7 +55,7 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<protocVersion>4.33.1</protocVersion>
+							<protocVersion>4.33.2</protocVersion>
 							<inputDirectories>
 								<include>../../protobuf</include>
 							</inputDirectories>
