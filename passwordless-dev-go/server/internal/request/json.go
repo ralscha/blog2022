@@ -11,7 +11,7 @@ import (
 
 const maxBytes = 1_048_576
 
-func DecodeJSON(w http.ResponseWriter, r *http.Request, dst interface{}) error {
+func DecodeJSON(w http.ResponseWriter, r *http.Request, dst any) error {
 	r.Body = http.MaxBytesReader(w, r.Body, int64(maxBytes))
 
 	dec := json.NewDecoder(r.Body)

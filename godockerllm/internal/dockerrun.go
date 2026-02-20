@@ -92,7 +92,7 @@ var excludePrefixes = []string{
 
 func cleanStderr(stderr string) string {
 	var cleanedLines []string
-	for _, line := range strings.Split(stderr, "\n") {
+	for line := range strings.SplitSeq(stderr, "\n") {
 		exclude := false
 		for _, prefix := range excludePrefixes {
 			if strings.HasPrefix(line, prefix) {

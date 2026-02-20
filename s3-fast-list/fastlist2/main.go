@@ -54,14 +54,12 @@ func fastListS3Objects(ctx context.Context, s3Client *s3.Client, bucket string, 
 	close(workChan)
 
 	for range maxWorkers {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
+		wg.Go(func() {
 			for prefix := range workChan {
 				count, err := listObjectsWithPrefix(ctx, s3Client, bucket, prefix)
 				resultChan <- result{prefix: prefix, count: count, error: err}
 			}
-		}()
+		})
 	}
 
 	wg.Wait()

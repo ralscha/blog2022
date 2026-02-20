@@ -33,9 +33,7 @@ func main() {
 	fmt.Printf("Starting to create %d objects with %d goroutines...\n", totalObjects, numGoroutines)
 
 	for range numGoroutines {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
+		wg.Go(func() {
 			for range objectsPerGoroutine {
 				key := uuid.New().String()
 				_, err := s3Client.PutObject(context.Background(), &s3.PutObjectInput{
@@ -47,7 +45,7 @@ func main() {
 					errChan <- err
 				}
 			}
-		}()
+		})
 	}
 
 	wg.Wait()

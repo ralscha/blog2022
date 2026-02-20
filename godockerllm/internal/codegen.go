@@ -41,7 +41,7 @@ Write a Go program that meets the following requirements:
 	parts = append(parts, &genai.Part{Text: userPrompt})
 
 	result, err := client.Models.GenerateContent(ctx, "gemini-2.5-flash", []*genai.Content{{Parts: parts}}, &genai.GenerateContentConfig{
-		Temperature:       genai.Ptr(float32(0.7)),
+		Temperature:       new(float32(0.7)),
 		MaxOutputTokens:   8192,
 		SystemInstruction: &genai.Content{Parts: []*genai.Part{{Text: systemPrompt}}},
 	})
@@ -50,12 +50,12 @@ Write a Go program that meets the following requirements:
 	}
 
 	if len(result.Candidates) > 0 && len(result.Candidates[0].Content.Parts) > 0 {
-		llmOutput := ""
+		var llmOutput strings.Builder
 		for _, part := range result.Candidates[0].Content.Parts {
-			llmOutput += fmt.Sprintf("%v", part.Text)
+			llmOutput.WriteString(fmt.Sprintf("%v", part.Text))
 		}
 
-		return cleanup(llmOutput)
+		return cleanup(llmOutput.String())
 	}
 
 	log.Fatalln("No response received from LLM")

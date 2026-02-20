@@ -221,7 +221,7 @@ func createLambda(ctx *pulumi.Context, role *iam.Role, todoDb *dynamodb.Table) (
 		return nil, err
 	}
 
-	codeArchive := pulumi.NewAssetArchive(map[string]interface{}{
+	codeArchive := pulumi.NewAssetArchive(map[string]any{
 		"bootstrap": pulumi.NewFileAsset("../lambda/main"),
 	})
 

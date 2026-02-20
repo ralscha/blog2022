@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"slices"
 
 	"github.com/h2non/filetype"
 	"github.com/openai/openai-go"
@@ -24,11 +25,8 @@ func (app *application) speechToText(w http.ResponseWriter, r *http.Request) {
 	supportedByWhisper := false
 	supportedAudioTypes := []string{"audio/mpeg", "audio/mp4", "audio/x-wav", "video/webm"}
 
-	for _, supported := range supportedAudioTypes {
-		if supported == kind.MIME.Value {
-			supportedByWhisper = true
-			break
-		}
+	if slices.Contains(supportedAudioTypes, kind.MIME.Value) {
+		supportedByWhisper = true
 	}
 
 	audioDataInput := audioData.Bytes()

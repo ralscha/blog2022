@@ -1,0 +1,36 @@
+# Spins up a throw-away Postgres, migrates with Flyway, then generates
+# jOOQ classes into target/generated-sources/jooq on the host.
+#
+# Usage:  generate-jooq.cmd   (or see that script for details)
+services:
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: shedlockdemo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d shedlockdemo"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  codegen:
+    image: maven:3.9.12-eclipse-temurin-25-alpine
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .:/project
+      - maven-cache:/root/.m2
+    working_dir: /project
+    command: >
+      mvn -Pjooq generate-sources
+        -Dcodegen.db.url=jdbc:postgresql://postgres:5432/shedlockdemo
+        -Dcodegen.db.user=postgres
+        -Dcodegen.db.password=password
+
+volumes:
+  maven-cache:

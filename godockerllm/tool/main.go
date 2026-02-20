@@ -53,7 +53,7 @@ It returns the output of the code execution. `,
 		{Parts: []*genai.Part{{Text: userPrompt}}, Role: "user"},
 	}
 	config := &genai.GenerateContentConfig{
-		Temperature: genai.Ptr(float32(0.7)),
+		Temperature: new(float32(0.7)),
 		Tools:       []*genai.Tool{generalPurposeTool},
 	}
 

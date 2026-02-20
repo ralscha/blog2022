@@ -1,0 +1,60 @@
+version: "3"
+
+vars:
+  MVNW: '{{if eq OS "windows"}}cmd /c mvnw.cmd{{else}}./mvnw{{end}}'
+
+tasks:
+
+  default:
+    desc: List all available tasks
+    cmds:
+      - task --list
+    silent: true
+
+  # ---------------------------------------------------------------------------
+  # Database
+  # ---------------------------------------------------------------------------
+
+  db:up:
+    desc: Start the development Postgres container
+    cmds:
+      - docker compose up -d
+    sources:
+      - docker-compose.yml
+
+  db:down:
+    desc: Stop and remove the development Postgres container
+    cmds:
+      - docker compose down
+
+  # ---------------------------------------------------------------------------
+  # Code generation
+  # ---------------------------------------------------------------------------
+
+  generate:
+    desc: Generate jOOQ classes inside Docker (output -> target/generated-sources/jooq)
+    cmds:
+      - docker compose -f docker-compose-codegen.yml run --rm codegen
+      - docker compose -f docker-compose-codegen.yml down -v
+    sources:
+      - src/main/resources/db/migration/**/*.sql
+      - pom.xml
+
+  # ---------------------------------------------------------------------------
+  # Build
+  # ---------------------------------------------------------------------------
+
+  clean:
+    desc: Remove build output (mvn clean)
+    cmds:
+      - "{{.MVNW}} clean"
+
+  # ---------------------------------------------------------------------------
+  # Run
+  # ---------------------------------------------------------------------------
+
+  run:
+    desc: Start Postgres (if not up) then run the Spring Boot application
+    deps: [db:up]
+    cmds:
+      - "{{.MVNW}} spring-boot:run"

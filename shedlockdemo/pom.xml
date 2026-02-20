@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.7</version>
+		<version>4.0.3</version>
 		<relativePath/>
 	</parent>
 	<groupId>ch.rasc</groupId>
@@ -28,12 +28,12 @@
 		<dependency>
 		    <groupId>net.javacrumbs.shedlock</groupId>
 		    <artifactId>shedlock-spring</artifactId>
-		    <version>6.10.0</version>
+		    <version>7.6.0</version>
 		</dependency>	
 		<dependency>
 			<groupId>net.javacrumbs.shedlock</groupId>
 			<artifactId>shedlock-provider-jooq</artifactId>
-			<version>6.10.0</version>
+			<version>7.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.flywaydb</groupId>
@@ -42,6 +42,10 @@
 		<dependency>
 		    <groupId>org.flywaydb</groupId>
 		    <artifactId>flyway-database-postgresql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-flyway</artifactId>
 		</dependency>		
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
@@ -54,63 +58,124 @@
 		</dependency>
 	</dependencies>
 
-	<profiles>
-		<profile>
-			<id>jooq</id>
-			<build>
-				<plugins>
-					<plugin>
-			    <groupId>org.testcontainers</groupId>
-			    <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
-			    <version>0.0.4</version>
-			    <executions>
-			        <execution>
-			            <goals>
-			                <goal>generate</goal>
-			            </goals>
-			        </execution>
-			    </executions>
-			    <dependencies>
-			        <dependency>
-			            <groupId>org.postgresql</groupId>
-			            <artifactId>postgresql</artifactId>
-			            <version>42.7.4</version>
-			        </dependency>
-			        <dependency>
-			            <groupId>org.testcontainers</groupId>
-			            <artifactId>postgresql</artifactId>
-			            <version>${testcontainers.version}</version>
-			        </dependency>
-			    </dependencies>
-			    <configuration>
-			        <database>
-			            <type>POSTGRES</type>
-			            <containerImage>postgres:17-alpine</containerImage>
-			        </database>
-			        <flyway>
-			            <locations>filesystem:src/main/resources/db/migration</locations>
-			        </flyway>
-			        <jooq>
-			           <generator>
-						<generate>
-							<pojos>false</pojos>
-							<daos>false</daos>
-						</generate>			           
-			            <target>
-                            <packageName>ch.rasc.shedlockdemo.db</packageName>
-                            <directory>${project.build.directory}/generated-sources/jooq</directory>
-                        </target>
-                        <database>
-                            <includes>.*</includes>
-                            <inputSchema>public</inputSchema>
-                        </database>                        
-			          </generator>
-			        </jooq>
-			    </configuration>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.15.0</version>
+				<configuration>
+					<release>${java.version}</release>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-jooq-sources</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources/jooq</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
-	</profile>
+
+	<profiles>
+		<profile>
+			<id>jooq</id>
+			<properties>
+				<codegen.db.url>jdbc:postgresql://localhost:5432/shedlockdemo</codegen.db.url>
+				<codegen.db.user>postgres</codegen.db.user>
+				<codegen.db.password>password</codegen.db.password>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.flywaydb</groupId>
+						<artifactId>flyway-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>migrate</goal>
+								</goals>
+							</execution>
+						</executions>
+						<dependencies>
+							<dependency>
+								<groupId>org.postgresql</groupId>
+								<artifactId>postgresql</artifactId>
+								<version>42.7.4</version>
+							</dependency>
+							<dependency>
+								<groupId>org.flywaydb</groupId>
+								<artifactId>flyway-database-postgresql</artifactId>
+								<version>${flyway.version}</version>
+							</dependency>
+						</dependencies>
+						<configuration>
+							<url>${codegen.db.url}</url>
+							<user>${codegen.db.user}</user>
+							<password>${codegen.db.password}</password>
+							<locations>
+								<location>filesystem:src/main/resources/db/migration</location>
+							</locations>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.jooq</groupId>
+						<artifactId>jooq-codegen-maven</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>generate</goal>
+								</goals>
+							</execution>
+						</executions>
+						<dependencies>
+							<dependency>
+								<groupId>org.postgresql</groupId>
+								<artifactId>postgresql</artifactId>
+								<version>42.7.4</version>
+							</dependency>
+						</dependencies>
+						<configuration>
+							<jdbc>
+								<driver>org.postgresql.Driver</driver>
+								<url>${codegen.db.url}</url>
+								<user>${codegen.db.user}</user>
+								<password>${codegen.db.password}</password>
+							</jdbc>
+							<generator>
+								<generate>
+									<pojos>false</pojos>
+									<daos>false</daos>
+								</generate>
+								<target>
+									<packageName>ch.rasc.shedlockdemo.db</packageName>
+									<directory>${project.build.directory}/generated-sources/jooq</directory>
+								</target>
+								<database>
+									<includes>.*</includes>
+									<inputSchema>public</inputSchema>
+								</database>
+							</generator>
+						</configuration>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 
 </project>
