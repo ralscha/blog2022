@@ -13,7 +13,7 @@ import (
 	"github.com/docker/docker/pkg/stdcopy"
 )
 
-const dockerImage = "golang:1.25.1-alpine3.22"
+const dockerImage = "golang:1.26.0-alpine3.23"
 
 func RunCodeInDocker(code string, timeout time.Duration) (string, string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)

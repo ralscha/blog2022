@@ -11,7 +11,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/go-shiori/go-readability"
+	"codeberg.org/readeck/go-readability/v2"
 	"github.com/ollama/ollama/api"
 )
 
@@ -162,7 +162,7 @@ func fetchTextContent(url string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return article.TextContent, nil
+	return article.Excerpt(), nil
 }
 
 func webSearch(query string) (*SearchResponse, error) {
