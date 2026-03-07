@@ -6,17 +6,18 @@
     "ng": "ng",
     "serve-dist": "ws --hostname localhost -d dist/app/browser -p 1234 -o --log.format stats",
     "start": "ng serve",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "format": "npx prettier --write ."
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "21.2.0",
-    "@angular/compiler": "21.2.0",
-    "@angular/core": "21.2.0",
-    "@angular/forms": "21.2.0",
-    "@angular/platform-browser": "21.2.0",
-    "@angular/router": "21.2.0",
-    "@ionic/angular": "8.7.18",
+    "@angular/common": "21.2.1",
+    "@angular/compiler": "21.2.1",
+    "@angular/core": "21.2.1",
+    "@angular/forms": "21.2.1",
+    "@angular/platform-browser": "21.2.1",
+    "@angular/router": "21.2.1",
+    "@ionic/angular": "8.8.1",
     "date-fns": "4.1.0",
     "ionicons": "8.0.13",
     "rxjs": "7.8.2",
@@ -25,11 +26,12 @@
     "zone.js": "0.16.1"
   },
   "devDependencies": {
-    "@angular/build": "21.2.0",
-    "@angular/cli": "21.2.0",
-    "@angular/compiler-cli": "21.2.0",
+    "@angular/build": "21.2.1",
+    "@angular/cli": "21.2.1",
+    "@angular/compiler-cli": "21.2.1",
     "@ionic/angular-toolkit": "12.3.0",
     "local-web-server": "5.4.0",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "prettier": "3.8.1"
   }
 }

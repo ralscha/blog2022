@@ -1,6 +1,6 @@
 module gotenbergdemo
 
-go 1.26.0
+go 1.26.1
 
 require (
 	github.com/starwalkn/gotenberg-go-client/v8 v8.12.0
