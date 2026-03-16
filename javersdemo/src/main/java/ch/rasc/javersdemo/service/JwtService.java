@@ -1,41 +1,41 @@
 package ch.rasc.javersdemo.service;
 
+import java.security.SecureRandom;
+import java.time.Instant;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
-
-import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.auth0.jwt.interfaces.JWTVerifier;
 
 @Service
 public class JwtService {
 
-  @Value("${jwt.secret:mySecretKey12345678901234567890123456789012345678901234567890}")
-  private String secret;
-
   @Value("${jwt.expiration:86400000}") // 24 hours in milliseconds
   private int jwtExpiration;
 
-  SecretKey key = Jwts.SIG.HS512.key().build();
+  private final Algorithm algorithm;
+  private final JWTVerifier verifier;
 
-  public String extractUsername(String token) {
-    return extractClaim(token, Claims::getSubject);
+  public JwtService() {
+    byte[] secret = new byte[64];
+    new SecureRandom().nextBytes(secret);
+    this.algorithm = Algorithm.HMAC512(secret);
+    this.verifier = JWT.require(this.algorithm).build();
   }
 
-  public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-    final Claims claims = extractAllClaims(token);
-    return claimsResolver.apply(claims);
+  public String extractUsername(String token) {
+    return verifier.verify(token).getSubject();
   }
 
   public String generateToken(UserDetails userDetails) {
-    return generateToken(new HashMap<>(), userDetails);
+    return generateToken(Map.of(), userDetails);
   }
 
   public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
@@ -44,10 +44,10 @@ public class JwtService {
 
   private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails,
       long expiration) {
-    return Jwts.builder().claims(extraClaims).subject(userDetails.getUsername())
-        .issuedAt(new Date(System.currentTimeMillis()))
-        .expiration(new Date(System.currentTimeMillis() + expiration)).signWith(this.key)
-        .compact();
+    return JWT.create().withPayload(extraClaims).withSubject(userDetails.getUsername())
+        .withIssuedAt(Instant.now())
+        .withExpiresAt(Instant.now().plusMillis(expiration))
+        .sign(this.algorithm);
   }
 
   public boolean isTokenValid(String token, UserDetails userDetails) {
@@ -56,16 +56,7 @@ public class JwtService {
   }
 
   private boolean isTokenExpired(String token) {
-    return extractExpiration(token).before(new Date());
-  }
-
-  private Date extractExpiration(String token) {
-    return extractClaim(token, Claims::getExpiration);
-  }
-
-  private Claims extractAllClaims(String token) {
-    return Jwts.parser().verifyWith(this.key).build().parseSignedClaims(token)
-        .getPayload();
+    return JWT.decode(token).getExpiresAt().before(new Date());
   }
 
 }

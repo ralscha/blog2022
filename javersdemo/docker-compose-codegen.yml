@@ -1,17 +1,17 @@
 # Spins up a throw-away Postgres, migrates with Flyway, then generates
 # jOOQ classes into target/generated-sources/jooq on the host.
 #
-# Usage:  generate-jooq.cmd   (or see that script for details)
+# Usage:  task generate
 services:
 
   postgres:
     image: postgres:18-alpine
     environment:
-      POSTGRES_DB: shedlockdemo
+      POSTGRES_DB: javersdemo
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d shedlockdemo"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d javersdemo"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -28,7 +28,7 @@ services:
     working_dir: /project
     command: >
       mvn -Pjooq generate-sources
-        -Dcodegen.db.url=jdbc:postgresql://postgres:5432/shedlockdemo
+        -Dcodegen.db.url=jdbc:postgresql://postgres:5432/javersdemo
         -Dcodegen.db.user=postgres
         -Dcodegen.db.password=password
 

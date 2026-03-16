@@ -41,7 +41,7 @@ tasks:
       - pom.xml
       - docker-compose-codegen.yml
     generates:
-      - target/generated-sources/jooq/ch/rasc/shedlockdemo/db/DefaultCatalog.java
+      - target/generated-sources/jooq/ch/rasc/javersdemo/db/DefaultCatalog.java
 
   # ---------------------------------------------------------------------------
   # Build
