@@ -8,21 +8,30 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-
-  <form #signupForm="ngForm" (ngSubmit)="signupForm.valid && register(username.value)"
-        [ngFormOptions]="{updateOn: 'submit'}"
-        class="ion-margin-top" novalidate>
+  <form
+    #signupForm="ngForm"
+    (ngSubmit)="signupForm.valid && register(username.value)"
+    [ngFormOptions]="{ updateOn: 'submit' }"
+    class="ion-margin-top"
+    novalidate
+  >
     <ion-grid>
-
       <ion-row>
         <ion-col>
           <ion-item lines="none">
-            <ion-input #username="ngModel" [required]="true"
-                       [spellcheck]="false" autocapitalize="off"
-                       autocomplete="username" errorText="Username is required"
-                       label="Username" labelPlacement="stacked"
-                       name="username"
-                       ngModel type="text" />
+            <ion-input
+              #username="ngModel"
+              [required]="true"
+              [spellcheck]="false"
+              autocapitalize="off"
+              autocomplete="username"
+              errorText="Username is required"
+              label="Username"
+              labelPlacement="stacked"
+              name="username"
+              ngModel
+              type="text"
+            />
           </ion-item>
         </ion-col>
       </ion-row>
@@ -32,9 +41,6 @@
           <ion-button color="secondary" expand="block" type="submit">Register</ion-button>
         </ion-col>
       </ion-row>
-
     </ion-grid>
   </form>
-
 </ion-content>
-

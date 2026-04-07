@@ -17,6 +17,16 @@ import {
   IonToolbar
 } from "@ionic/angular/standalone";
 
+type Sqlite3ModuleOptions = {
+  locateFile?: (file: string) => string;
+  print?: typeof console.log;
+  printErr?: typeof console.error;
+};
+
+const initializeSqlite3Module = sqlite3InitModule as unknown as (
+  options?: Sqlite3ModuleOptions,
+) => ReturnType<typeof sqlite3InitModule>;
+
 type Country = {
   id: number,
   name: string,
@@ -94,7 +104,7 @@ Question:
 
     const initializeSQLite = async () => {
       try {
-        const sqlite3 = await sqlite3InitModule({
+        const sqlite3 = await initializeSqlite3Module({
           locateFile: (file) => `/sqlite-wasm/${file}`,
           print: console.log,
           printErr: console.error,

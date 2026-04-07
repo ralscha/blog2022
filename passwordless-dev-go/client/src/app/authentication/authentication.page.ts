@@ -1,11 +1,11 @@
-import {Component, inject} from '@angular/core';
-import {MessagesService} from '../messages.service';
-import {HttpClient} from '@angular/common/http';
-import {environment} from '../../environments/environment';
+import { Component, inject } from '@angular/core';
+import { MessagesService } from '../messages.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
-import {Client} from '@passwordlessdev/passwordless-client';
-import {SigninInput} from "../api/types";
-import {RouterLink} from '@angular/router';
+import { Client } from '@passwordlessdev/passwordless-client';
+import { SigninInput } from '../api/types';
+import { RouterLink } from '@angular/router';
 import {
   IonButton,
   IonCol,
@@ -16,13 +16,24 @@ import {
   IonRow,
   IonTitle,
   IonToolbar,
-  NavController
-} from "@ionic/angular/standalone";
+  NavController,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-authentication',
   templateUrl: './authentication.page.html',
-  imports: [RouterLink, IonRouterLink, IonHeader, IonToolbar, IonContent, IonGrid, IonCol, IonButton, IonRow, IonTitle]
+  imports: [
+    RouterLink,
+    IonRouterLink,
+    IonHeader,
+    IonToolbar,
+    IonContent,
+    IonGrid,
+    IonCol,
+    IonButton,
+    IonRow,
+    IonTitle,
+  ],
 })
 export class AuthenticationPage {
   readonly #navCtrl = inject(NavController);
@@ -34,7 +45,7 @@ export class AuthenticationPage {
       apiKey: environment.PASSWORDLESS_PUBLIC_KEY,
     });
 
-    const {token, error} = await passwordlessClient.signinWithDiscoverable();
+    const { token, error } = await passwordlessClient.signinWithDiscoverable();
 
     if (error) {
       await this.#messagesService.showErrorToast('Login failed');
@@ -46,13 +57,11 @@ export class AuthenticationPage {
     };
     this.#httpClient.post<void>(`${environment.API_URL}/signin`, signinInput).subscribe({
       next: () => {
-        this.#navCtrl.navigateRoot('/home', {replaceUrl: true});
+        this.#navCtrl.navigateRoot('/home', { replaceUrl: true });
       },
       error: () => {
         this.#messagesService.showErrorToast('Login failed');
-      }
+      },
     });
-
   }
-
 }

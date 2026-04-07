@@ -1,7 +1,31 @@
 import {Component, inject} from '@angular/core';
+import {AsyncPipe} from '@angular/common';
 import sqlite3InitModule from '@sqlite.org/sqlite-wasm';
 import {HttpClient} from "@angular/common/http";
+import {FormsModule} from '@angular/forms';
 import {env, pipeline, TextGenerationPipeline} from "@huggingface/transformers";
+import {
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardTitle,
+  IonContent,
+  IonHeader,
+  IonInput,
+  IonSpinner,
+  IonTitle,
+  IonToolbar
+} from "@ionic/angular/standalone";
+
+type Sqlite3ModuleOptions = {
+  locateFile?: (file: string) => string;
+  print?: typeof console.log;
+  printErr?: typeof console.error;
+};
+
+const initializeSqlite3Module = sqlite3InitModule as unknown as (
+  options?: Sqlite3ModuleOptions,
+) => ReturnType<typeof sqlite3InitModule>;
 
 type Country = {
   id: number,
@@ -22,6 +46,7 @@ type Country = {
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrl: './home.page.scss',
+  imports: [FormsModule, AsyncPipe, IonHeader, IonToolbar, IonTitle, IonContent, IonInput, IonSpinner, IonCard, IonCardHeader, IonCardContent, IonCardTitle]
 })
 export class HomePage {
   readonly httpClient = inject(HttpClient);
@@ -84,7 +109,7 @@ export class HomePage {
 
     const initializeSQLite = async () => {
       try {
-        const sqlite3 = await sqlite3InitModule({
+        const sqlite3 = await initializeSqlite3Module({
           locateFile: (file) => `/sqlite-wasm/${file}`,
           print: console.log,
           printErr: console.error,
