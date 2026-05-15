@@ -1,6 +1,6 @@
 module hibpbloom
 
-go 1.26.2
+go 1.26.3
 
 require github.com/bits-and-blooms/bloom/v3 v3.7.1
 
