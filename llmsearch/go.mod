@@ -4,7 +4,7 @@ go 1.26.3
 
 require (
 	codeberg.org/readeck/go-readability/v2 v2.1.1
-	github.com/ollama/ollama v0.23.4
+	github.com/ollama/ollama v0.24.0
 )
 
 require (
@@ -17,9 +17,9 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/mailru/easyjson v0.9.2 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
-	golang.org/x/crypto v0.51.0 // indirect
-	golang.org/x/net v0.54.0 // indirect
-	golang.org/x/sys v0.44.0 // indirect
+	golang.org/x/crypto v0.52.0 // indirect
+	golang.org/x/net v0.55.0 // indirect
+	golang.org/x/sys v0.45.0 // indirect
 	golang.org/x/text v0.37.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
