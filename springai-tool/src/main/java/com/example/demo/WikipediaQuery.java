@@ -1,7 +1,7 @@
 package com.example.demo;
 
-import com.fasterxml.jackson.annotation.JsonClassDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+import tools.jackson.annotation.JsonClassDescription;
+import tools.jackson.annotation.JsonPropertyDescription;
 
 @JsonClassDescription("A query to search Wikipedia")
 public record WikipediaQuery(
