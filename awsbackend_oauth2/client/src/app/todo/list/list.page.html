@@ -1,8 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>
-      Todos
-    </ion-title>
+    <ion-title> Todos </ion-title>
     <ion-buttons slot="primary">
       <ion-button (click)="signout()">
         <ion-icon name="exit-outline" slot="icon-only" />
@@ -10,7 +8,6 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 
 <ion-content [fullscreen]="true">
   @for (todo of todos$ | async; track todoTrackBy($index, todo)) {
@@ -30,7 +27,7 @@
         </div>
       </ion-card-header>
       <ion-card-content>
-        <ion-label>Due {{ todo.dueDate | date:'yyyy-MM-dd' }}</ion-label>
+        <ion-label>Due {{ todo.dueDate | date: 'yyyy-MM-dd' }}</ion-label>
       </ion-card-content>
       <ion-row>
         <ion-item [routerLink]="['./edit', todo.id]" routerDirection="forward">

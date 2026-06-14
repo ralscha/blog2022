@@ -1,16 +1,21 @@
-import {Component, ElementRef, OnDestroy, viewChild} from '@angular/core';
-import {IonContent, IonHeader, IonLabel, IonTitle, IonToolbar} from '@ionic/angular/standalone';
-import {AudioAnalyzer} from "./audio-analyzer";
-
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  viewChild,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import { IonContent, IonHeader, IonLabel, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { AudioAnalyzer } from './audio-analyzer';
 
 @Component({
   selector: 'app-speech',
   templateUrl: './speech.page.html',
   styleUrl: './speech.page.scss',
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonLabel]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonLabel],
 })
 export class SpeechPage implements OnDestroy {
-
   static readonly SAMPLING_RATE = 16_000;
 
   readonly canvas = viewChild.required<ElementRef>('canvas');
@@ -20,20 +25,20 @@ export class SpeechPage implements OnDestroy {
   private width = 300;
   private height = 350;
   private score = 0;
-  private snake: { x: number, y: number }[] = [];
-  private food!: { x: number, y: number };
+  private snake: { x: number; y: number }[] = [];
+  private food!: { x: number; y: number };
   private direction: string | null = null;
   private gameloop: number | null = null;
   private listenLoop: number | null = null;
   private worker!: Worker;
   private recorder: MediaRecorder | null = null;
-  private audioContext = new AudioContext({sampleRate: SpeechPage.SAMPLING_RATE});
-  private audioAnalyzer = new AudioAnalyzer({sampleRate: this.audioContext.sampleRate});
+  private audioContext = new AudioContext({ sampleRate: SpeechPage.SAMPLING_RATE });
+  private audioAnalyzer = new AudioAnalyzer({ sampleRate: this.audioContext.sampleRate });
 
   constructor() {
     this.worker = new Worker(new URL('../app.worker', import.meta.url));
     this.initListener();
-    this.worker.postMessage({type: 'load'});
+    this.worker.postMessage({ type: 'load' });
   }
 
   initListener(): void {
@@ -55,23 +60,22 @@ export class SpeechPage implements OnDestroy {
   async startListen(): Promise<void> {
     this.ctx = this.canvas().nativeElement.getContext('2d');
     if (!navigator.mediaDevices.getUserMedia) {
-      console.error("getUserMedia not supported on your browser!");
-      return
+      console.error('getUserMedia not supported on your browser!');
+      return;
     }
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: {
         sampleRate: SpeechPage.SAMPLING_RATE,
         channelCount: 1,
         echoCancellation: true,
-        noiseSuppression: true
-      }
+        noiseSuppression: true,
+      },
     });
 
     this.recorder = new MediaRecorder(stream);
-    this.recorder.onstart = () => {
-    }
+    this.recorder.onstart = () => {};
     this.recorder.ondataavailable = (e) => {
-      const blob = new Blob([e.data], {type: this.recorder!.mimeType});
+      const blob = new Blob([e.data], { type: this.recorder!.mimeType });
       const fileReader = new FileReader();
       fileReader.onloadend = async () => {
         try {
@@ -85,30 +89,30 @@ export class SpeechPage implements OnDestroy {
             return;
           }
 
-          this.worker.postMessage({type: 'generate', data: {audio: channelData, language: 'english'}});
+          this.worker.postMessage({
+            type: 'generate',
+            data: { audio: channelData, language: 'english' },
+          });
         } catch (e) {
           console.error('Error decoding audio data:', e);
         }
-      }
+      };
       fileReader.readAsArrayBuffer(blob);
     };
 
-    this.recorder.onstop = () => {
-    };
-
+    this.recorder.onstop = () => {};
 
     this.listenLoop = window.setInterval(() => {
       this.recorder!.stop();
       this.recorder!.start();
     }, 800);
-
   }
 
   ngOnDestroy(): void {
     this.stopGame();
     if (this.listenLoop) {
       clearInterval(this.listenLoop);
-      this.listenLoop = null
+      this.listenLoop = null;
     }
   }
 
@@ -183,7 +187,12 @@ export class SpeechPage implements OnDestroy {
     this.ctx.fillStyle = 'yellow';
     this.ctx.fillRect(x * this.snakeSize, y * this.snakeSize, this.snakeSize, this.snakeSize);
     this.ctx.fillStyle = 'red';
-    this.ctx.fillRect(x * this.snakeSize + 1, y * this.snakeSize + 1, this.snakeSize - 2, this.snakeSize - 2);
+    this.ctx.fillRect(
+      x * this.snakeSize + 1,
+      y * this.snakeSize + 1,
+      this.snakeSize - 2,
+      this.snakeSize - 2,
+    );
   }
 
   drawScore(): void {
@@ -196,7 +205,7 @@ export class SpeechPage implements OnDestroy {
     const length = 4;
     this.snake = [];
     for (let i = length - 1; i >= 0; i--) {
-      this.snake.push({x: i, y: 0});
+      this.snake.push({ x: i, y: 0 });
     }
   }
 
@@ -229,9 +238,9 @@ export class SpeechPage implements OnDestroy {
       snakeX = 0;
     }
 
-    let tail: { x: number, y: number } | undefined;
+    let tail: { x: number; y: number } | undefined;
     if (snakeX === this.food.x && snakeY === this.food.y) {
-      tail = {x: snakeX, y: snakeY};
+      tail = { x: snakeX, y: snakeY };
       this.score++;
 
       this.createFood();
@@ -257,20 +266,21 @@ export class SpeechPage implements OnDestroy {
 
   createFood(): void {
     this.food = {
-      x: Math.floor((Math.random() * 30) + 1),
-      y: Math.floor((Math.random() * 30) + 1)
+      x: Math.floor(Math.random() * 30 + 1),
+      y: Math.floor(Math.random() * 30 + 1),
     };
 
     for (let i = 0; i < this.snake.length; i++) {
       const snakeX = this.snake[i].x;
       const snakeY = this.snake[i].y;
 
-      if (this.food.x === snakeX && this.food.y === snakeY || this.food.y === snakeY && this.food.x === snakeX) {
-        this.food.x = Math.floor((Math.random() * 30) + 1);
-        this.food.y = Math.floor((Math.random() * 30) + 1);
+      if (
+        (this.food.x === snakeX && this.food.y === snakeY) ||
+        (this.food.y === snakeY && this.food.x === snakeX)
+      ) {
+        this.food.x = Math.floor(Math.random() * 30 + 1);
+        this.food.y = Math.floor(Math.random() * 30 + 1);
       }
     }
   }
-
-
 }

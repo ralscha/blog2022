@@ -1,11 +1,11 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TodoService} from '../todo.service';
-import {MessagesService} from '../messages.service';
-import {FormsModule, NgForm} from '@angular/forms';
-import {HttpErrorResponse} from '@angular/common/http';
-import {TodoPostResponse} from '../todo-post-response';
-import {Todo} from '../todo';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TodoService } from '../todo.service';
+import { MessagesService } from '../messages.service';
+import { FormsModule, NgForm } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+import { TodoPostResponse } from '../todo-post-response';
+import { Todo } from '../todo';
 import {
   IonBackButton,
   IonButton,
@@ -20,19 +20,36 @@ import {
   IonSelect,
   IonSelectOption,
   IonTitle,
-  IonToolbar
-} from "@ionic/angular/standalone";
+  IonToolbar,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-edit-page',
   templateUrl: './edit.page.html',
   styleUrls: ['./edit.page.scss'],
-  imports: [FormsModule, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonList, IonItem, IonInput, IonSelect, IonSelectOption, IonModal, IonDatetime, IonButton]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [
+    FormsModule,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonTitle,
+    IonContent,
+    IonList,
+    IonItem,
+    IonInput,
+    IonSelect,
+    IonSelectOption,
+    IonModal,
+    IonDatetime,
+    IonButton,
+  ],
 })
 export class EditPage implements OnInit {
   selectedTodo!: Todo;
   showCalendar = false;
-  dueDate?: string
+  dueDate?: string;
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly messagesService = inject(MessagesService);
@@ -42,13 +59,13 @@ export class EditPage implements OnInit {
     for (const [key, value] of Object.entries(fieldErrors)) {
       const comp = form.form.get(key);
       if (comp) {
-        comp.setErrors({[value]: true});
+        comp.setErrors({ [value]: true });
       }
     }
   }
 
   async ngOnInit(): Promise<void> {
-    this.route.data.subscribe(data => {
+    this.route.data.subscribe((data) => {
       this.selectedTodo = data['todo'];
       this.dueDate = this.selectedTodo.dueDate;
     });
@@ -61,7 +78,7 @@ export class EditPage implements OnInit {
 
     this.todoService.save(this.selectedTodo).subscribe({
       next: () => this.handleSuccessResponse(),
-      error: this.handleErrorResponse(todoForm)
+      error: this.handleErrorResponse(todoForm),
     });
   }
 
@@ -80,12 +97,11 @@ export class EditPage implements OnInit {
       const response: TodoPostResponse = errorResponse.error;
       if (response) {
         if (response.fieldErrors) {
-          EditPage.displayFieldErrors(form, response.fieldErrors)
+          EditPage.displayFieldErrors(form, response.fieldErrors);
         } else {
           this.messagesService.showErrorToast('Saving Todo failed');
         }
       }
     };
   }
-
 }

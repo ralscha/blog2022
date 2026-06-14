@@ -1,16 +1,15 @@
-import {inject, Injectable} from '@angular/core';
-import {LoadingController, ToastController} from '@ionic/angular/standalone';
+import { inject, Injectable } from '@angular/core';
+import { LoadingController, ToastController } from '@ionic/angular/standalone';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class MessagesService {
   private readonly toastCtrl = inject(ToastController);
   private readonly loadingCtrl = inject(LoadingController);
 
-
   async showLoading(message = 'Working'): Promise<HTMLIonLoadingElement> {
     const loading = await this.loadingCtrl.create({
       spinner: 'bubbles',
-      message
+      message,
     });
     await loading.present();
     return loading;
@@ -21,7 +20,7 @@ export class MessagesService {
       message,
       duration,
       position: 'bottom',
-      color: 'success'
+      color: 'success',
     });
     await toast.present();
   }
@@ -31,9 +30,8 @@ export class MessagesService {
       message,
       duration: 4000,
       position: 'bottom',
-      color: 'danger'
+      color: 'danger',
     });
     await toast.present();
   }
-
 }

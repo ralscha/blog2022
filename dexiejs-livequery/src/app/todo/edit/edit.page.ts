@@ -1,9 +1,9 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TodoService} from '../todo.service';
-import {MessagesService} from '../messages.service';
-import {FormsModule, NgForm} from '@angular/forms';
-import {Todo} from '../todo-db';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TodoService } from '../todo.service';
+import { MessagesService } from '../messages.service';
+import { FormsModule, NgForm } from '@angular/forms';
+import { Todo } from '../todo-db';
 import {
   IonBackButton,
   IonButton,
@@ -18,26 +18,43 @@ import {
   IonSelect,
   IonSelectOption,
   IonTitle,
-  IonToolbar
-} from "@ionic/angular/standalone";
+  IonToolbar,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-edit-page',
   templateUrl: './edit.page.html',
   styleUrl: './edit.page.scss',
-  imports: [FormsModule, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonList, IonItem, IonInput, IonSelect, IonSelectOption, IonModal, IonDatetime, IonButton]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [
+    FormsModule,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonTitle,
+    IonContent,
+    IonList,
+    IonItem,
+    IonInput,
+    IonSelect,
+    IonSelectOption,
+    IonModal,
+    IonDatetime,
+    IonButton,
+  ],
 })
 export class EditPage implements OnInit {
   selectedTodo!: Todo;
   showCalendar = false;
-  dueDate?: string
+  dueDate?: string;
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly messagesService = inject(MessagesService);
   private readonly todoService = inject(TodoService);
 
   async ngOnInit(): Promise<void> {
-    this.route.data.subscribe(data => {
+    this.route.data.subscribe((data) => {
       this.selectedTodo = data['todo'];
       this.dueDate = this.selectedTodo.dueDate;
     });

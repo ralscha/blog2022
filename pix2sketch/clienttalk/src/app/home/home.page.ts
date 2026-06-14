@@ -1,4 +1,4 @@
-import {Component, inject, NgZone} from '@angular/core';
+import { Component, inject, NgZone, ChangeDetectionStrategy } from '@angular/core';
 import {
   IonButton,
   IonContent,
@@ -6,20 +6,20 @@ import {
   IonIcon,
   IonProgressBar,
   IonTitle,
-  IonToolbar
+  IonToolbar,
 } from '@ionic/angular/standalone';
 
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../environments/environment";
-import {addIcons} from "ionicons";
-import {micCircleOutline, playCircleOutline, stopCircleOutline} from "ionicons/icons";
-
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { addIcons } from 'ionicons';
+import { micCircleOutline, playCircleOutline, stopCircleOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrl: './home.page.scss',
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonProgressBar]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonProgressBar],
 })
 export class HomePage {
   recording = false;
@@ -34,55 +34,58 @@ export class HomePage {
   private readonly zone = inject(NgZone);
 
   constructor() {
-    addIcons({micCircleOutline, stopCircleOutline, playCircleOutline});
+    addIcons({ micCircleOutline, stopCircleOutline, playCircleOutline });
   }
 
   speechToTextRequest(blob: Blob) {
     this.processing = true;
-    this.httpClient.post(`${environment.SERVER_URL}/talk/speechToText`, blob, {
-      responseType: 'text'
-    })
+    this.httpClient
+      .post(`${environment.SERVER_URL}/talk/speechToText`, blob, {
+        responseType: 'text',
+      })
       .subscribe({
-        next: response => {
+        next: (response) => {
           this.speechToTextResponse = response;
           this.chatWithGPT4(response);
         },
-        error: error => {
+        error: (error) => {
           this.error = error.message;
           this.processing = false;
-        }
+        },
       });
   }
 
   chatWithGPT4(prompt: string) {
-    this.httpClient.post(`${environment.SERVER_URL}/talk/chatWithGPT4`, prompt, {
-      responseType: 'text'
-    })
+    this.httpClient
+      .post(`${environment.SERVER_URL}/talk/chatWithGPT4`, prompt, {
+        responseType: 'text',
+      })
       .subscribe({
-        next: response => {
+        next: (response) => {
           this.chatGPT4Response = response;
           this.textToSpeechRequest(response);
         },
-        error: error => {
+        error: (error) => {
           this.error = error.message;
           this.processing = false;
-        }
+        },
       });
   }
 
   textToSpeechRequest(text: string) {
-    this.httpClient.post(`${environment.SERVER_URL}/talk/textToSpeech`, text, {
-      responseType: "blob"
-    })
+    this.httpClient
+      .post(`${environment.SERVER_URL}/talk/textToSpeech`, text, {
+        responseType: 'blob',
+      })
       .subscribe({
-        next: response => {
+        next: (response) => {
           this.textToSpeechResponse = response;
           this.processing = false;
         },
-        error: error => {
+        error: (error) => {
           this.error = error.message;
           this.processing = false;
-        }
+        },
       });
   }
 
@@ -105,8 +108,9 @@ export class HomePage {
     this.error = null;
     this.chunks = [];
     if (navigator.mediaDevices?.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({audio: true})
-        .then(stream => {
+      navigator.mediaDevices
+        .getUserMedia({ audio: true })
+        .then((stream) => {
           this.recording = true;
           this.mediaRecorder = new MediaRecorder(stream);
           this.mediaRecorder.start();
@@ -114,9 +118,9 @@ export class HomePage {
             this.chunks.push(e.data);
           };
         })
-        .catch(err => this.error = err);
+        .catch((err) => (this.error = err));
     } else {
-      this.error = "getUserMedia not supported on your browser!";
+      this.error = 'getUserMedia not supported on your browser!';
     }
   }
 
@@ -127,10 +131,8 @@ export class HomePage {
         const blob = new Blob(this.chunks);
         this.chunks = [];
         this.zone.run(() => this.speechToTextRequest(blob));
-      }
+      };
       this.mediaRecorder.stop();
     }
   }
-
-
 }

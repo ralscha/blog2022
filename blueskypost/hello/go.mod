@@ -1,9 +1,9 @@
 module bskyhello
 
-go 1.26.3
+go 1.26.4
 
 require (
-	github.com/bluesky-social/indigo v0.0.0-20260529183052-5368f55344e0
+	github.com/bluesky-social/indigo v0.0.0-20260611225325-d538a9c1096f
 	github.com/joho/godotenv v1.5.1
 )
 
@@ -12,7 +12,7 @@ exclude github.com/ipfs/go-log v1.0.5
 require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/earthboundkid/versioninfo/v2 v2.24.1 // indirect
-	github.com/felixge/httpsnoop v1.0.4 // indirect
+	github.com/felixge/httpsnoop v1.1.0 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
@@ -21,7 +21,7 @@ require (
 	github.com/hashicorp/go-retryablehttp v0.7.8 // indirect
 	github.com/hashicorp/golang-lru v1.0.2 // indirect
 	github.com/ipfs/bbloom v0.1.0 // indirect
-	github.com/ipfs/boxo v0.40.0 // indirect
+	github.com/ipfs/boxo v0.41.0 // indirect
 	github.com/ipfs/go-block-format v0.2.3 // indirect
 	github.com/ipfs/go-cid v0.6.1 // indirect
 	github.com/ipfs/go-datastore v0.9.1 // indirect
@@ -54,8 +54,8 @@ require (
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.28.0 // indirect
-	golang.org/x/crypto v0.52.0 // indirect
-	golang.org/x/sys v0.45.0 // indirect
+	golang.org/x/crypto v0.53.0 // indirect
+	golang.org/x/sys v0.46.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
 	lukechampine.com/blake3 v1.4.1 // indirect
 )

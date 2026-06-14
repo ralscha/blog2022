@@ -62,8 +62,8 @@ export class AudioAnalyzer {
         consecutiveSpeechSamples,
         threshold: this.energyThreshold,
         minDuration: this.minDuration,
-        averageEnergy: totalEnergy / frames
-      }
+        averageEnergy: totalEnergy / frames,
+      },
     };
   }
 

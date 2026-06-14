@@ -1,8 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      pix2sketch
-    </ion-title>
+    <ion-title> pix2sketch </ion-title>
     @if (processing) {
       <ion-progress-bar type="indeterminate" />
     }
@@ -23,11 +21,15 @@
     </ion-button>
     <div>
       @if (image) {
-        <img class="selectedImage" [src]="imageData" alt="selected_image"/>
+        <img class="selectedImage" [src]="imageData" alt="selected_image" />
       }
     </div>
     @if (sketchResponse) {
-      <img class="sketch" [src]="'data:image/jpg;base64,' +sketchResponse.imageBase64" alt="generated drawing"/>
+      <img
+        class="sketch"
+        [src]="'data:image/jpg;base64,' + sketchResponse.imageBase64"
+        alt="generated drawing"
+      />
       <p class="ion-margin">{{ sketchResponse.description }}</p>
     }
     @if (error) {

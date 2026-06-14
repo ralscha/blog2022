@@ -1,27 +1,28 @@
-import { Component, inject } from '@angular/core';
-import {IonApp, IonRouterOutlet} from '@ionic/angular/standalone';
-import {CapacitorUpdater} from '@capgo/capacitor-updater'
-import {HttpClient} from "@angular/common/http";
-import {firstValueFrom} from "rxjs";
-import {environment} from "../environments/environment";
-import {Dialog} from "@capacitor/dialog";
-import {App, AppState} from "@capacitor/app";
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { CapacitorUpdater } from '@capgo/capacitor-updater';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
+import { environment } from '../environments/environment';
+import { Dialog } from '@capacitor/dialog';
+import { App, AppState } from '@capacitor/app';
 
 type UpdateInfo = {
   version: string;
   downloadURL: string;
-}
+};
 
 @Component({
-    selector: 'app-root',
-    templateUrl: 'app.component.html',
-    imports: [IonApp, IonRouterOutlet]
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [IonApp, IonRouterOutlet],
 })
 export class AppComponent {
   private readonly httpClient = inject(HttpClient);
 
   constructor() {
-    CapacitorUpdater.notifyAppReady()
+    CapacitorUpdater.notifyAppReady();
 
     App.addListener('appStateChange', (state: AppState) => {
       if (state.isActive) {
@@ -32,7 +33,7 @@ export class AppComponent {
   }
 
   #checkForUpgrade() {
-    this.#readUpdateInfo().then(updateInfo => {
+    this.#readUpdateInfo().then((updateInfo) => {
       if (updateInfo.version !== environment.version) {
         this.#upgrade(updateInfo);
       }
@@ -47,9 +48,9 @@ export class AppComponent {
     const version = await CapacitorUpdater.download({
       url: updateInfo.downloadURL,
       version: updateInfo.version,
-    })
+    });
 
-    const {value: okButtonClicked} = await Dialog.confirm({
+    const { value: okButtonClicked } = await Dialog.confirm({
       title: 'New Version Available',
       message: `Do you want to upgrade to version ${updateInfo.version}?`,
       okButtonTitle: 'Upgrade',
@@ -58,6 +59,5 @@ export class AppComponent {
     if (okButtonClicked) {
       await CapacitorUpdater.set(version);
     }
-
   }
 }

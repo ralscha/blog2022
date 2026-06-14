@@ -1,3 +1,3 @@
 export const environment = {
-  SERVER_URL: 'https://webpush.hplar.ch'
+  SERVER_URL: 'https://webpush.hplar.ch',
 };

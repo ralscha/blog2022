@@ -1,4 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { Router } from '@angular/router';
 import {
   AlertController,
@@ -42,6 +47,7 @@ import { ToastService } from '../services/toast.service';
   selector: 'app-todos',
   templateUrl: './todos.page.html',
   styleUrl: './todos.page.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,

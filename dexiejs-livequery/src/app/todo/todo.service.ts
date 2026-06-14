@@ -1,9 +1,8 @@
-import {Injectable} from '@angular/core';
-import {Todo, TodoDb} from './todo-db';
+import { Injectable } from '@angular/core';
+import { Todo, TodoDb } from './todo-db';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class TodoService {
-
   private readonly db: TodoDb;
 
   constructor() {
@@ -25,6 +24,4 @@ export class TodoService {
   async getTodo(id: string): Promise<Todo | undefined> {
     return this.db.todos.get(id);
   }
-
-
 }

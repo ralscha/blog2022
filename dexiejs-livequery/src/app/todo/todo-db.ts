@@ -6,7 +6,7 @@ export class TodoDb extends Dexie {
   constructor() {
     super('tododb');
     this.version(1).stores({
-      todos: 'id'
+      todos: 'id',
     });
   }
 }
@@ -17,5 +17,3 @@ export interface Todo {
   dueDate?: string;
   description: string;
 }
-
-

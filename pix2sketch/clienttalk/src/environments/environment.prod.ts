@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  SERVER_URL: "https://talk.hplar.ch",
+  SERVER_URL: 'https://talk.hplar.ch',
 };

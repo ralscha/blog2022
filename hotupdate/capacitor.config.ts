@@ -7,9 +7,9 @@ const config: CapacitorConfig = {
   plugins: {
     CapacitorUpdater: {
       autoUpdate: false,
-	    statsUrl: ''
-    }
-  }
+      statsUrl: '',
+    },
+  },
 };
 
 export default config;

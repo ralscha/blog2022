@@ -1,4 +1,11 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -32,6 +39,7 @@ import { FormErrorService } from '../services/form-error.service';
   selector: 'app-edit-todo',
   templateUrl: './edit-todo.page.html',
   styleUrl: './edit-todo.page.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,

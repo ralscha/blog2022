@@ -22,13 +22,10 @@
               "base": "www"
             },
             "index": "src/index.html",
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
+            "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-            ],
+            "assets": [],
             "styles": ["src/global.scss", "src/variables.scss"],
             "scripts": [],
             "browser": "src/main.ts"

@@ -1,6 +1,5 @@
 {
   "name": "factbook",
-  "integrations": {
-  },
+  "integrations": {},
   "type": "angular"
 }

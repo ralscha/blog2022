@@ -1,14 +1,15 @@
-import {Component, inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
-import {HttpClient} from "@angular/common/http";
-import {SwPush} from "@angular/service-worker";
-import {firstValueFrom, lastValueFrom} from "rxjs";
-import {environment} from "../environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { SwPush } from '@angular/service-worker';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { environment } from '../environments/environment';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: 'app.component.html',
-    styleUrls: ['app.component.css']
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrls: ['app.component.css'],
 })
 export class AppComponent implements OnInit {
   subscribed = false;
@@ -24,16 +25,19 @@ export class AppComponent implements OnInit {
     // standalone: boolean indicating whether the browser is running in standalone mode.
     // Available on Apple's iOS Safari only
     const isIOS = 'standalone' in window.navigator;
-    const isIOSStandalone = 'standalone' in window.navigator && window.navigator.standalone === true;
+    const isIOSStandalone =
+      'standalone' in window.navigator && window.navigator.standalone === true;
     this.enabled = this.#swPush.isEnabled;
     if (this.#swPush.isEnabled && (!isIOS || isIOSStandalone)) {
       this.webPushSupported = true;
 
       // fetch the current subscription
-      this.#currentSubscription = await firstValueFrom(this.#swPush.subscription)
+      this.#currentSubscription = await firstValueFrom(this.#swPush.subscription);
       if (this.#currentSubscription) {
         this.subscribed = true;
-        await lastValueFrom(this.#httpClient.post(`${environment.SERVER_URL}/subscribe`, this.#currentSubscription));
+        await lastValueFrom(
+          this.#httpClient.post(`${environment.SERVER_URL}/subscribe`, this.#currentSubscription),
+        );
       }
     } else {
       this.webPushSupported = false;
@@ -42,11 +46,13 @@ export class AppComponent implements OnInit {
 
   async subscribe() {
     if (!this.#currentSubscription) {
-      this.#serverPublicKey = await lastValueFrom(this.#httpClient.get(`${environment.SERVER_URL}/publicKey`, {responseType: 'text'}))
+      this.#serverPublicKey = await lastValueFrom(
+        this.#httpClient.get(`${environment.SERVER_URL}/publicKey`, { responseType: 'text' }),
+      );
 
       try {
         this.#currentSubscription = await this.#swPush.requestSubscription({
-          serverPublicKey: this.#serverPublicKey!
+          serverPublicKey: this.#serverPublicKey!,
         });
       } catch (e) {
         console.error(e);
@@ -56,7 +62,9 @@ export class AppComponent implements OnInit {
     }
 
     if (this.#currentSubscription) {
-      await lastValueFrom(this.#httpClient.post(`${environment.SERVER_URL}/subscribe`, this.#currentSubscription));
+      await lastValueFrom(
+        this.#httpClient.post(`${environment.SERVER_URL}/subscribe`, this.#currentSubscription),
+      );
       this.subscribed = true;
     } else {
       this.subscribed = false;
@@ -66,10 +74,11 @@ export class AppComponent implements OnInit {
   async unsubscribe() {
     if (this.#currentSubscription) {
       await this.#currentSubscription.unsubscribe();
-      await lastValueFrom(this.#httpClient.post(`${environment.SERVER_URL}/unsubscribe`, this.#currentSubscription));
+      await lastValueFrom(
+        this.#httpClient.post(`${environment.SERVER_URL}/unsubscribe`, this.#currentSubscription),
+      );
       this.#currentSubscription = null;
       this.subscribed = false;
     }
   }
-
 }

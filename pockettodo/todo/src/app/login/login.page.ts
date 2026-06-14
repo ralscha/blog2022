@@ -1,4 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -30,6 +35,7 @@ import { FormErrorService } from '../services/form-error.service';
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrl: './login.page.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,

@@ -1,10 +1,10 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {TodoService} from '../todo.service';
-import {MessagesService} from '../messages.service';
-import {Observable} from 'rxjs';
-import {Todo} from '../todo';
-import {RouterLink} from '@angular/router';
-import {AsyncPipe, DatePipe} from '@angular/common';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { TodoService } from '../todo.service';
+import { MessagesService } from '../messages.service';
+import { Observable } from 'rxjs';
+import { Todo } from '../todo';
+import { RouterLink } from '@angular/router';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import {
   IonCard,
   IonCardContent,
@@ -19,16 +19,35 @@ import {
   IonRouterLink,
   IonRow,
   IonTitle,
-  IonToolbar
-} from "@ionic/angular/standalone";
-import {addIcons} from "ionicons";
-import {add, ellipse, exitOutline, pencilOutline, trashOutline} from "ionicons/icons";
+  IonToolbar,
+} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { add, ellipse, exitOutline, pencilOutline, trashOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.page.html',
   styleUrls: ['./list.page.scss'],
-  imports: [RouterLink, IonRouterLink, AsyncPipe, DatePipe, IonHeader, IonToolbar, IonTitle, IonIcon, IonContent, IonCard, IonCardHeader, IonCardContent, IonLabel, IonRow, IonItem, IonFab, IonFabButton]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [
+    RouterLink,
+    IonRouterLink,
+    AsyncPipe,
+    DatePipe,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonIcon,
+    IonContent,
+    IonCard,
+    IonCardHeader,
+    IonCardContent,
+    IonLabel,
+    IonRow,
+    IonItem,
+    IonFab,
+    IonFabButton,
+  ],
 })
 export class ListPage implements OnInit {
   todos$!: Observable<Todo[]>;
@@ -36,7 +55,7 @@ export class ListPage implements OnInit {
   private readonly messagesService = inject(MessagesService);
 
   constructor() {
-    addIcons({exitOutline, ellipse, pencilOutline, trashOutline, add});
+    addIcons({ exitOutline, ellipse, pencilOutline, trashOutline, add });
   }
 
   ngOnInit(): void {
@@ -45,7 +64,7 @@ export class ListPage implements OnInit {
   }
 
   async loadData(): Promise<void> {
-    const loading = await this.messagesService.showLoading("Please wait...");
+    const loading = await this.messagesService.showLoading('Please wait...');
     try {
       await this.todoService.loadTodos();
     } finally {
@@ -58,8 +77,8 @@ export class ListPage implements OnInit {
   }
 
   async deleteTodo(id: string): Promise<void> {
-    this.todoService.deleteTodo(id).subscribe(() => this.messagesService.showSuccessToast('Todo successfully deleted', 500));
+    this.todoService
+      .deleteTodo(id)
+      .subscribe(() => this.messagesService.showSuccessToast('Todo successfully deleted', 500));
   }
-
-
 }

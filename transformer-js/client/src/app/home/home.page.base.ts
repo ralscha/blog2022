@@ -1,9 +1,9 @@
-import {Component, inject} from '@angular/core';
-import {AsyncPipe} from '@angular/common';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import sqlite3InitModule from '@sqlite.org/sqlite-wasm';
-import {HttpClient} from "@angular/common/http";
-import {FormsModule} from '@angular/forms';
-import {env, pipeline, TextGenerationPipeline} from "@huggingface/transformers";
+import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { env, pipeline, TextGenerationPipeline } from '@huggingface/transformers';
 import {
   IonCard,
   IonCardContent,
@@ -14,8 +14,8 @@ import {
   IonInput,
   IonSpinner,
   IonTitle,
-  IonToolbar
-} from "@ionic/angular/standalone";
+  IonToolbar,
+} from '@ionic/angular/standalone';
 
 type Sqlite3ModuleOptions = {
   locateFile?: (file: string) => string;
@@ -28,25 +28,38 @@ const initializeSqlite3Module = sqlite3InitModule as unknown as (
 ) => ReturnType<typeof sqlite3InitModule>;
 
 type Country = {
-  id: number,
-  name: string,
-  area: number,
-  area_land: number,
-  area_water: number,
-  population: number,
-  population_growth: number,
-  birth_rate: number,
-  death_rate: number,
-  migration_rate: number,
-  flag_description: string,
-}
-
+  id: number;
+  name: string;
+  area: number;
+  area_land: number;
+  area_water: number;
+  population: number;
+  population_growth: number;
+  birth_rate: number;
+  death_rate: number;
+  migration_rate: number;
+  flag_description: string;
+};
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrl: './home.page.scss',
-  imports: [FormsModule, AsyncPipe, IonHeader, IonToolbar, IonTitle, IonContent, IonInput, IonSpinner, IonCard, IonCardHeader, IonCardContent, IonCardTitle]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [
+    FormsModule,
+    AsyncPipe,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonInput,
+    IonSpinner,
+    IonCard,
+    IonCardHeader,
+    IonCardContent,
+    IonCardTitle,
+  ],
 })
 export class HomePage {
   readonly httpClient = inject(HttpClient);
@@ -89,22 +102,31 @@ export class HomePage {
     const httpClient = this.httpClient;
 
     const start = (sqlite3: any) => {
-      httpClient.get('assets/countries.sqlite3', {responseType: 'arraybuffer'}).subscribe((data) => {
-        const p = sqlite3.wasm.allocFromTypedArray(data);
-        this.db = new sqlite3.oo1.DB();
-        const deserialize_flags = sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE;
-        const rc = sqlite3.capi.sqlite3_deserialize(this.db.pointer, 'main', p, data.byteLength, data.byteLength, deserialize_flags);
-        this.db.checkRc(rc);
+      httpClient
+        .get('assets/countries.sqlite3', { responseType: 'arraybuffer' })
+        .subscribe((data) => {
+          const p = sqlite3.wasm.allocFromTypedArray(data);
+          this.db = new sqlite3.oo1.DB();
+          const deserialize_flags = sqlite3.capi.SQLITE_DESERIALIZE_FREEONCLOSE;
+          const rc = sqlite3.capi.sqlite3_deserialize(
+            this.db.pointer,
+            'main',
+            p,
+            data.byteLength,
+            data.byteLength,
+            deserialize_flags,
+          );
+          this.db.checkRc(rc);
 
-        this.countries = [];
-        this.db.exec({
-          sql: 'select * from countries;',
-          rowMode: "object",
-          callback: (row: any) => {
-            this.countries.push(row);
-          }
+          this.countries = [];
+          this.db.exec({
+            sql: 'select * from countries;',
+            rowMode: 'object',
+            callback: (row: any) => {
+              this.countries.push(row);
+            },
+          });
         });
-      });
     };
 
     const initializeSQLite = async () => {
@@ -122,7 +144,6 @@ export class HomePage {
 
     initializeSQLite();
     this.#initializeLLM();
-
   }
 
   async generateSQL(): Promise<void> {
@@ -134,31 +155,27 @@ export class HomePage {
     const userPrompt = this.#prompt_template.replace('{question}', this.searchTerm);
     this.selectStatement = '';
 
-    const messages = [
-      {role: "user", content: userPrompt},
-    ];
+    const messages = [{ role: 'user', content: userPrompt }];
 
-    const output: any = await this.generator(messages, {max_new_tokens: 200});
+    const output: any = await this.generator(messages, { max_new_tokens: 200 });
     this.selectStatement = output[0].generated_text.at(-1).content;
 
     this.working = false;
 
     this.db.exec({
       sql: this.selectStatement,
-      rowMode: "object",
+      rowMode: 'object',
       callback: (row: any) => {
         this.countries.push(row);
-      }
+      },
     });
   }
 
   async isWebGPUAvailable(): Promise<boolean> {
-    // @ts-expect-error
     if (!navigator.gpu) {
       return false;
     }
     try {
-      // @ts-expect-error
       const adapter = await navigator.gpu.requestAdapter();
       return !!adapter;
     } catch {
@@ -172,10 +189,14 @@ export class HomePage {
     env.allowRemoteModels = false;
     env.backends.onnx.wasm!.wasmPaths = 'transformers-wasm/';
 
-    this.generator = await pipeline('text-generation', 'onnx-community/Llama-3.2-1B-Instruct-q4f16', {
-      device: 'webgpu',
-      dtype: 'q4f16',
-      local_files_only: true,
-    });
+    this.generator = await pipeline(
+      'text-generation',
+      'onnx-community/Llama-3.2-1B-Instruct-q4f16',
+      {
+        device: 'webgpu',
+        dtype: 'q4f16',
+        local_files_only: true,
+      },
+    );
   }
 }

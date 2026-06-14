@@ -19,7 +19,8 @@ import { GlobalErrorHandler } from './app/services/global-error-handler.service'
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideZoneChangeDetection(),{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    provideZoneChangeDetection(),
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(
       routes,

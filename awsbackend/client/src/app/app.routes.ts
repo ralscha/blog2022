@@ -1,13 +1,13 @@
-import {TodoResolver} from "./todo/todo.resolver";
-import {EditPage} from "./todo/edit/edit.page";
-import {ListPage} from "./todo/list/list.page";
-import {Routes} from "@angular/router";
+import { TodoResolver } from './todo/todo.resolver';
+import { EditPage } from './todo/edit/edit.page';
+import { ListPage } from './todo/list/list.page';
+import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
     path: '',
     redirectTo: 'todo',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'todo',
@@ -23,19 +23,19 @@ export const routes: Routes = [
             path: ':id',
             component: EditPage,
             resolve: {
-              todo: TodoResolver
-            }
+              todo: TodoResolver,
+            },
           },
           {
             path: '',
             component: EditPage,
             resolve: {
-              todo: TodoResolver
-            }
-          }
-        ]
-      }
-    ]
+              todo: TodoResolver,
+            },
+          },
+        ],
+      },
+    ],
   },
-  {path: '**', redirectTo: 'todo'}
+  { path: '**', redirectTo: 'todo' },
 ];

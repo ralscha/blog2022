@@ -1,5 +1,5 @@
-import {AuthConfig} from 'angular-oauth2-oidc';
-import {environment} from '../environments/environment';
+import { AuthConfig } from 'angular-oauth2-oidc';
+import { environment } from '../environments/environment';
 
 export const authCodeFlowConfig: AuthConfig = {
   issuer: environment.ISSUER,
@@ -10,5 +10,5 @@ export const authCodeFlowConfig: AuthConfig = {
   scope: 'openid',
   showDebugInformation: !environment.production,
   timeoutFactor: 0.01,
-  strictDiscoveryDocumentValidation: false
+  strictDiscoveryDocumentValidation: false,
 };

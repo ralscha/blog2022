@@ -1,10 +1,11 @@
-import {Component, inject} from '@angular/core';
-import {Todo} from '../todo-db';
-import {TodoService} from '../todo.service';
-import {MessagesService} from '../messages.service';
-import {liveQuery, Observable} from 'dexie';
-import {RouterLink} from '@angular/router';
-import {AsyncPipe, DatePipe} from '@angular/common';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Todo } from '../todo-db';
+import { TodoService } from '../todo.service';
+import { MessagesService } from '../messages.service';
+import { liveQuery } from 'dexie';
+import { Observable, from } from 'rxjs';
+import { RouterLink } from '@angular/router';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import {
   IonCard,
   IonCardContent,
@@ -19,16 +20,35 @@ import {
   IonRouterLink,
   IonRow,
   IonTitle,
-  IonToolbar
-} from "@ionic/angular/standalone";
-import {addIcons} from "ionicons";
-import {add, ellipse, pencilOutline, trashOutline} from "ionicons/icons";
+  IonToolbar,
+} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { add, ellipse, pencilOutline, trashOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.page.html',
   styleUrl: './list.page.scss',
-  imports: [RouterLink, IonRouterLink, AsyncPipe, DatePipe, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonIcon, IonLabel, IonCardContent, IonRow, IonItem, IonFab, IonFabButton]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [
+    RouterLink,
+    IonRouterLink,
+    AsyncPipe,
+    DatePipe,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonCard,
+    IonCardHeader,
+    IonIcon,
+    IonLabel,
+    IonCardContent,
+    IonRow,
+    IonItem,
+    IonFab,
+    IonFabButton,
+  ],
 })
 export class ListPage {
   public readonly todos$: Observable<Todo[]>;
@@ -36,8 +56,8 @@ export class ListPage {
   private readonly messagesService = inject(MessagesService);
 
   constructor() {
-    addIcons({ellipse, pencilOutline, trashOutline, add});
-    this.todos$ = liveQuery(() => this.todoService.allTodos());
+    addIcons({ ellipse, pencilOutline, trashOutline, add });
+    this.todos$ = from(liveQuery(() => this.todoService.allTodos()));
   }
 
   todoTrackBy(index: number, todo: Todo): string {
@@ -48,6 +68,4 @@ export class ListPage {
     await this.todoService.deleteTodo(id);
     await this.messagesService.showSuccessToast('Todo successfully deleted', 500);
   }
-
-
 }

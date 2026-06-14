@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -33,6 +39,7 @@ import { FormErrorService } from '../services/form-error.service';
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrl: './profile.page.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,

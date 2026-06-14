@@ -1,4 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -29,6 +34,7 @@ import { FormErrorService } from '../services/form-error.service';
   selector: 'app-password-reset',
   templateUrl: './password-reset.page.html',
   styleUrl: './password-reset.page.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,

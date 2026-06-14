@@ -1,8 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      World Factbook
-    </ion-title>
+    <ion-title> World Factbook </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,8 +8,12 @@
   <ion-content class="ion-padding">
     <div class="grid-container">
       <div class="grid-item">
-        <ion-input [disabled]="!db || !generator || working" placeholder="Search" [(ngModel)]="searchTerm"
-                   (ionChange)="generateSQL()" />
+        <ion-input
+          [disabled]="!db || !generator || working"
+          placeholder="Search"
+          [(ngModel)]="searchTerm"
+          (ionChange)="generateSQL()"
+        />
       </div>
       <div class="grid-item sql-output">
         <code>{{ selectStatement }}</code>

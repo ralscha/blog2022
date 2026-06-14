@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MessagesService } from '../messages.service';
 import { environment } from '../../environments/environment';
@@ -25,6 +25,7 @@ import {
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.page.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     FormsModule,
     IonHeader,

@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   IonButton,
   IonContent,
@@ -6,14 +6,14 @@ import {
   IonIcon,
   IonProgressBar,
   IonTitle,
-  IonToolbar
+  IonToolbar,
 } from '@ionic/angular/standalone';
 
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../environments/environment";
-import {finalize} from "rxjs";
-import {addIcons} from "ionicons";
-import {cameraOutline} from "ionicons/icons";
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { finalize } from 'rxjs';
+import { addIcons } from 'ionicons';
+import { cameraOutline } from 'ionicons/icons';
 
 interface SketchResponse {
   description: string;
@@ -24,7 +24,8 @@ interface SketchResponse {
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrl: './home.page.scss',
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonProgressBar]
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonProgressBar],
 })
 export class HomePage {
   image: ArrayBuffer | undefined;
@@ -35,7 +36,7 @@ export class HomePage {
   private readonly httpClient = inject(HttpClient);
 
   constructor() {
-    addIcons({cameraOutline});
+    addIcons({ cameraOutline });
   }
 
   selectImage() {
@@ -63,14 +64,15 @@ export class HomePage {
 
   postRequest() {
     this.processing = true;
-    this.httpClient.post<SketchResponse>(`${environment.SERVER_URL}/sketch`, this.image)
-      .pipe(finalize(() => this.processing = false))
+    this.httpClient
+      .post<SketchResponse>(`${environment.SERVER_URL}/sketch`, this.image)
+      .pipe(finalize(() => (this.processing = false)))
       .subscribe({
-        next: response => this.sketchResponse = response,
-        error: error => {
+        next: (response) => (this.sketchResponse = response),
+        error: (error) => {
           console.log(error);
           this.error = error.message;
-        }
+        },
       });
   }
 }

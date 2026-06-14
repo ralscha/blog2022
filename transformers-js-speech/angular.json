@@ -16,9 +16,7 @@
             "outputPath": "dist/app",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
@@ -76,19 +74,14 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
     }
   },
   "cli": {
-    "schematicCollections": [
-      "@ionic/angular-toolkit"
-    ]
+    "schematicCollections": ["@ionic/angular-toolkit"]
   },
   "schematics": {
     "@ionic/angular-toolkit:component": {

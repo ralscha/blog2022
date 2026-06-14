@@ -8,7 +8,6 @@ import {
   TextStreamer,
 } from '@huggingface/transformers';
 
-
 class AutomaticSpeechRecognitionPipeline {
   static model_id: string | null = null;
   static tokenizer: Promise<PreTrainedTokenizer> | null = null;
@@ -35,7 +34,7 @@ class AutomaticSpeechRecognitionPipeline {
 let processing = false;
 
 // @ts-ignore
-async function generate({audio, language}) {
+async function generate({ audio, language }) {
   if (processing) {
     return;
   }
@@ -47,7 +46,7 @@ async function generate({audio, language}) {
     skip_prompt: true,
     decode_kwargs: {
       skip_special_tokens: true,
-    }
+    },
   });
 
   const inputs = await processor(audio);
@@ -59,7 +58,7 @@ async function generate({audio, language}) {
     streamer,
   });
 
-  const outputText = tokenizer.batch_decode(outputs, {skip_special_tokens: true});
+  const outputText = tokenizer.batch_decode(outputs, { skip_special_tokens: true });
 
   self.postMessage({
     status: 'complete',
@@ -70,11 +69,11 @@ async function generate({audio, language}) {
 
 async function load() {
   await AutomaticSpeechRecognitionPipeline.getInstance();
-  self.postMessage({status: 'ready'});
+  self.postMessage({ status: 'ready' });
 }
 
 self.addEventListener('message', async (e: MessageEvent) => {
-  const {type, data} = e.data;
+  const { type, data } = e.data;
 
   switch (type) {
     case 'load':
