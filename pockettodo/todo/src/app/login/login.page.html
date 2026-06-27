@@ -16,11 +16,13 @@
       <ion-col size="12" size-lg="4" size-md="6">
         <ion-card>
           <ion-card-content>
-            <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+            <form [formRoot]="loginForm" (submit)="onSubmit()">
               <ion-input
-                [errorText]="formErrorService.getErrorMessage(email, 'email')"
+                [errorText]="
+                  formErrorService.getErrorMessage(loginForm.email, 'email')
+                "
                 fill="outline"
-                formControlName="email"
+                [formField]="loginForm.email"
                 label="Email"
                 labelPlacement="stacked"
                 placeholder="Enter your email"
@@ -28,10 +30,13 @@
 
               <ion-input
                 [errorText]="
-                  formErrorService.getErrorMessage(password, 'password')
+                  formErrorService.getErrorMessage(
+                    loginForm.password,
+                    'password'
+                  )
                 "
                 fill="outline"
-                formControlName="password"
+                [formField]="loginForm.password"
                 label="Password"
                 labelPlacement="stacked"
                 placeholder="Enter your password"
@@ -40,7 +45,7 @@
               </ion-input>
 
               <ion-button
-                [disabled]="loginForm.invalid || isLoading()"
+                [disabled]="!loginForm().valid() || isLoading()"
                 class="ion-margin-top"
                 expand="block"
                 type="submit">

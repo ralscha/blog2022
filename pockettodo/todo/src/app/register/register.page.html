@@ -16,11 +16,13 @@
       <ion-col size="12" size-lg="4" size-md="6">
         <ion-card>
           <ion-card-content>
-            <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+            <form [formRoot]="registerForm" (submit)="onSubmit()">
               <ion-input
-                [errorText]="formErrorService.getErrorMessage(email, 'email')"
+                [errorText]="
+                  formErrorService.getErrorMessage(registerForm.email, 'email')
+                "
                 fill="outline"
-                formControlName="email"
+                [formField]="registerForm.email"
                 label="Email"
                 labelPlacement="stacked"
                 placeholder="Enter your email"
@@ -28,7 +30,7 @@
 
               <ion-input
                 fill="outline"
-                formControlName="name"
+                [formField]="registerForm.name"
                 label="Name (Optional)"
                 labelPlacement="stacked"
                 placeholder="Enter your name"
@@ -36,10 +38,13 @@
 
               <ion-input
                 [errorText]="
-                  formErrorService.getErrorMessage(password, 'password')
+                  formErrorService.getErrorMessage(
+                    registerForm.password,
+                    'password'
+                  )
                 "
                 fill="outline"
-                formControlName="password"
+                [formField]="registerForm.password"
                 label="Password"
                 labelPlacement="stacked"
                 placeholder="Enter your password"
@@ -47,20 +52,24 @@
 
               <ion-input
                 [errorText]="
-                  formErrorService.getErrorMessage(
-                    passwordConfirm,
-                    'passwordConfirm'
-                  )
+                  passwordMismatch()
+                    ? 'Passwords do not match'
+                    : formErrorService.getErrorMessage(
+                        registerForm.passwordConfirm,
+                        'passwordConfirm'
+                      )
                 "
                 fill="outline"
-                formControlName="passwordConfirm"
+                [formField]="registerForm.passwordConfirm"
                 label="Confirm Password"
                 labelPlacement="stacked"
                 placeholder="Confirm your password"
                 type="password" />
 
               <ion-button
-                [disabled]="registerForm.invalid || isLoading()"
+                [disabled]="
+                  !registerForm().valid() || passwordMismatch() || isLoading()
+                "
                 class="ion-margin-top"
                 expand="block"
                 type="submit">

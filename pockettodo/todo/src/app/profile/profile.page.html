@@ -25,20 +25,22 @@
       </ion-card-header>
 
       <ion-card-content>
-        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <form [formRoot]="profileForm" (submit)="onSubmit()">
           <ion-input
             type="email"
             fill="outline"
-            formControlName="email"
+            [formField]="profileForm.email"
             label="Email"
             labelPlacement="stacked"
             placeholder="Enter your email"
-            [errorText]="formErrorService.getErrorMessage(email, 'email')" />
+            [errorText]="
+              formErrorService.getErrorMessage(profileForm.email, 'email')
+            " />
 
           <ion-input
             type="text"
             fill="outline"
-            formControlName="name"
+            [formField]="profileForm.name"
             label="Name"
             labelPlacement="stacked"
             placeholder="Enter your name (optional)" />
@@ -47,7 +49,7 @@
             <ion-button
               expand="block"
               type="submit"
-              [disabled]="profileForm.invalid || isLoading()">
+              [disabled]="!profileForm().valid() || isLoading()">
               @if (isLoading()) {
                 Updating...
               } @else {

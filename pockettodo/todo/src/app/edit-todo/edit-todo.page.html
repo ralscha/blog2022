@@ -33,29 +33,34 @@
   } @else {
     <ion-card>
       <ion-card-content>
-        <form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
+        <form [formRoot]="todoForm" (submit)="onSubmit()">
           <ion-input
             type="text"
-            formControlName="title"
+            [formField]="todoForm.title"
             fill="outline"
             label="Title *"
             labelPlacement="stacked"
             placeholder="Enter todo title"
-            [errorText]="formErrorService.getErrorMessage(title, 'title')" />
+            [errorText]="
+              formErrorService.getErrorMessage(todoForm.title, 'title')
+            " />
 
           <ion-textarea
-            formControlName="description"
+            [formField]="todoForm.description"
             label="Description"
             fill="outline"
             labelPlacement="stacked"
             placeholder="Enter todo description (optional)"
             rows="4"
             [errorText]="
-              formErrorService.getErrorMessage(description, 'description')
+              formErrorService.getErrorMessage(
+                todoForm.description,
+                'description'
+              )
             " />
 
           <ion-datetime
-            formControlName="due_date"
+            [formField]="todoForm.due_date"
             presentation="date"
             [min]="getCurrentDate()"
             slot="end">
@@ -63,7 +68,7 @@
           </ion-datetime>
 
           @if (isEditing()) {
-            <ion-checkbox formControlName="completed" labelPlacement="end">
+            <ion-checkbox [formField]="todoForm.completed" labelPlacement="end">
               Completed
             </ion-checkbox>
           }
@@ -72,7 +77,7 @@
             <ion-button
               expand="block"
               type="submit"
-              [disabled]="todoForm.invalid || isLoading()">
+              [disabled]="!todoForm().valid() || isLoading()">
               @if (isLoading()) {
                 @if (isEditing()) {
                   Updating...

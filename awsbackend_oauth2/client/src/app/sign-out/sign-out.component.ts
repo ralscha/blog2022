@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   IonContent,
@@ -12,7 +12,6 @@ import {
   selector: 'app-sign-out',
   templateUrl: './sign-out.component.html',
   styleUrls: ['./sign-out.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [RouterLink, IonRouterLinkWithHref, IonHeader, IonToolbar, IonTitle, IonContent],
 })
 export class SignOutComponent {}

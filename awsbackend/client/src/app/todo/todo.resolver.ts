@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
@@ -6,7 +6,7 @@ import { add, format } from 'date-fns';
 import { Todo } from './todo';
 import { TodoService } from './todo.service';
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class TodoResolver implements Resolve<Todo> {
   private readonly todoService = inject(TodoService);
 

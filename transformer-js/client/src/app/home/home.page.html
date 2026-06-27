@@ -4,25 +4,26 @@
   </ion-toolbar>
 </ion-header>
 
-@if (isWebGPUAvailable() | async) {
+@if (webGPUAvailable()) {
   <ion-content class="ion-padding">
     <div class="grid-container">
       <div class="grid-item">
         <ion-input
-          [disabled]="!db || !generator || working"
+          [disabled]="!dbReady() || !generatorReady() || working()"
           placeholder="Search"
-          [(ngModel)]="searchTerm"
+          [value]="searchTerm()"
+          (ionInput)="searchTerm.set($event.detail.value ?? '')"
           (ionChange)="generateSQL()"
         />
       </div>
       <div class="grid-item sql-output">
-        <code>{{ selectStatement }}</code>
+        <code>{{ selectStatement() }}</code>
       </div>
       <div class="grid-item country-list">
-        @if (working) {
+        @if (working()) {
           <ion-spinner />
         } @else {
-          @for (fact of countries; track fact.id) {
+          @for (fact of countries(); track fact.id) {
             <ion-card>
               <ion-card-header>
                 <ion-card-title>{{ fact.name }}</ion-card-title>
@@ -45,7 +46,7 @@
   </ion-content>
 }
 
-@if (!isWebGPUAvailable()) {
+@if (webGPUAvailable() === false) {
   <ion-content class="ion-padding">
     <div class="ion-text-center">
       <h1>WebGPU is not available in your browser</h1>

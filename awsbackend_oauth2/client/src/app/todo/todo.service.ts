@@ -1,11 +1,11 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Todo } from './todo';
 import { TodoPostResponse } from './todo-post-response';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class TodoService {
   private readonly httpClient = inject(HttpClient);
 

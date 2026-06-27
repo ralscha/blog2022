@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title> Talk to GPT </ion-title>
-    @if (processing) {
+    @if (processing()) {
       <ion-progress-bar type="indeterminate" />
     }
   </ion-toolbar>
@@ -15,35 +15,35 @@
   </ion-header>
 
   <div class="container">
-    @if (!recording) {
-      <ion-button [disabled]="processing" (click)="startRecording()" color="success">
+    @if (!recording()) {
+      <ion-button [disabled]="processing()" (click)="startRecording()" color="success">
         <ion-icon slot="start" name="mic-circle-outline" />
         Start Recording
       </ion-button>
     }
-    @if (recording) {
+    @if (recording()) {
       <ion-button (click)="stopRecording()" color="danger">
         <ion-icon slot="start" name="stop-circle-outline" />
         Stop Recording
       </ion-button>
     }
 
-    @if (speechToTextResponse) {
-      <p class="ion-margin">{{ speechToTextResponse }}</p>
+    @if (speechToTextResponse(); as response) {
+      <p class="ion-margin">{{ response }}</p>
     }
-    @if (chatGPT4Response) {
-      <p class="ion-margin">{{ chatGPT4Response }}</p>
+    @if (chatGPT4Response(); as response) {
+      <p class="ion-margin">{{ response }}</p>
     }
 
-    @if (textToSpeechResponse) {
+    @if (textToSpeechResponse()) {
       <ion-button (click)="speak()" color="success">
         <ion-icon slot="start" name="play-circle-outline" />
         Speak
       </ion-button>
     }
 
-    @if (error) {
-      <p class="ion-margin error">{{ error }}</p>
+    @if (error(); as message) {
+      <p class="ion-margin error">{{ message }}</p>
     }
   </div>
 </ion-content>

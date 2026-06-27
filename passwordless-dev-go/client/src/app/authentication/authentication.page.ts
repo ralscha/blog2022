@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MessagesService } from '../messages.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -22,7 +22,6 @@ import {
 @Component({
   selector: 'app-authentication',
   templateUrl: './authentication.page.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     RouterLink,
     IonRouterLink,

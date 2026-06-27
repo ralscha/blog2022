@@ -1,15 +1,11 @@
+import { Component, inject, signal } from '@angular/core';
 import {
-  Component,
-  inject,
-  signal,
-  ChangeDetectionStrategy
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+  email,
+  FormField,
+  FormRoot,
+  form,
+  required
+} from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 import {
   IonButton,
@@ -34,7 +30,6 @@ import { FormErrorService } from '../services/form-error.service';
   selector: 'app-password-reset',
   templateUrl: './password-reset.page.html',
   styleUrl: './password-reset.page.css',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,
@@ -48,36 +43,32 @@ import { FormErrorService } from '../services/form-error.service';
     IonGrid,
     IonRow,
     IonCol,
-    ReactiveFormsModule,
+    FormField,
+    FormRoot,
     RouterLink,
     IonRouterLinkWithHref
   ]
 })
 export class PasswordResetPage {
   formErrorService = inject(FormErrorService);
-  resetForm: FormGroup;
+  resetModel = signal({
+    email: ''
+  });
+  resetForm = form(this.resetModel, path => {
+    required(path.email);
+    email(path.email);
+  });
   isLoading = signal(false);
   emailSent = signal(false);
-  private fb = inject(FormBuilder);
   private pocketbaseService = inject(PocketbaseService);
   private toastService = inject(ToastService);
 
-  constructor() {
-    this.resetForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]]
-    });
-  }
-
-  get email() {
-    return this.resetForm.get('email');
-  }
-
-  async onSubmit() {
-    if (this.resetForm.valid && !this.isLoading()) {
+  async onSubmit(): Promise<void> {
+    if (this.resetForm().valid() && !this.isLoading()) {
       this.isLoading.set(true);
 
       await this.pocketbaseService.requestPasswordReset(
-        this.resetForm.value.email
+        this.resetModel().email
       );
       this.emailSent.set(true);
       await this.toastService.showToast(

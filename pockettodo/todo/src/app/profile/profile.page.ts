@@ -1,16 +1,11 @@
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {
-  Component,
-  inject,
-  OnInit,
-  signal,
-  ChangeDetectionStrategy
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+  email,
+  FormField,
+  FormRoot,
+  form,
+  required
+} from '@angular/forms/signals';
 import { Router } from '@angular/router';
 import {
   AlertController,
@@ -39,7 +34,6 @@ import { FormErrorService } from '../services/form-error.service';
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrl: './profile.page.css',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,
@@ -55,46 +49,38 @@ import { FormErrorService } from '../services/form-error.service';
     IonText,
     IonButtons,
     IonBackButton,
-    ReactiveFormsModule,
+    FormField,
+    FormRoot,
     IonItem
   ]
 })
 export class ProfilePage implements OnInit {
   formErrorService = inject(FormErrorService);
-  profileForm: FormGroup;
+  profileModel = signal({
+    email: '',
+    name: ''
+  });
+  profileForm = form(this.profileModel, path => {
+    required(path.email);
+    email(path.email);
+  });
   isLoading = signal(false);
   currentUser = signal<User | null>(null);
-  private fb = inject(FormBuilder);
   private pocketbaseService = inject(PocketbaseService);
   private router = inject(Router);
   private toastService = inject(ToastService);
   private alertController = inject(AlertController);
 
-  constructor() {
-    this.profileForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      name: ['']
-    });
-  }
-
-  get email() {
-    return this.profileForm.get('email');
-  }
-
-  get name() {
-    return this.profileForm.get('name');
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadProfile();
   }
 
-  async loadProfile() {
+  async loadProfile(): Promise<void> {
     this.isLoading.set(true);
     const user = this.pocketbaseService.currentUser();
     if (user) {
       this.currentUser.set(user);
-      this.profileForm.patchValue({
+      this.profileModel.set({
         email: user.email,
         name: user.name || ''
       });
@@ -102,8 +88,8 @@ export class ProfilePage implements OnInit {
     this.isLoading.set(false);
   }
 
-  async onSubmit() {
-    if (this.profileForm.valid && !this.isLoading()) {
+  async onSubmit(): Promise<void> {
+    if (this.profileForm().valid() && !this.isLoading()) {
       const user = this.currentUser();
       if (!user) return;
 
@@ -111,7 +97,7 @@ export class ProfilePage implements OnInit {
 
       const updatedUser = await this.pocketbaseService.updateProfile(
         user.id,
-        this.profileForm.value
+        this.profileModel()
       );
       this.currentUser.set(updatedUser);
       await this.toastService.showToast(

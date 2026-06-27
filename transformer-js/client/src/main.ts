@@ -1,4 +1,3 @@
-import { provideZoneChangeDetection } from '@angular/core';
 import { provideRouter, RouteReuseStrategy, Routes, withHashLocation } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 import { bootstrapApplication } from '@angular/platform-browser';
@@ -20,7 +19,6 @@ const routes: Routes = [
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideZoneChangeDetection(),
     provideIonicAngular(),
     provideHttpClient(withXhr()),
     provideRouter(routes, withHashLocation()),

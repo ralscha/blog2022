@@ -1,17 +1,11 @@
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import {
-  Component,
-  inject,
-  input,
-  OnInit,
-  signal,
-  ChangeDetectionStrategy
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+  FormField,
+  FormRoot,
+  form,
+  maxLength,
+  required
+} from '@angular/forms/signals';
 import { Router } from '@angular/router';
 import {
   IonBackButton,
@@ -35,11 +29,17 @@ import { Todo } from '../models/todo.model';
 import { ToastService } from '../services/toast.service';
 import { FormErrorService } from '../services/form-error.service';
 
+type TodoForm = {
+  title: string;
+  description: string;
+  completed: boolean;
+  due_date: string;
+};
+
 @Component({
   selector: 'app-edit-todo',
   templateUrl: './edit-todo.page.html',
   styleUrl: './edit-todo.page.css',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,
@@ -56,54 +56,39 @@ import { FormErrorService } from '../services/form-error.service';
     IonCheckbox,
     IonButtons,
     IonBackButton,
-    ReactiveFormsModule
+    FormField,
+    FormRoot
   ]
 })
 export class EditTodoPage implements OnInit {
   formErrorService = inject(FormErrorService);
-  todoForm: FormGroup;
+  todoModel = signal<TodoForm>({
+    title: '',
+    description: '',
+    completed: false,
+    due_date: ''
+  });
+  todoForm = form(this.todoModel, path => {
+    required(path.title);
+    maxLength(path.title, 255);
+    maxLength(path.description, 1000);
+  });
   isLoading = signal(false);
   isEditing = signal(false);
   currentTodo = signal<Todo | null>(null);
   id = input<string | null>(null);
-  private fb = inject(FormBuilder);
   private pocketbaseService = inject(PocketbaseService);
   private router = inject(Router);
   private toastService = inject(ToastService);
 
-  constructor() {
-    this.todoForm = this.fb.group({
-      title: ['', [Validators.required, Validators.maxLength(255)]],
-      description: ['', [Validators.maxLength(1000)]],
-      completed: [false],
-      due_date: ['']
-    });
-  }
-
-  get title() {
-    return this.todoForm.get('title');
-  }
-
-  get description() {
-    return this.todoForm.get('description');
-  }
-
-  get completed() {
-    return this.todoForm.get('completed');
-  }
-
-  get due_date() {
-    return this.todoForm.get('due_date');
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.id()) {
       this.isEditing.set(true);
       this.loadTodo();
     }
   }
 
-  async loadTodo() {
+  async loadTodo(): Promise<void> {
     if (!this.id()) {
       return;
     }
@@ -111,7 +96,7 @@ export class EditTodoPage implements OnInit {
     this.isLoading.set(true);
     const todo = await this.pocketbaseService.getTodo(this.id()!);
     this.currentTodo.set(todo);
-    this.todoForm.patchValue({
+    this.todoModel.set({
       title: todo.title,
       description: todo.description || '',
       completed: todo.completed,
@@ -120,17 +105,17 @@ export class EditTodoPage implements OnInit {
     this.isLoading.set(false);
   }
 
-  async onSubmit() {
-    if (this.todoForm.valid && !this.isLoading()) {
+  async onSubmit(): Promise<void> {
+    if (this.todoForm().valid() && !this.isLoading()) {
       this.isLoading.set(true);
 
-      const formData = this.todoForm.value;
-
-      if (formData.due_date) {
-        formData.due_date = new Date(formData.due_date).toISOString();
-      } else {
-        formData.due_date = null;
-      }
+      const formValue = this.todoModel();
+      const formData = {
+        ...formValue,
+        due_date: formValue.due_date
+          ? new Date(formValue.due_date).toISOString()
+          : undefined
+      };
 
       if (this.isEditing() && this.id()) {
         await this.pocketbaseService.updateTodo(this.id()!, formData);

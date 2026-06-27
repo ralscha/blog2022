@@ -1,16 +1,12 @@
+import { Component, computed, inject, signal } from '@angular/core';
 import {
-  Component,
-  inject,
-  signal,
-  ChangeDetectionStrategy
-} from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+  email,
+  FormField,
+  FormRoot,
+  form,
+  minLength,
+  required
+} from '@angular/forms/signals';
 import { Router, RouterLink } from '@angular/router';
 import {
   IonButton,
@@ -35,7 +31,6 @@ import { FormErrorService } from '../services/form-error.service';
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrl: './register.page.css',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,
@@ -49,76 +44,45 @@ import { FormErrorService } from '../services/form-error.service';
     IonGrid,
     IonRow,
     IonCol,
-    ReactiveFormsModule,
+    FormField,
+    FormRoot,
     RouterLink,
     IonRouterLinkWithHref
   ]
 })
 export class RegisterPage {
   formErrorService = inject(FormErrorService);
-  registerForm: FormGroup;
+  registerModel = signal({
+    email: '',
+    name: '',
+    password: '',
+    passwordConfirm: ''
+  });
+  registerForm = form(this.registerModel, path => {
+    required(path.email);
+    email(path.email);
+    required(path.password);
+    minLength(path.password, 6);
+    required(path.passwordConfirm);
+  });
+  passwordMismatch = computed(() => {
+    const { password, passwordConfirm } = this.registerModel();
+    return passwordConfirm.length > 0 && password !== passwordConfirm;
+  });
   isLoading = signal(false);
-  private fb = inject(FormBuilder);
   private pocketbaseService = inject(PocketbaseService);
   private router = inject(Router);
   private toastService = inject(ToastService);
 
-  constructor() {
-    this.registerForm = this.fb.group(
-      {
-        email: ['', [Validators.required, Validators.email]],
-        name: [''],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        passwordConfirm: ['', [Validators.required]]
-      },
-      { validators: this.passwordMatchValidator }
-    );
-  }
-
-  get email() {
-    return this.registerForm.get('email');
-  }
-
-  get name() {
-    return this.registerForm.get('name');
-  }
-
-  get password() {
-    return this.registerForm.get('password');
-  }
-
-  get passwordConfirm() {
-    return this.registerForm.get('passwordConfirm');
-  }
-
-  passwordMatchValidator(control: AbstractControl) {
-    const password = control.get('password');
-    const passwordConfirm = control.get('passwordConfirm');
-
+  async onSubmit(): Promise<void> {
     if (
-      password &&
-      passwordConfirm &&
-      password.value !== passwordConfirm.value
+      this.registerForm().valid() &&
+      !this.passwordMismatch() &&
+      !this.isLoading()
     ) {
-      passwordConfirm.setErrors({ passwordMismatch: true });
-      return { passwordMismatch: true };
-    }
-
-    if (passwordConfirm?.errors?.['passwordMismatch']) {
-      delete passwordConfirm.errors['passwordMismatch'];
-      if (Object.keys(passwordConfirm.errors).length === 0) {
-        passwordConfirm.setErrors(null);
-      }
-    }
-
-    return null;
-  }
-
-  async onSubmit() {
-    if (this.registerForm.valid && !this.isLoading()) {
       this.isLoading.set(true);
 
-      await this.pocketbaseService.register(this.registerForm.value);
+      await this.pocketbaseService.register(this.registerModel());
       await this.toastService.showToast(
         'Registration successful! You can now login.',
         'success'

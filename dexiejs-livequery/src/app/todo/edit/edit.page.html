@@ -8,61 +8,47 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form
-    #todoForm="ngForm"
-    (ngSubmit)="todoForm.valid && save(todoForm)"
-    [ngFormOptions]="{ updateOn: 'submit' }"
-    novalidate
-  >
+  <form [formRoot]="todoForm" (submit)="todoForm().valid() && save()" novalidate>
     <ion-list>
       <ion-item lines="none">
         <ion-input
-          [ngModel]="selectedTodo.description"
+          [formField]="todoForm.description"
           [required]="true"
           errorText="Task is required"
           label="Task"
           labelPlacement="floating"
-          name="description"
         />
       </ion-item>
 
       <ion-item class="ion-margin-top">
-        <ion-select
-          #priority="ngModel"
-          [ngModel]="selectedTodo.priority"
-          [required]="true"
-          label="Priority"
-          labelPlacement="floating"
-          name="priority"
-        >
+        <ion-select [formField]="todoForm.priority" label="Priority" labelPlacement="floating">
           <ion-select-option value="low">Low</ion-select-option>
           <ion-select-option value="normal">Normal</ion-select-option>
           <ion-select-option value="high">High</ion-select-option>
         </ion-select>
-        @if (!priority.valid && todoForm.submitted) {
+        @if (!todoForm.priority().valid() && todoForm.priority().touched()) {
           <span slot="error">Task is required</span>
         }
       </ion-item>
 
       <ion-item class="ion-margin-top">
         <ion-input
-          (click)="showCalendar = true"
-          [ngModel]="dueDate"
+          (click)="showCalendar.set(true)"
+          [formField]="todoForm.dueDate"
           [readonly]="true"
           [required]="true"
           label="Due Date"
           labelPlacement="floating"
-          name="dueDate"
         />
-        <ion-modal [isOpen]="showCalendar">
+        <ion-modal [isOpen]="showCalendar()">
           <ng-template>
             <ion-content>
               <ion-datetime
-                (ionCancel)="showCalendar = false"
+                (ionCancel)="showCalendar.set(false)"
                 (ionChange)="dateChanged($event)"
                 [showClearButton]="true"
                 [showDefaultButtons]="true"
-                [value]="dueDate"
+                [value]="todoModel().dueDate"
                 presentation="date"
               />
             </ion-content>
@@ -72,7 +58,7 @@
     </ion-list>
 
     <div class="ion-padding">
-      <ion-button expand="block" type="submit">Save</ion-button>
+      <ion-button [disabled]="!todoForm().valid()" expand="block" type="submit">Save</ion-button>
     </div>
   </form>
 </ion-content>

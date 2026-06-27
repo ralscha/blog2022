@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   IonButton,
   IonContent,
@@ -24,7 +24,6 @@ interface SketchResponse {
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrl: './home.page.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonProgressBar],
 })
 export class HomePage {

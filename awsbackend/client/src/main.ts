@@ -1,4 +1,3 @@
-import { provideZoneChangeDetection } from '@angular/core';
 import {
   PreloadAllModules,
   provideRouter,
@@ -14,7 +13,6 @@ import { provideHttpClient, withXhr } from '@angular/common/http';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideZoneChangeDetection(),
     provideIonicAngular(),
     provideHttpClient(withXhr()),
     provideRouter(routes, withHashLocation(), withPreloading(PreloadAllModules)),

@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MessagesService } from '../messages.service';
 import { environment } from '../../environments/environment';
@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 import { Client } from '@passwordlessdev/passwordless-client';
 import { CreateTokenInput, CreateTokenOutput } from '../api/types';
-import { FormsModule } from '@angular/forms';
+import { FormField, FormRoot, form } from '@angular/forms/signals';
 import {
   IonBackButton,
   IonButton,
@@ -22,12 +22,16 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 
+interface RegistrationForm {
+  username: string;
+}
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.page.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
-    FormsModule,
+    FormField,
+    FormRoot,
     IonHeader,
     IonToolbar,
     IonButtons,
@@ -43,11 +47,17 @@ import {
   ],
 })
 export class RegistrationPage {
+  readonly registrationModel = signal<RegistrationForm>({
+    username: '',
+  });
+  readonly registrationForm = form(this.registrationModel);
+
   readonly #router = inject(Router);
   readonly #httpClient = inject(HttpClient);
   readonly #messagesService = inject(MessagesService);
 
-  async register(username: string | null): Promise<void> {
+  async register(): Promise<void> {
+    const { username } = this.registrationModel();
     if (!username) {
       return;
     }

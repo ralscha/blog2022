@@ -13,11 +13,10 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { environment } from './environments/environment';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
-import { importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { importProvidersFrom } from '@angular/core';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideZoneChangeDetection(),
     importProvidersFrom(
       OAuthModule.forRoot({
         resourceServer: {

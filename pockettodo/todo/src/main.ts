@@ -14,12 +14,11 @@ import {
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
-import { ErrorHandler, provideZoneChangeDetection } from '@angular/core';
+import { ErrorHandler } from '@angular/core';
 import { GlobalErrorHandler } from './app/services/global-error-handler.service';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideZoneChangeDetection(),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(

@@ -1,15 +1,12 @@
+import { Component, inject, signal } from '@angular/core';
 import {
-  Component,
-  inject,
-  signal,
-  ChangeDetectionStrategy
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+  email,
+  FormField,
+  FormRoot,
+  form,
+  minLength,
+  required
+} from '@angular/forms/signals';
 import { Router, RouterLink } from '@angular/router';
 import {
   IonButton,
@@ -35,7 +32,6 @@ import { FormErrorService } from '../services/form-error.service';
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrl: './login.page.css',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,
@@ -49,7 +45,8 @@ import { FormErrorService } from '../services/form-error.service';
     IonGrid,
     IonRow,
     IonCol,
-    ReactiveFormsModule,
+    FormField,
+    FormRoot,
     RouterLink,
     IonRouterLinkWithHref,
     IonInputPasswordToggle
@@ -57,33 +54,26 @@ import { FormErrorService } from '../services/form-error.service';
 })
 export class LoginPage {
   formErrorService = inject(FormErrorService);
-  loginForm: FormGroup;
+  loginModel = signal({
+    email: '',
+    password: ''
+  });
+  loginForm = form(this.loginModel, path => {
+    required(path.email);
+    email(path.email);
+    required(path.password);
+    minLength(path.password, 6);
+  });
   isLoading = signal(false);
-  private fb = inject(FormBuilder);
   private pocketbaseService = inject(PocketbaseService);
   private router = inject(Router);
   private toastService = inject(ToastService);
 
-  constructor() {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    });
-  }
-
-  get email() {
-    return this.loginForm.get('email');
-  }
-
-  get password() {
-    return this.loginForm.get('password');
-  }
-
-  async onSubmit() {
-    if (this.loginForm.valid && !this.isLoading()) {
+  async onSubmit(): Promise<void> {
+    if (this.loginForm().valid() && !this.isLoading()) {
       this.isLoading.set(true);
 
-      await this.pocketbaseService.login(this.loginForm.value);
+      await this.pocketbaseService.login(this.loginModel());
       await this.toastService.showToast('Login successful!', 'success');
       this.router.navigate(['/todos']);
 

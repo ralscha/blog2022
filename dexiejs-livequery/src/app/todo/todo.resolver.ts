@@ -3,10 +3,10 @@ import { Todo } from './todo-db';
 import { Observable } from 'rxjs';
 import { TodoService } from './todo.service';
 import { v4 as uuidv4 } from 'uuid';
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { add, format } from 'date-fns';
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class TodoResolver implements Resolve<Todo> {
   private readonly todoService = inject(TodoService);
 

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 import { SwPush } from '@angular/service-worker';
@@ -8,7 +8,6 @@ import { environment } from '../environments/environment';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['app.component.css'],
 })
 export class AppComponent implements OnInit {

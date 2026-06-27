@@ -1,8 +1,6 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
 import sqlite3InitModule from '@sqlite.org/sqlite-wasm';
 import { HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
 import { env, pipeline, TextGenerationPipeline } from '@huggingface/transformers';
 import {
   IonCard,
@@ -45,10 +43,7 @@ type Country = {
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrl: './home.page.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
-    FormsModule,
-    AsyncPipe,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -64,12 +59,15 @@ type Country = {
 export class HomePage {
   readonly httpClient = inject(HttpClient);
 
-  selectStatement = 'select * from countries;';
-  countries: Country[] = [];
-  searchTerm = '';
+  selectStatement = signal('select * from countries;');
+  countries = signal<Country[]>([]);
+  searchTerm = signal('');
+  webGPUAvailable = signal<boolean | null>(null);
+  dbReady = signal(false);
+  generatorReady = signal(false);
   db: any | undefined;
   generator: TextGenerationPipeline | undefined;
-  working = false;
+  working = signal(false);
 
   readonly #prompt_template = `
     You are given a database schema and a question.
@@ -118,14 +116,16 @@ export class HomePage {
           );
           this.db.checkRc(rc);
 
-          this.countries = [];
+          const countries: Country[] = [];
           this.db.exec({
             sql: 'select * from countries;',
             rowMode: 'object',
             callback: (row: any) => {
-              this.countries.push(row);
+              countries.push(row);
             },
           });
+          this.countries.set(countries);
+          this.dbReady.set(true);
         });
     };
 
@@ -142,6 +142,7 @@ export class HomePage {
       }
     };
 
+    this.isWebGPUAvailable().then((available) => this.webGPUAvailable.set(available));
     initializeSQLite();
     this.#initializeLLM();
   }
@@ -150,25 +151,27 @@ export class HomePage {
     if (!this.generator || !this.db) {
       return;
     }
-    this.countries = [];
-    this.working = true;
-    const userPrompt = this.#prompt_template.replace('{question}', this.searchTerm);
-    this.selectStatement = '';
+    this.countries.set([]);
+    this.working.set(true);
+    const userPrompt = this.#prompt_template.replace('{question}', this.searchTerm());
+    this.selectStatement.set('');
 
     const messages = [{ role: 'user', content: userPrompt }];
 
     const output: any = await this.generator(messages, { max_new_tokens: 200 });
-    this.selectStatement = output[0].generated_text.at(-1).content;
+    this.selectStatement.set(output[0].generated_text.at(-1).content);
 
-    this.working = false;
+    this.working.set(false);
 
+    const countries: Country[] = [];
     this.db.exec({
-      sql: this.selectStatement,
+      sql: this.selectStatement(),
       rowMode: 'object',
       callback: (row: any) => {
-        this.countries.push(row);
+        countries.push(row);
       },
     });
+    this.countries.set(countries);
   }
 
   async isWebGPUAvailable(): Promise<boolean> {
@@ -198,5 +201,6 @@ export class HomePage {
         local_files_only: true,
       },
     );
+    this.generatorReady.set(true);
   }
 }

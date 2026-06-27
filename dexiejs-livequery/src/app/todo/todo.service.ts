@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { Todo, TodoDb } from './todo-db';
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class TodoService {
   private readonly db: TodoDb;
 

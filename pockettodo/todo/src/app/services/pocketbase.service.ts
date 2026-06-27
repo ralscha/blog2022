@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Service, signal } from '@angular/core';
 import PocketBase from 'pocketbase';
 import { environment } from '../../environments/environment';
 import {
@@ -14,9 +14,7 @@ import {
   UpdateTodoRequest
 } from '../models/todo.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Service()
 export class PocketbaseService {
   isLoggedIn = signal<boolean>(false);
   currentUser = signal<User | null>(null);

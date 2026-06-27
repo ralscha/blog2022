@@ -9,9 +9,8 @@
 
 <ion-content class="ion-padding">
   <form
-    #signupForm="ngForm"
-    (ngSubmit)="signupForm.valid && register(username.value)"
-    [ngFormOptions]="{ updateOn: 'submit' }"
+    [formRoot]="registrationForm"
+    (submit)="registrationForm().valid() && register()"
     class="ion-margin-top"
     novalidate
   >
@@ -20,7 +19,6 @@
         <ion-col>
           <ion-item lines="none">
             <ion-input
-              #username="ngModel"
               [required]="true"
               [spellcheck]="false"
               autocapitalize="off"
@@ -28,8 +26,7 @@
               errorText="Username is required"
               label="Username"
               labelPlacement="stacked"
-              name="username"
-              ngModel
+              [formField]="registrationForm.username"
               type="text"
             />
           </ion-item>
@@ -38,7 +35,13 @@
 
       <ion-row>
         <ion-col class="ion-margin-top">
-          <ion-button color="secondary" expand="block" type="submit">Register</ion-button>
+          <ion-button
+            [disabled]="!registrationForm().valid()"
+            color="secondary"
+            expand="block"
+            type="submit"
+            >Register</ion-button
+          >
         </ion-col>
       </ion-row>
     </ion-grid>

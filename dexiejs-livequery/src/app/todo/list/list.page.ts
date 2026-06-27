@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Todo } from '../todo-db';
 import { TodoService } from '../todo.service';
 import { MessagesService } from '../messages.service';
@@ -29,7 +29,6 @@ import { add, ellipse, pencilOutline, trashOutline } from 'ionicons/icons';
   selector: 'app-list',
   templateUrl: './list.page.html',
   styleUrl: './list.page.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     RouterLink,
     IonRouterLink,

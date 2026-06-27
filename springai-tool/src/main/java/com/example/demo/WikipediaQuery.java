@@ -1,9 +1,7 @@
 package com.example.demo;
 
-import tools.jackson.annotation.JsonClassDescription;
-import tools.jackson.annotation.JsonPropertyDescription;
+import org.springframework.ai.tool.annotation.ToolParam;
 
-@JsonClassDescription("A query to search Wikipedia")
 public record WikipediaQuery(
-    @JsonPropertyDescription("The search query") String searchQuery) {
+    @ToolParam(description = "The search query") String searchQuery) {
 }

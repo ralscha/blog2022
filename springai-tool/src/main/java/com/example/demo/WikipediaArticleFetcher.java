@@ -13,7 +13,7 @@ import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.WikipediaArticleFetcher.SearchResponse.SearchResult;
-import tools.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import tools.jackson.databind.ObjectMapper;
 
 @Service

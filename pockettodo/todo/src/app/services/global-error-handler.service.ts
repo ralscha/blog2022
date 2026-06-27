@@ -1,10 +1,9 @@
-import { ErrorHandler, inject, Injectable, NgZone } from '@angular/core';
+import { inject, ErrorHandler, Injectable } from '@angular/core';
 import { ToastService } from './toast.service';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
   private toastService = inject(ToastService);
-  private zone = inject(NgZone);
 
   handleError(error: any): void {
     if (error.originalError) {
@@ -15,8 +14,6 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     console.error(error);
 
-    this.zone.run(() => {
-      this.toastService.showToast(message, 'danger');
-    });
+    void this.toastService.showToast(message, 'danger');
   }
 }

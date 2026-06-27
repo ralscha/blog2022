@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  OnDestroy,
-  viewChild,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, ElementRef, OnDestroy, viewChild } from '@angular/core';
 import { IonContent, IonHeader, IonLabel, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { AudioAnalyzer } from './audio-analyzer';
 
@@ -12,7 +6,6 @@ import { AudioAnalyzer } from './audio-analyzer';
   selector: 'app-speech',
   templateUrl: './speech.page.html',
   styleUrl: './speech.page.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonLabel],
 })
 export class SpeechPage implements OnDestroy {

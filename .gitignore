@@ -3,3 +3,7 @@
 blog2022.iml
 .vscode
 .task
+node_modules
+target
+bun.lock
+package-lock.json

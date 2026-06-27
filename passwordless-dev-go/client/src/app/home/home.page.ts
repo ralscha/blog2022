@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -15,11 +15,10 @@ import {
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton],
 })
 export class HomePage implements OnInit {
-  secretMessage: string | null = null;
+  secretMessage = signal<string | null>(null);
 
   readonly #navCtrl = inject(NavController);
   readonly #httpClient = inject(HttpClient);
@@ -32,6 +31,6 @@ export class HomePage implements OnInit {
   ngOnInit(): void {
     this.#httpClient
       .get<SecretOutput>(`${environment.API_URL}/secret`)
-      .subscribe((response) => (this.secretMessage = response.message));
+      .subscribe((response) => this.secretMessage.set(response.message));
   }
 }

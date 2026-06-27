@@ -1,4 +1,3 @@
-import { provideZoneChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import {
   PreloadAllModules,
@@ -15,7 +14,6 @@ import { provideHttpClient, withXhr } from '@angular/common/http';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideZoneChangeDetection(),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideHttpClient(withXhr()),

@@ -1,37 +1,36 @@
-import { Injectable } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { Service } from '@angular/core';
+import { type FieldTree } from '@angular/forms/signals';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Service()
 export class FormErrorService {
-  constructor() {}
-
   getErrorMessage(
-    control: AbstractControl | null,
+    field: FieldTree<unknown> | null,
     controlName: string
   ): string {
-    if (!control || !control.invalid || !control.touched) {
+    const state = field?.();
+    if (!state || !state.invalid() || !state.touched()) {
       return '';
     }
 
-    if (control.errors?.['required']) {
+    if (state.getError('required')) {
       return `${this.capitalizeFirstLetter(controlName)} is required`;
     }
 
-    if (control.errors?.['email']) {
+    if (state.getError('email')) {
       return 'Please enter a valid email';
     }
 
-    if (control.errors?.['minlength']) {
-      return `${this.capitalizeFirstLetter(controlName)} must be at least ${control.errors?.['minlength'].requiredLength} characters`;
+    const minLength = state.getError('minLength');
+    if (minLength) {
+      return `${this.capitalizeFirstLetter(controlName)} must be at least ${minLength.minLength} characters`;
     }
 
-    if (control.errors?.['maxlength']) {
-      return `${this.capitalizeFirstLetter(controlName)} cannot exceed ${control.errors?.['maxlength'].requiredLength} characters`;
+    const maxLength = state.getError('maxLength');
+    if (maxLength) {
+      return `${this.capitalizeFirstLetter(controlName)} cannot exceed ${maxLength.maxLength} characters`;
     }
 
-    if (control.errors?.['passwordMismatch']) {
+    if (state.getError('passwordMismatch')) {
       return 'Passwords do not match';
     }
 
