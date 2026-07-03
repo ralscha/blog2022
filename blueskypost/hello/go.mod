@@ -3,7 +3,7 @@ module bskyhello
 go 1.26.4
 
 require (
-	github.com/bluesky-social/indigo v0.0.0-20260611225325-d538a9c1096f
+	github.com/bluesky-social/indigo v0.0.0-20260629160527-dfe5578fd537
 	github.com/joho/godotenv v1.5.1
 )
 
@@ -32,7 +32,7 @@ require (
 	github.com/ipfs/go-log v1.0.4 // indirect
 	github.com/ipfs/go-log/v2 v2.9.2 // indirect
 	github.com/ipfs/go-metrics-interface v0.3.0 // indirect
-	github.com/klauspost/cpuid/v2 v2.3.0 // indirect
+	github.com/klauspost/cpuid/v2 v2.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.22 // indirect
 	github.com/minio/sha256-simd v1.0.1 // indirect

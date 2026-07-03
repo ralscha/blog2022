@@ -20,8 +20,8 @@ github.com/itlightning/dateparse v0.2.1 h1:AB0NJTyI0HYcerEUMovKZOiQVBg1mBPxgAnWQ
 github.com/itlightning/dateparse v0.2.1/go.mod h1:xHlmL8lT0L9JIBlaKotRwsoDYpKJskXpiU9ZwbbSkNA=
 github.com/mailru/easyjson v0.9.2 h1:dX8U45hQsZpxd80nLvDGihsQ/OxlvTkVUXH2r/8cb2M=
 github.com/mailru/easyjson v0.9.2/go.mod h1:1+xMtQp2MRNVL/V1bOzuP3aP8VNwRW55fQUto+XFtTU=
-github.com/ollama/ollama v0.30.11 h1:SP82Wz888PefT55etJJwRBl5uGH01Gs6L2b08LIi33c=
-github.com/ollama/ollama v0.30.11/go.mod h1:TjwyryJftKpcf7ByoIuZWso/Wx2Jr2AcGubxadv13dY=
+github.com/ollama/ollama v0.31.1 h1:K9/EwSSWxHiAx3Gm9dUUkOFOa/Dv27UrSQQqwnkK30Y=
+github.com/ollama/ollama v0.31.1/go.mod h1:TjwyryJftKpcf7ByoIuZWso/Wx2Jr2AcGubxadv13dY=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/sergi/go-diff v1.4.0 h1:n/SP9D5ad1fORl+llWyN+D6qoUETXNZARKjyY2/KVCw=
