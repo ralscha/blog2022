@@ -18,7 +18,7 @@ type application struct {
 }
 
 func main() {
-	logger := slog.New(tint.NewHandler(os.Stdout, &tint.Options{Level: slog.LevelDebug}))
+	logger := slog.New(tint.NewTextHandler(os.Stdout, &tint.Options{Level: slog.LevelDebug}))
 
 	err := run(logger)
 	if err != nil {

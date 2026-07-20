@@ -8,9 +8,9 @@
   },
   "dependencies": {
     "@pulumi/command": "1.2.1",
-    "@pulumi/hcloud": "1.39.0",
+    "@pulumi/hcloud": "1.39.1",
     "@pulumi/local": "0.1.6",
-    "@pulumi/pulumi": "3.251.0",
+    "@pulumi/pulumi": "3.253.0",
     "node-forge": "1.4.0"
   }
 }
