@@ -4,7 +4,7 @@ go 1.26.5
 
 require (
 	github.com/bluesky-social/indigo v0.0.0-20260629160527-dfe5578fd537
-	github.com/firebase/genkit/go v1.10.0
+	github.com/firebase/genkit/go v1.11.0
 	github.com/joho/godotenv v1.5.1
 )
 
@@ -20,7 +20,7 @@ require (
 	github.com/coder/websocket v1.8.15 // indirect
 	github.com/earthboundkid/versioninfo/v2 v2.24.1 // indirect
 	github.com/felixge/httpsnoop v1.1.0 // indirect
-	github.com/go-logr/logr v1.4.3 // indirect
+	github.com/go-logr/logr v1.4.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/goccy/go-yaml v1.19.2 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
@@ -28,7 +28,7 @@ require (
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/s2a-go v0.1.9 // indirect
 	github.com/google/uuid v1.6.0 // indirect
-	github.com/googleapis/enterprise-certificate-proxy v0.3.18 // indirect
+	github.com/googleapis/enterprise-certificate-proxy v0.3.19 // indirect
 	github.com/googleapis/gax-go/v2 v2.23.0 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
@@ -36,7 +36,7 @@ require (
 	github.com/hashicorp/golang-lru v1.0.2 // indirect
 	github.com/invopop/jsonschema v0.14.0 // indirect
 	github.com/ipfs/bbloom v0.1.0 // indirect
-	github.com/ipfs/boxo v0.41.0 // indirect
+	github.com/ipfs/boxo v0.42.0 // indirect
 	github.com/ipfs/go-block-format v0.2.4 // indirect
 	github.com/ipfs/go-cid v0.6.2 // indirect
 	github.com/ipfs/go-datastore v0.9.2 // indirect
@@ -49,7 +49,7 @@ require (
 	github.com/ipfs/go-metrics-interface v0.3.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
-	github.com/mattn/go-isatty v0.0.23 // indirect
+	github.com/mattn/go-isatty v0.0.24 // indirect
 	github.com/mbleigh/raymond v0.0.0-20250414171441-6b3a58ab9e0a // indirect
 	github.com/minio/sha256-simd v1.0.1 // indirect
 	github.com/mr-tron/base58 v1.3.0 // indirect
@@ -82,9 +82,9 @@ require (
 	golang.org/x/sys v0.47.0 // indirect
 	golang.org/x/text v0.40.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
-	google.golang.org/api v0.289.0 // indirect
-	google.golang.org/genai v1.64.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260715232425-e75dac1f907d // indirect
+	google.golang.org/api v0.290.0 // indirect
+	google.golang.org/genai v1.65.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260724162435-b2f20204f0df // indirect
 	google.golang.org/grpc v1.82.1 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 	lukechampine.com/blake3 v1.4.1 // indirect
