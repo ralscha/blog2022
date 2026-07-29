@@ -37,8 +37,8 @@ github.com/hashicorp/golang-lru v1.0.2 h1:dV3g9Z/unq5DpblPpw+Oqcv4dU/1omnb4Ok8iP
 github.com/hashicorp/golang-lru v1.0.2/go.mod h1:iADmTwqILo4mZ8BN3D2Q6+9jd8WM5uGBxy+E8yxSoD4=
 github.com/ipfs/bbloom v0.1.0 h1:nIWwfIE3AaG7RCDQIsrUonGCOTp7qSXzxH7ab/ss964=
 github.com/ipfs/bbloom v0.1.0/go.mod h1:lDy3A3i6ndgEW2z1CaRFvDi5/ZTzgM1IxA/pkL7Wgts=
-github.com/ipfs/boxo v0.42.0 h1:081LA7V9orgvGsCHMpxAjPz51JSDZtUaptZ9FwMcqP4=
-github.com/ipfs/boxo v0.42.0/go.mod h1:YoQNNShPIELwAGxmxemjZ/g7gqPUT8WDVO4ehPJU4Zg=
+github.com/ipfs/boxo v0.42.1 h1:sbG7kjAvKozeNSI2d6S3qv8uCdO6xgzYB18IvI0Z6mc=
+github.com/ipfs/boxo v0.42.1/go.mod h1:Izfi844gxRpk7VYbgtMOufY811ohXciUvdgSwd+uPuo=
 github.com/ipfs/go-block-format v0.2.4 h1:pgsT9i8zB4YQkBIQRrBwqbQiXPogRCiQnfxd2bC4koI=
 github.com/ipfs/go-block-format v0.2.4/go.mod h1:YpXrOge8ARskfuJuqjvJTYr4v6o9IZWgK2EEIMAhpcU=
 github.com/ipfs/go-cid v0.6.2 h1:VuGwJd+KJTaMJ4S4d5EEf9SXc17YUblS5axCbocn9YE=
