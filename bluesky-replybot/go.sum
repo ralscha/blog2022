@@ -7,8 +7,8 @@ cloud.google.com/go/compute/metadata v0.9.0/go.mod h1:E0bWwX5wTnLPedCKqk3pJmVgCB
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/bahlo/generic-list-go v0.2.0 h1:5sz/EEAK+ls5wF+NeqDpk5+iNdMDXrh3z3nPnH1Wvgk=
 github.com/bahlo/generic-list-go v0.2.0/go.mod h1:2KvAjgMlE5NNynlg/5iLrrCCZ2+5xWbdbCW3pNTGyYg=
-github.com/bluesky-social/indigo v0.0.0-20260629160527-dfe5578fd537 h1:rHaND0argSxgbmE2ix/YuF11xXTtiP3oGUz4fS2Diqo=
-github.com/bluesky-social/indigo v0.0.0-20260629160527-dfe5578fd537/go.mod h1:JqQkz8lrOI6YZivP38GHmtVOTtzsNToITKj1gMpU5Jo=
+github.com/bluesky-social/indigo v0.0.0-20260729153533-2d8ff55a2be0 h1:QMnljzlqVekof0Imcp2Y3wr9Dp1sN7LkVzse4fZ+Yoo=
+github.com/bluesky-social/indigo v0.0.0-20260729153533-2d8ff55a2be0/go.mod h1:JqQkz8lrOI6YZivP38GHmtVOTtzsNToITKj1gMpU5Jo=
 github.com/buger/jsonparser v1.6.0 h1:IHTgLjkgckOjAp8p0aYfXkv+cqC+zrzALg/JywnPjxY=
 github.com/buger/jsonparser v1.6.0/go.mod h1:6RYKKt7H4d4+iWqouImQ9R2FZql3VbhNgx27UK13J/0=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
