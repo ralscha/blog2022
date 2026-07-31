@@ -30,7 +30,7 @@
     "@capacitor/keyboard": "8.0.5",
     "@capacitor/splash-screen": "8.0.2",
     "@capacitor/status-bar": "8.0.3",
-    "@capgo/capacitor-updater": "8.51.2",
+    "@capgo/capacitor-updater": "8.51.3",
     "@ionic/angular": "8.8.16",
     "ionicons": "8.1.0",
     "rxjs": "7.8.2",
