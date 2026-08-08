@@ -4,7 +4,7 @@ go 1.26.5
 
 require (
 	codeberg.org/readeck/go-readability/v2 v2.1.2
-	github.com/ollama/ollama v0.32.5
+	github.com/ollama/ollama v0.32.6
 )
 
 require (
