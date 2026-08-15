@@ -10,7 +10,7 @@
     "@pulumi/command": "1.2.1",
     "@pulumi/hcloud": "1.41.0",
     "@pulumi/local": "0.1.6",
-    "@pulumi/pulumi": "3.256.0",
+    "@pulumi/pulumi": "3.257.0",
     "node-forge": "1.4.0"
   }
 }

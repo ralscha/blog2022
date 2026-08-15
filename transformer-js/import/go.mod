@@ -1,6 +1,6 @@
 module factbookimport
 
-go 1.26.5
+go 1.26.6
 
 require zombiezen.com/go/sqlite v1.4.2
 
