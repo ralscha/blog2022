@@ -33,7 +33,7 @@ func main() {
 		Affiliation: "owner",
 		Sort:        "full_name",
 		Direction:   "asc",
-		ListOptions: github.ListOptions{PerPage: 25},
+		PerPage:     25,
 	}
 
 	var allRepos []*github.Repository

@@ -49,7 +49,7 @@ func main() {
 
 		batch := db.NewBatch()
 
-		hashPrefix := strings.Split(fileName, ".")[0]
+		hashPrefix, _, _ := strings.Cut(fileName, ".")
 
 		scanner := bufio.NewScanner(file)
 		for scanner.Scan() {

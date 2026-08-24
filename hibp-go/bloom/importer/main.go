@@ -82,7 +82,7 @@ func insert(fileNames []string, inputDir string, filter *bloom.BloomFilter, nPas
 		if err != nil {
 			log.Fatalf("Can't open file %s, %v", fileName, err)
 		}
-		hashPrefix := strings.Split(fileName, ".")[0]
+		hashPrefix, _, _ := strings.Cut(fileName, ".")
 		scanner := bufio.NewScanner(file)
 		for scanner.Scan() {
 			line := scanner.Text()

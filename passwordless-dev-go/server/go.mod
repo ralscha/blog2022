@@ -1,11 +1,11 @@
 module webauthn.rasc.ch
 
-go 1.26.6
+go 1.27.0
 
 require (
 	github.com/AJAYK-01/passwordless-go v0.1.2
 	github.com/alexedwards/scs/v2 v2.9.0
-	github.com/go-chi/chi/v5 v5.3.1
+	github.com/go-chi/chi/v5 v5.3.2
 	github.com/go-chi/httprate v0.16.0
 	github.com/google/uuid v1.6.0
 	github.com/spf13/viper v1.21.0

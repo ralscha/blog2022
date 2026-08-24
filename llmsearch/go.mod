@@ -1,10 +1,10 @@
 module llmsearch
 
-go 1.26.6
+go 1.27.0
 
 require (
 	codeberg.org/readeck/go-readability/v2 v2.1.2
-	github.com/ollama/ollama v0.32.12
+	github.com/ollama/ollama v0.32.15
 )
 
 require (

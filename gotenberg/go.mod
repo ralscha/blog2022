@@ -1,6 +1,6 @@
 module gotenbergdemo
 
-go 1.26.6
+go 1.27.0
 
 require (
 	github.com/starwalkn/gotenberg-go-client/v8 v8.12.0
@@ -8,7 +8,7 @@ require (
 )
 
 require (
-	github.com/richardlehane/mscfb v1.0.7 // indirect
+	github.com/richardlehane/mscfb v1.0.8 // indirect
 	github.com/richardlehane/msoleps v1.0.6 // indirect
 	github.com/tiendc/go-deepcopy v1.7.2 // indirect
 	github.com/xuri/efp v0.0.1 // indirect
