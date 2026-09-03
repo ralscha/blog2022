@@ -44,7 +44,7 @@ const sshKey = new hcloud.SshKey("wireguard-ssh-key", {
 const wireguardServer = new hcloud.Server("wireguard-server", {
   name: "wireguard-server",
   sshKeys: [sshKey.id],
-  serverType: "cx22",
+  serverType: "cx23",
   image: "debian-12",
   location: serverRegion,
   userData: userData

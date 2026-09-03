@@ -26,7 +26,7 @@ func main() {
 	s3Client := s3.NewFromConfig(cfg)
 
 	var people []*shared.Person
-	for i := 1; i < 10_000; i++ {
+	for i := 1; i < 30_000; i++ {
 		p := &shared.Person{
 			Id:    int32(i),
 			Name:  faker.Name(),

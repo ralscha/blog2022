@@ -1,6 +1,6 @@
 module webauthn.rasc.ch
 
-go 1.27.0
+go 1.27.1
 
 require (
 	github.com/AJAYK-01/passwordless-go v0.1.2

@@ -29,7 +29,7 @@ public class Producer {
     Faker faker = new Faker();
     List<Person> persons = new ArrayList<>();
 
-    for (int i = 1; i < 10_000; i++) {
+    for (int i = 1; i < 30_000; i++) {
       PhoneNumber pn = PhoneNumber.newBuilder().setType(PhoneType.MOBILE)
           .setNumber(faker.phoneNumber().cellPhone()).build();
       Person person = Person.newBuilder().setId(i)
