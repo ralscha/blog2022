@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TodoService } from '../todo.service';
 import { MessagesService } from '../messages.service';
@@ -19,7 +19,7 @@ import {
   IonSelectOption,
   IonTitle,
   IonToolbar,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 
 type TodoForm = {
   description: string;
@@ -28,6 +28,7 @@ type TodoForm = {
 };
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-edit-page',
   templateUrl: './edit.page.html',
   styleUrl: './edit.page.scss',

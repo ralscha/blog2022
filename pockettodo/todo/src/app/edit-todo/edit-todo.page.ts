@@ -1,4 +1,11 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  OnInit,
+  signal
+} from '@angular/core';
 import {
   FormField,
   FormRoot,
@@ -23,7 +30,7 @@ import {
   IonTextarea,
   IonTitle,
   IonToolbar
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { PocketbaseService } from '../services/pocketbase.service';
 import { Todo } from '../models/todo.model';
 import { ToastService } from '../services/toast.service';
@@ -37,6 +44,7 @@ type TodoForm = {
 };
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-edit-todo',
   templateUrl: './edit-todo.page.html',
   styleUrl: './edit-todo.page.css',

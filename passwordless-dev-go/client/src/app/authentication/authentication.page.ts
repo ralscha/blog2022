@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MessagesService } from '../messages.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -17,9 +17,10 @@ import {
   IonTitle,
   IonToolbar,
   NavController,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-authentication',
   templateUrl: './authentication.page.html',
   imports: [

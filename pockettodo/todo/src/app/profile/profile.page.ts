@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+  signal
+} from '@angular/core';
 import {
   email,
   FormField,
@@ -24,13 +30,14 @@ import {
   IonText,
   IonTitle,
   IonToolbar
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { PocketbaseService } from '../services/pocketbase.service';
 import { User } from '../models/user.model';
 import { ToastService } from '../services/toast.service';
 import { FormErrorService } from '../services/form-error.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrl: './profile.page.css',

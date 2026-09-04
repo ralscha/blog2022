@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MessagesService } from '../messages.service';
 import { environment } from '../../environments/environment';
@@ -20,13 +20,14 @@ import {
   IonRow,
   IonTitle,
   IonToolbar,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 
 interface RegistrationForm {
   username: string;
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-registration',
   templateUrl: './registration.page.html',
   imports: [

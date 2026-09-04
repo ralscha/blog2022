@@ -1,8 +1,17 @@
-import { Component, ElementRef, OnDestroy, viewChild } from '@angular/core';
-import { IonContent, IonHeader, IonLabel, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  inject,
+  OnDestroy,
+  viewChild,
+} from '@angular/core';
+import { IonContent, IonHeader, IonLabel, IonTitle, IonToolbar } from '@ionic/angular';
 import { AudioAnalyzer } from './audio-analyzer';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-speech',
   templateUrl: './speech.page.html',
   styleUrl: './speech.page.scss',
@@ -12,6 +21,7 @@ export class SpeechPage implements OnDestroy {
   static readonly SAMPLING_RATE = 16_000;
 
   readonly canvas = viewChild.required<ElementRef>('canvas');
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
   modelReady = false;
   private ctx!: CanvasRenderingContext2D;
   private snakeSize = 10;
@@ -39,6 +49,7 @@ export class SpeechPage implements OnDestroy {
       switch (e.data.status) {
         case 'ready':
           this.modelReady = true;
+          this.changeDetectorRef.markForCheck();
           this.startListen();
           break;
         case 'complete':

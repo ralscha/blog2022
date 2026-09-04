@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import {
   IonButton,
   IonContent,
@@ -7,7 +7,7 @@ import {
   IonProgressBar,
   IonTitle,
   IonToolbar,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -15,6 +15,7 @@ import { addIcons } from 'ionicons';
 import { micCircleOutline, playCircleOutline, stopCircleOutline } from 'ionicons/icons';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrl: './home.page.scss',

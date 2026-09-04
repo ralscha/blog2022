@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import {
   IonButton,
   IonContent,
@@ -7,7 +7,7 @@ import {
   IonProgressBar,
   IonTitle,
   IonToolbar,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -21,6 +21,7 @@ interface SketchResponse {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrl: './home.page.scss',
@@ -33,6 +34,7 @@ export class HomePage {
   sketchResponse: SketchResponse | undefined;
   processing = false;
   private readonly httpClient = inject(HttpClient);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   constructor() {
     addIcons({ cameraOutline });
@@ -49,6 +51,7 @@ export class HomePage {
     input.onchange = () => {
       const file = input.files![0];
       this.imageData = URL.createObjectURL(file);
+      this.changeDetectorRef.markForCheck();
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.result instanceof ArrayBuffer) {
@@ -63,14 +66,24 @@ export class HomePage {
 
   postRequest() {
     this.processing = true;
+    this.changeDetectorRef.markForCheck();
     this.httpClient
       .post<SketchResponse>(`${environment.SERVER_URL}/sketch`, this.image)
-      .pipe(finalize(() => (this.processing = false)))
+      .pipe(
+        finalize(() => {
+          this.processing = false;
+          this.changeDetectorRef.markForCheck();
+        }),
+      )
       .subscribe({
-        next: (response) => (this.sketchResponse = response),
+        next: (response) => {
+          this.sketchResponse = response;
+          this.changeDetectorRef.markForCheck();
+        },
         error: (error) => {
           console.log(error);
           this.error = error.message;
+          this.changeDetectorRef.markForCheck();
         },
       });
   }

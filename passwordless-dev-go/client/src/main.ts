@@ -2,7 +2,7 @@ import { provideRouter, RouteReuseStrategy, withHashLocation } from '@angular/ro
 import { provideHttpClient, withXhr } from '@angular/common/http';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
-import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
+import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular';
 import { routes } from './app/app-routing.routes';
 
 bootstrapApplication(AppComponent, {

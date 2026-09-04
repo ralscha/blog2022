@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { IonApp, IonRouterOutlet } from '@ionic/angular';
 import { CapacitorUpdater } from '@capgo/capacitor-updater';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
@@ -13,6 +13,7 @@ type UpdateInfo = {
 };
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-root',
   templateUrl: 'app.component.html',
   imports: [IonApp, IonRouterOutlet],

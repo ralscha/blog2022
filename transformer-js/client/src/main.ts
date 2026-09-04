@@ -1,5 +1,5 @@
 import { provideRouter, RouteReuseStrategy, Routes, withHashLocation } from '@angular/router';
-import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
+import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideHttpClient, withXhr } from '@angular/common/http';
 import { AppComponent } from './app/app.component';

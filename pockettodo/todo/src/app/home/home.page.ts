@@ -1,4 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import {
   IonButton,
@@ -15,10 +20,11 @@ import {
   IonText,
   IonTitle,
   IonToolbar
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { PocketbaseService } from '../services/pocketbase.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrl: './home.page.css',

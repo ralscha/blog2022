@@ -1,9 +1,15 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { IonApp, IonRouterOutlet } from '@ionic/angular';
 import { PocketbaseService } from './services/pocketbase.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-root',
   templateUrl: './app.component.html',
   imports: [IonApp, IonRouterOutlet]

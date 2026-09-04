@@ -5,7 +5,7 @@ import {
   withHashLocation,
   withPreloading,
 } from '@angular/router';
-import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
+import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular';
 import { AuthGuard } from './app/auth.guard';
 import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { bootstrapApplication } from '@angular/platform-browser';

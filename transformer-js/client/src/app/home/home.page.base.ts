@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import sqlite3InitModule from '@sqlite.org/sqlite-wasm';
 import { HttpClient } from '@angular/common/http';
 import { env, pipeline, TextGenerationPipeline } from '@huggingface/transformers';
@@ -13,7 +13,7 @@ import {
   IonSpinner,
   IonTitle,
   IonToolbar,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 
 type Sqlite3ModuleOptions = {
   locateFile?: (file: string) => string;
@@ -40,6 +40,7 @@ type Country = {
 };
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrl: './home.page.scss',

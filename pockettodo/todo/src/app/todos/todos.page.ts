@@ -1,4 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal
+} from '@angular/core';
 import { Router } from '@angular/router';
 import {
   AlertController,
@@ -22,7 +27,7 @@ import {
   IonTitle,
   IonToolbar,
   ViewWillEnter
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import {
   add,
@@ -39,6 +44,7 @@ import { Todo } from '../models/todo.model';
 import { ToastService } from '../services/toast.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-todos',
   templateUrl: './todos.page.html',
   styleUrl: './todos.page.css',

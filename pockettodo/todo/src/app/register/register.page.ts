@@ -1,4 +1,10 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  signal
+} from '@angular/core';
 import {
   email,
   FormField,
@@ -22,12 +28,13 @@ import {
   IonText,
   IonTitle,
   IonToolbar
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { PocketbaseService } from '../services/pocketbase.service';
 import { ToastService } from '../services/toast.service';
 import { FormErrorService } from '../services/form-error.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrl: './register.page.css',

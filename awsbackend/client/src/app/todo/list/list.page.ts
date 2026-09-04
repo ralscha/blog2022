@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { TodoService } from '../todo.service';
 import { MessagesService } from '../messages.service';
 import { Observable } from 'rxjs';
@@ -20,11 +20,12 @@ import {
   IonRow,
   IonTitle,
   IonToolbar,
-} from '@ionic/angular/standalone';
+} from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { add, ellipse, exitOutline, pencilOutline, trashOutline } from 'ionicons/icons';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-list',
   templateUrl: './list.page.html',
   styleUrls: ['./list.page.scss'],
