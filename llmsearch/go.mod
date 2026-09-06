@@ -4,11 +4,11 @@ go 1.27.1
 
 require (
 	codeberg.org/readeck/go-readability/v2 v2.1.2
-	github.com/ollama/ollama v0.33.2
+	github.com/ollama/ollama v0.33.3
 )
 
 require (
-	github.com/andybalholm/cascadia v1.3.4 // indirect
+	github.com/andybalholm/cascadia v1.3.5 // indirect
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
 	github.com/buger/jsonparser v1.6.1 // indirect
 	github.com/go-shiori/dom v0.0.0-20230515143342-73569d674e1c // indirect
