@@ -3,7 +3,7 @@ module bskyhello
 go 1.27.1
 
 require (
-	github.com/bluesky-social/indigo v0.0.0-20260903211445-41278964ec8e
+	github.com/bluesky-social/indigo v0.0.0-20260925062619-162dca49278b
 	github.com/joho/godotenv v1.5.1
 )
 
@@ -50,7 +50,7 @@ require (
 	go.opentelemetry.io/otel v1.46.0 // indirect
 	go.opentelemetry.io/otel/metric v1.46.0 // indirect
 	go.opentelemetry.io/otel/trace v1.46.0 // indirect
-	go.uber.org/atomic v1.11.0 // indirect
+	go.uber.org/atomic v1.12.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.28.0 // indirect
 	golang.org/x/crypto v0.57.0 // indirect
