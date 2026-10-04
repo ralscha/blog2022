@@ -3,8 +3,8 @@ module llmsearch
 go 1.27.1
 
 require (
-	codeberg.org/readeck/go-readability/v2 v2.1.2
-	github.com/ollama/ollama v0.34.4
+	codeberg.org/readeck/go-readability/v2 v2.1.3
+	github.com/ollama/ollama v0.35.1
 )
 
 require (
