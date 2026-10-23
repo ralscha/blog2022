@@ -1,9 +1,11 @@
 package internal
 
 import (
+	"archive/tar"
 	"bytes"
 	"context"
 	"io"
+	"log"
 	"strings"
 	"time"
 
@@ -41,7 +43,7 @@ func RunCodeInDocker(code string, timeout time.Duration) (string, string, error)
 		Cmd: []string{
 			"/bin/sh",
 			"-c",
-			`mkdir -p /code && cd /code && go mod init gorun && echo '` + code + `' > app.go && go mod tidy && go build -o app app.go && ./app`,
+			`cd /code && go mod init gorun && go mod tidy && go build -o app app.go && ./app`,
 		},
 		Tty: false,
 	}, nil, nil, nil, "")
@@ -49,8 +51,20 @@ func RunCodeInDocker(code string, timeout time.Duration) (string, string, error)
 		return "", "", err
 	}
 	defer func() {
-		_ = cli.ContainerRemove(ctx, resp.ID, container.RemoveOptions{})
+		cleanupCtx, cancelCleanup := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancelCleanup()
+		if err := cli.ContainerRemove(cleanupCtx, resp.ID, container.RemoveOptions{Force: true}); err != nil {
+			log.Printf("container cleanup failed for %s: %v", resp.ID, err)
+		}
 	}()
+
+	source, err := sourceArchive(code)
+	if err != nil {
+		return "", "", err
+	}
+	if err := cli.CopyToContainer(ctx, resp.ID, "/", source, container.CopyToContainerOptions{}); err != nil {
+		return "", "", err
+	}
 
 	if err := cli.ContainerStart(ctx, resp.ID, container.StartOptions{}); err != nil {
 		return "", "", err
@@ -71,6 +85,7 @@ func RunCodeInDocker(code string, timeout time.Duration) (string, string, error)
 	if err != nil {
 		return "", "", err
 	}
+	defer out.Close()
 
 	var stdoutBuf, stderrBuf bytes.Buffer
 	_, err = stdcopy.StdCopy(&stdoutBuf, &stderrBuf, out)
@@ -81,6 +96,24 @@ func RunCodeInDocker(code string, timeout time.Duration) (string, string, error)
 	stderr := cleanStderr(stderrBuf.String())
 
 	return strings.TrimSpace(stdoutBuf.String()), strings.TrimSpace(stderr), nil
+}
+
+func sourceArchive(code string) (io.Reader, error) {
+	var archive bytes.Buffer
+	w := tar.NewWriter(&archive)
+	if err := w.WriteHeader(&tar.Header{Name: "code/", Mode: 0755, Typeflag: tar.TypeDir}); err != nil {
+		return nil, err
+	}
+	if err := w.WriteHeader(&tar.Header{Name: "code/app.go", Mode: 0600, Size: int64(len(code))}); err != nil {
+		return nil, err
+	}
+	if _, err := io.WriteString(w, code); err != nil {
+		return nil, err
+	}
+	if err := w.Close(); err != nil {
+		return nil, err
+	}
+	return &archive, nil
 }
 
 var excludePrefixes = []string{

@@ -4,7 +4,7 @@ import pulumi_docker_build as docker_build
 
 output_s3_bucket = aws.s3.Bucket(
     "output-s3-bucket",
-    bucket="ml-models"
+    bucket="ml-models",
     acl="private"
 )
 
@@ -160,7 +160,7 @@ compute_environment = aws.batch.ComputeEnvironment(
         instance_role=ecs_instance_profile.arn,
         ec2_configurations=[
             aws.batch.ComputeEnvironmentComputeResourcesEc2ConfigurationArgs(
-                image_type="ECS_AL2_NVIDIA",
+                image_type="ECS_AL2023_NVIDIA",
             )
         ],
     ),

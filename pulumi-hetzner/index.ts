@@ -32,7 +32,7 @@ const userData = pulumi.all([
 
 // 4. Generate SSH key pair for the server
 const keypair = forge.pki.rsa.generateKeyPair(4096);
-const sshPrivateKey = forge.ssh.privateKeyToOpenSSH(keypair.privateKey);
+const sshPrivateKey = pulumi.secret(forge.ssh.privateKeyToOpenSSH(keypair.privateKey));
 const sshPublicKey = forge.ssh.publicKeyToOpenSSH(keypair.publicKey, "root@host");
 
 const sshKey = new hcloud.SshKey("wireguard-ssh-key", {

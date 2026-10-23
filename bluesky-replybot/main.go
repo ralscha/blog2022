@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"crypto/sha256"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -29,57 +31,90 @@ func main() {
 		genkit.WithDefaultModel("googleai/gemini-2.5-flash"),
 	)
 
-	ticker := time.NewTicker(1 * time.Minute)
+	authClient, auth, err := createAuthenticatedBlueskyClient()
+	if err != nil {
+		log.Fatal(err)
+	}
+	statePath := os.Getenv("BLUESKY_STATE_FILE")
+	if statePath == "" {
+		statePath = "replybot-state.json"
+	}
+	state, err := loadState(statePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	ticker := time.NewTicker(time.Minute)
 	defer ticker.Stop()
-
-	for range ticker.C {
-		authClient, auth, err := createAuthenticatedBlueskyClient()
-		if err != nil {
-			log.Fatal("Error creating authenticated Bluesky client:", err)
+	for {
+		if err := refreshSession(authClient, auth); err != nil {
+			log.Printf("Session refresh failed: %v", err)
+		} else if err := poll(authClient, auth, genkitInstance, state, statePath); err != nil {
+			log.Printf("Polling failed; pending work will be retried: %v", err)
 		}
-
-		notifications, err := checkNotifications(authClient)
-		if err != nil {
-			log.Fatal("Error checking notifications:", err)
-		}
-
-		for _, notif := range notifications {
-			processNotification(authClient, auth, genkitInstance, notif)
-		}
+		<-ticker.C
 	}
 }
 
-func processNotification(authClient *xrpc.Client, auth *atproto.ServerCreateSession_Output, genkitInstance *genkit.Genkit, notif *bsky.NotificationListNotifications_Notification) {
-	var postText string
+func poll(authClient *xrpc.Client, auth *atproto.ServerCreateSession_Output, genkitInstance *genkit.Genkit, state *botState, statePath string) error {
+	notifications, err := checkNotifications(authClient)
+	if err != nil {
+		return err
+	}
+	var seenAt string
+	for _, notif := range notifications {
+		if notif.IndexedAt > seenAt {
+			seenAt = notif.IndexedAt
+		}
+		if !state.Completed[notif.Uri] {
+			state.Pending[notif.Uri] = notif
+		}
+	}
+	if err := saveState(statePath, state); err != nil {
+		return err
+	}
+	for uri, notif := range state.Pending {
+		if err := processNotification(authClient, auth, genkitInstance, notif); err != nil {
+			return err
+		}
+		state.Completed[uri] = true
+		delete(state.Pending, uri)
+		if err := saveState(statePath, state); err != nil {
+			return err
+		}
+	}
+	if seenAt != "" {
+		return bsky.NotificationUpdateSeen(context.Background(), authClient, &bsky.NotificationUpdateSeen_Input{SeenAt: seenAt})
+	}
+	return nil
+}
+
+func processNotification(authClient *xrpc.Client, auth *atproto.ServerCreateSession_Output, genkitInstance *genkit.Genkit, notif *bsky.NotificationListNotifications_Notification) error {
 	feedPost, ok := notif.Record.Val.(*bsky.FeedPost)
 	if !ok {
-		log.Printf("Notification record is not a FeedPost: %v", notif.Record.Val)
-		return
+		return nil
 	}
-
-	postText = feedPost.Text
-
-	if postText == "" {
-		return
-	}
-
-	cleanedText := strings.ReplaceAll(postText, "@llm.rasc.ch", "")
-	cleanedText = strings.TrimSpace(cleanedText)
-
+	cleanedText := strings.TrimSpace(strings.ReplaceAll(feedPost.Text, "@llm.rasc.ch", ""))
 	if cleanedText == "" {
-		return
+		return nil
 	}
-
+	// A stable record key also covers a crash after posting but before saving local state.
+	_, err := atproto.RepoGetRecord(context.Background(), authClient, "", "app.bsky.feed.post", auth.Did, replyKey(notif.Uri))
+	if err == nil {
+		return nil
+	}
+	var rpcError *xrpc.XRPCError
+	if !errors.As(err, &rpcError) || rpcError.ErrStr != "RecordNotFound" {
+		return err
+	}
 	aiResponse, err := generateGeminiResponse(genkitInstance, cleanedText)
 	if err != nil {
-		log.Printf("Failed to generate AI response: %v", err)
-		return
+		return err
 	}
+	return sendReply(authClient, auth, notif, aiResponse)
+}
 
-	err = sendReply(authClient, auth, notif, aiResponse)
-	if err != nil {
-		log.Printf("Failed to send reply: %v", err)
-	}
+func replyKey(uri string) string {
+	return fmt.Sprintf("reply-%x", sha256.Sum256([]byte(uri)))
 }
 
 func generateGeminiResponse(genkitInstance *genkit.Genkit, userMessage string) (string, error) {
@@ -121,6 +156,10 @@ func sendReply(authClient *xrpc.Client, auth *atproto.ServerCreateSession_Output
 		},
 	}
 
+	if original, ok := originalNotif.Record.Val.(*bsky.FeedPost); ok && original.Reply != nil {
+		replyRecord.Reply.Root = original.Reply.Root
+	}
+	rkey := replyKey(originalNotif.Uri)
 	encodedRecord := &util.LexiconTypeDecoder{Val: &replyRecord}
 
 	_, err := atproto.RepoCreateRecord(
@@ -130,6 +169,7 @@ func sendReply(authClient *xrpc.Client, auth *atproto.ServerCreateSession_Output
 			Repo:       auth.Did,
 			Collection: "app.bsky.feed.post",
 			Record:     encodedRecord,
+			Rkey:       &rkey,
 		},
 	)
 
@@ -176,17 +216,6 @@ func checkNotifications(authClient *xrpc.Client) ([]*bsky.NotificationListNotifi
 		cursor = *notificationsList.Cursor
 	}
 
-	if len(allUnreadNotifications) > 0 {
-		seenInput := &bsky.NotificationUpdateSeen_Input{
-			SeenAt: time.Now().UTC().Format(time.RFC3339),
-		}
-
-		err := bsky.NotificationUpdateSeen(context.Background(), authClient, seenInput)
-		if err != nil {
-			return nil, fmt.Errorf("failed to mark notifications as seen: %w", err)
-		}
-	}
-
 	return allUnreadNotifications, nil
 }
 
@@ -207,7 +236,7 @@ func createAuthenticatedBlueskyClient() (*xrpc.Client, *atproto.ServerCreateSess
 
 	authClient := &xrpc.Client{
 		Host: client.Host,
-		Auth: &xrpc.AuthInfo{AccessJwt: auth.AccessJwt},
+		Auth: &xrpc.AuthInfo{AccessJwt: auth.AccessJwt, RefreshJwt: auth.RefreshJwt, Did: auth.Did, Handle: auth.Handle},
 	}
 
 	return authClient, auth, nil

@@ -3,6 +3,8 @@ import sys
 import os
 import shutil
 import zipfile
+import platform
+from pathlib import Path
 
 
 def run_command(command: str) -> None:
@@ -33,11 +35,15 @@ def copy_directory(src: str, dst: str) -> None:
 
 
 def run_zip():
+    if (platform.system() != "Linux" or platform.machine().lower() not in {"aarch64", "arm64"}
+            or sys.version_info[:2] != (3, 12)):
+        raise RuntimeError("Build this Lambda ZIP with Python 3.12 on Linux ARM64 (for example in a matching container).")
     run_command("poetry install --only main --sync")
     shutil.rmtree("dist", ignore_errors=True)
     os.makedirs("dist/lambda-package/splitpdf", exist_ok=True)
 
-    copy_directory(".venv/lib/site-packages", "dist/lambda-package")
+    venv = Path(subprocess.check_output(["poetry", "env", "info", "--path"], text=True).strip())
+    copy_directory(str(venv / "lib/python3.12/site-packages"), "dist/lambda-package")
     copy_directory("splitpdf", "dist/lambda-package/splitpdf")
 
     zip_directory("dist/lambda-package", "dist/lambda.zip")

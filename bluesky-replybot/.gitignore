@@ -1,2 +1,5 @@
 .env
 .idea
+
+replybot-state.json
+.replybot-state-*

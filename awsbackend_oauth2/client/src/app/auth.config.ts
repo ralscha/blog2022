@@ -7,7 +7,7 @@ export const authCodeFlowConfig: AuthConfig = {
   logoutUrl: 'http://localhost:8100/sign-out',
   clientId: environment.CLIENT_ID,
   responseType: 'code',
-  scope: 'openid',
+  scope: 'openid todo-api/access',
   showDebugInformation: !environment.production,
   timeoutFactor: 0.01,
   strictDiscoveryDocumentValidation: false,

@@ -98,6 +98,18 @@ func createCognitoUserPool(ctx *pulumi.Context) (pulumi.IDOutput, pulumi.IDOutpu
 		return pulumi.IDOutput{}, pulumi.IDOutput{}, err
 	}
 
+	resourceServer, err := cognito.NewResourceServer(ctx, "todo-api", &cognito.ResourceServerArgs{
+		Identifier: pulumi.String("todo-api"),
+		Name:       pulumi.String("Todo API"),
+		UserPoolId: userPool.ID(),
+		Scopes: cognito.ResourceServerScopeArray{
+			&cognito.ResourceServerScopeArgs{ScopeName: pulumi.String("access"), ScopeDescription: pulumi.String("Manage todos")},
+		},
+	})
+	if err != nil {
+		return pulumi.IDOutput{}, pulumi.IDOutput{}, err
+	}
+
 	client, err := cognito.NewUserPoolClient(ctx, "client", &cognito.UserPoolClientArgs{
 		CallbackUrls:         pulumi.StringArray{pulumi.String("http://localhost:8100")},
 		AccessTokenValidity:  pulumi.Int(1),
@@ -116,6 +128,7 @@ func createCognitoUserPool(ctx *pulumi.Context) (pulumi.IDOutput, pulumi.IDOutpu
 		AllowedOauthFlowsUserPoolClient: pulumi.Bool(true),
 		AllowedOauthScopes: pulumi.StringArray{
 			pulumi.String("openid"),
+			pulumi.String("todo-api/access"),
 		},
 		ExplicitAuthFlows: pulumi.StringArray{
 			pulumi.String("ALLOW_REFRESH_TOKEN_AUTH"),
@@ -131,7 +144,7 @@ func createCognitoUserPool(ctx *pulumi.Context) (pulumi.IDOutput, pulumi.IDOutpu
 		WriteAttributes: pulumi.StringArray{
 			pulumi.String("email"),
 		},
-	})
+	}, pulumi.DependsOn([]pulumi.Resource{resourceServer}))
 	if err != nil {
 		return pulumi.IDOutput{}, pulumi.IDOutput{}, err
 	}
@@ -237,33 +250,36 @@ func createApi(ctx *pulumi.Context, lmbda *lambda.Function, clientId pulumi.IDOu
 	}).(pulumi.StringOutput)
 
 	_, err = apigatewayv2.NewRoute(ctx, "todos-get", &apigatewayv2.RouteArgs{
-		ApiId:             api.ID(),
-		AuthorizationType: pulumi.String("JWT"),
-		AuthorizerId:      authorizer.ID(),
-		RouteKey:          pulumi.String("GET /todos"),
-		Target:            target,
+		ApiId:               api.ID(),
+		AuthorizationType:   pulumi.String("JWT"),
+		AuthorizationScopes: pulumi.StringArray{pulumi.String("todo-api/access")},
+		AuthorizerId:        authorizer.ID(),
+		RouteKey:            pulumi.String("GET /todos"),
+		Target:              target,
 	})
 	if err != nil {
 		return nil, err
 	}
 
 	_, err = apigatewayv2.NewRoute(ctx, "todos-post", &apigatewayv2.RouteArgs{
-		ApiId:             api.ID(),
-		AuthorizationType: pulumi.String("JWT"),
-		AuthorizerId:      authorizer.ID(),
-		RouteKey:          pulumi.String("POST /todos"),
-		Target:            target,
+		ApiId:               api.ID(),
+		AuthorizationType:   pulumi.String("JWT"),
+		AuthorizationScopes: pulumi.StringArray{pulumi.String("todo-api/access")},
+		AuthorizerId:        authorizer.ID(),
+		RouteKey:            pulumi.String("POST /todos"),
+		Target:              target,
 	})
 	if err != nil {
 		return nil, err
 	}
 
 	_, err = apigatewayv2.NewRoute(ctx, "todos-delete", &apigatewayv2.RouteArgs{
-		ApiId:             api.ID(),
-		AuthorizationType: pulumi.String("JWT"),
-		AuthorizerId:      authorizer.ID(),
-		RouteKey:          pulumi.String("DELETE /todos/{id}"),
-		Target:            target,
+		ApiId:               api.ID(),
+		AuthorizationType:   pulumi.String("JWT"),
+		AuthorizationScopes: pulumi.StringArray{pulumi.String("todo-api/access")},
+		AuthorizerId:        authorizer.ID(),
+		RouteKey:            pulumi.String("DELETE /todos/{id}"),
+		Target:              target,
 	})
 	if err != nil {
 		return nil, err
