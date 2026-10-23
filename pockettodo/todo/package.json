@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "test:pocketbase": "node scripts/test-pocketbase.mjs",
     "watch": "ng build --watch --configuration development",
     "prettier": "prettier --write .",
     "format": "npx prettier --write ."
