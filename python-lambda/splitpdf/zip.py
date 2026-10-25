@@ -1,14 +1,14 @@
+import os
+import platform
+import shutil
 import subprocess
 import sys
-import os
-import shutil
 import zipfile
-import platform
 from pathlib import Path
 
 
 def run_command(command: str) -> None:
-    result = subprocess.run(command, shell=True)
+    result = subprocess.run(command, shell=True, check=False)
     if result.returncode != 0:
         sys.exit(result.returncode)
 

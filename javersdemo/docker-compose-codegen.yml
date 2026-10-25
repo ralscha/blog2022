@@ -18,7 +18,7 @@ services:
       start_period: 10s
 
   codegen:
-    image: maven:3.9.13-eclipse-temurin-25-alpine
+    image: maven:3.9-eclipse-temurin-26-alpine
     depends_on:
       postgres:
         condition: service_healthy

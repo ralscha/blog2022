@@ -11,7 +11,7 @@ def run_lint():
     ]
 
     for command in commands:
-        result = subprocess.run(command)
+        result = subprocess.run(command, check=False)
         if result.returncode != 0:
             sys.exit(result.returncode)
 

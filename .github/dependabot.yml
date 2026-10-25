@@ -1,6 +1,4 @@
-# Weekly version updates; security updates are enabled in repository settings.
-# Minor and patch releases are grouped; major releases remain separate.
-# Temporarily hold TypeScript below 7 for Angular projects; remove the ignore rule when compatible.
+# Keep Angular/Pulumi TypeScript and pandas runtime/stub versions compatible.
 version: 2
 updates:
 - package-ecosystem: docker
@@ -11,7 +9,7 @@ updates:
   schedule:
     interval: weekly
     day: monday
-    time: "09:00"
+    time: 09:00
     timezone: Europe/Zurich
   open-pull-requests-limit: 5
   groups:
@@ -32,7 +30,7 @@ updates:
   schedule:
     interval: weekly
     day: monday
-    time: "09:00"
+    time: 09:00
     timezone: Europe/Zurich
   open-pull-requests-limit: 5
   groups:
@@ -68,7 +66,7 @@ updates:
   schedule:
     interval: weekly
     day: monday
-    time: "09:00"
+    time: 09:00
     timezone: Europe/Zurich
   open-pull-requests-limit: 5
   groups:
@@ -88,7 +86,7 @@ updates:
   schedule:
     interval: weekly
     day: monday
-    time: "09:00"
+    time: 09:00
     timezone: Europe/Zurich
   open-pull-requests-limit: 5
   groups:
@@ -116,7 +114,7 @@ updates:
   schedule:
     interval: weekly
     day: monday
-    time: "09:00"
+    time: 09:00
     timezone: Europe/Zurich
   open-pull-requests-limit: 5
   groups:
@@ -131,7 +129,7 @@ updates:
   schedule:
     interval: weekly
     day: monday
-    time: "09:00"
+    time: 09:00
     timezone: Europe/Zurich
   open-pull-requests-limit: 5
   groups:
@@ -143,13 +141,12 @@ updates:
       - minor
       - patch
   directories:
-  - /pulumi-hetzner
   - /sqsprotobuf/iac
 - package-ecosystem: npm
   schedule:
     interval: weekly
     day: monday
-    time: "09:00"
+    time: 09:00
     timezone: Europe/Zurich
   open-pull-requests-limit: 5
   groups:
@@ -178,7 +175,6 @@ updates:
     - '>=7.0.0'
 - package-ecosystem: pip
   directories:
-  - /awsbatchgpu/catboost
   - /awsbatchgpu/infra
   - /awsbatchgpu/llm
   - /python-lambda/iac
@@ -189,7 +185,7 @@ updates:
   schedule:
     interval: weekly
     day: monday
-    time: "09:00"
+    time: 09:00
     timezone: Europe/Zurich
   open-pull-requests-limit: 5
   groups:
@@ -200,3 +196,45 @@ updates:
       update-types:
       - minor
       - patch
+- package-ecosystem: npm
+  schedule:
+    interval: weekly
+    day: monday
+    time: 09:00
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+  directories:
+  - /pulumi-hetzner
+  ignore:
+  - dependency-name: typescript
+    versions:
+    - '>=7.0.0'
+- package-ecosystem: pip
+  directories:
+  - /awsbatchgpu/catboost
+  schedule:
+    interval: weekly
+    day: monday
+    time: 09:00
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+  ignore:
+  - dependency-name: pandas-stubs
+    versions:
+    - '>=2.3'

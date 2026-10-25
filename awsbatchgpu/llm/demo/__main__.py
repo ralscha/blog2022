@@ -1,5 +1,6 @@
 import base64
 import json
+import logging
 import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -9,6 +10,8 @@ from mypy_boto3_s3.client import S3Client
 from vllm import LLM
 from vllm.entrypoints.chat_utils import ChatCompletionMessageParam
 from vllm.sampling_params import SamplingParams
+
+logger = logging.getLogger(__name__)
 
 
 def download_large_file(
@@ -53,7 +56,7 @@ def download_large_file(
         raise
 
 
-def setu_pmodel(s3_client: S3Client, bucket_name: str, prefix_key: str) -> LLM:
+def setup_model(s3_client: S3Client, bucket_name: str, prefix_key: str) -> LLM:
     model_path = "/tmp/pixtral"
     os.makedirs(model_path, exist_ok=True)
 
@@ -106,8 +109,8 @@ def process_image(
 
         return {"id": image["id"], "response": response_text}
     except Exception as e:
-        print(f"Error processing image {image['id']}: {e}")
-        return {"id": image["id"], "response": f"Error: {str(e)}"}
+        logger.exception("Error processing image %s", image["id"])
+        return {"id": image["id"], "response": f"Error: {e!s}"}
 
 
 def main():
@@ -134,8 +137,9 @@ def main():
         output_data = json.dumps(results, indent=2)
         s3_client.put_object(Bucket=bucket_name, Key=output_key, Body=output_data)
 
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    except Exception:
+        logger.exception("Batch processing failed")
+        raise
 
 
 if __name__ == "__main__":
