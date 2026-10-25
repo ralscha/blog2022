@@ -12,6 +12,6 @@ python = "^3.8"
 pulumi-docker-build = "^0.0.6"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.6.8"
+ruff = "^0.17.1"
 mypy = "^1.11.2"
 
