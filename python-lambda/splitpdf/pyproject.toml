@@ -6,19 +6,19 @@ authors = ["me"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-boto3 = {extras = ["s3", "ssm"], version = "1.35.27"}
+boto3 = {extras = ["s3", "ssm"], version = "1.43.117"}
 pypdf = "6.21.2"
-boto3-stubs = {extras = ["s3", "ssm"], version = "1.35.27"}
-aws-lambda-powertools = "3.0.0"
-slack-sdk = "3.33.1"
+boto3-stubs = {extras = ["s3", "ssm"], version = "1.43.117"}
+aws-lambda-powertools = "3.37.0"
+slack-sdk = "3.45.0"
 
 
 
 [tool.poetry.group.dev.dependencies]
-ruff = "0.6.7"
+ruff = "0.17.1"
 mypy = "1.11.2"
-moto = {extras = ["s3"], version = "5.0.15"}
-pytest = "9.0.3"
+moto = {extras = ["s3"], version = "5.2.4"}
+pytest = "9.1.1"
 
 [build-system]
 requires = ["poetry-core"]
