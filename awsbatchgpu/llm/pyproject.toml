@@ -13,7 +13,7 @@ boto3-stubs = {extras = ["s3"], version = "1.35.29"}
 
 
 [tool.poetry.group.dev.dependencies]
-ruff = "0.6.8"
+ruff = "0.17.1"
 mypy = "1.11.2"
 
 [build-system]
