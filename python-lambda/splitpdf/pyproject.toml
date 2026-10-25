@@ -7,7 +7,7 @@ authors = ["me"]
 [tool.poetry.dependencies]
 python = "^3.11"
 boto3 = {extras = ["s3", "ssm"], version = "1.35.27"}
-pypdf = "5.0.0"
+pypdf = "6.21.2"
 boto3-stubs = {extras = ["s3", "ssm"], version = "1.35.27"}
 aws-lambda-powertools = "3.0.0"
 slack-sdk = "3.33.1"
@@ -18,7 +18,7 @@ slack-sdk = "3.33.1"
 ruff = "0.6.7"
 mypy = "1.11.2"
 moto = {extras = ["s3"], version = "5.0.15"}
-pytest = "8.3.3"
+pytest = "9.0.3"
 
 [build-system]
 requires = ["poetry-core"]

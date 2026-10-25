@@ -4,7 +4,7 @@ go 1.27.3
 
 require (
 	github.com/starwalkn/gotenberg-go-client/v8 v8.12.0
-	github.com/xuri/excelize/v2 v2.11.0
+	github.com/xuri/excelize/v2 v2.11.1-0.20261003002531-6258dcebc4e2
 )
 
 require (
