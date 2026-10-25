@@ -1,5 +1,6 @@
 # Weekly version updates; security updates are enabled in repository settings.
 # Minor and patch releases are grouped; major releases remain separate.
+# Temporarily hold TypeScript below 7 for Angular projects; remove the ignore rule when compatible.
 version: 2
 updates:
 - package-ecosystem: docker
@@ -127,20 +128,6 @@ updates:
       - minor
       - patch
 - package-ecosystem: npm
-  directories:
-  - /awsbackend/client
-  - /awsbackend_oauth2/client
-  - /dexiejs-livequery
-  - /hotupdate
-  - /passwordless-dev-go/client
-  - /pix2sketch/client
-  - /pix2sketch/clienttalk
-  - /pockettodo/todo
-  - /pulumi-hetzner
-  - /sqsprotobuf/iac
-  - /transformer-js/client
-  - /transformers-js-speech
-  - /webpush-angular/client
   schedule:
     interval: weekly
     day: monday
@@ -155,6 +142,40 @@ updates:
       update-types:
       - minor
       - patch
+  directories:
+  - /pulumi-hetzner
+  - /sqsprotobuf/iac
+- package-ecosystem: npm
+  schedule:
+    interval: weekly
+    day: monday
+    time: "09:00"
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch-angular:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+  directories:
+  - /awsbackend/client
+  - /awsbackend_oauth2/client
+  - /dexiejs-livequery
+  - /hotupdate
+  - /passwordless-dev-go/client
+  - /pix2sketch/client
+  - /pix2sketch/clienttalk
+  - /pockettodo/todo
+  - /transformer-js/client
+  - /transformers-js-speech
+  - /webpush-angular/client
+  ignore:
+  - dependency-name: typescript
+    versions:
+    - '>=7.0.0'
 - package-ecosystem: pip
   directories:
   - /awsbatchgpu/catboost
