@@ -1,0 +1,181 @@
+# Weekly version updates; security updates are enabled in repository settings.
+# Minor and patch releases are grouped; major releases remain separate.
+version: 2
+updates:
+- package-ecosystem: docker
+  directories:
+  - /awsbatchgpu/catboost
+  - /awsbatchgpu/llm
+  - /sqsprotobuf
+  schedule:
+    interval: weekly
+    day: monday
+    time: "09:00"
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+- package-ecosystem: docker-compose
+  directories:
+  - /javersdemo
+  - /mongodb-validation
+  - /pockettodo
+  - /shedlockdemo
+  - /springai-rag
+  schedule:
+    interval: weekly
+    day: monday
+    time: "09:00"
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+- package-ecosystem: gomod
+  directories:
+  - /awsbackend/iac
+  - /awsbackend/lambda
+  - /awsbackend_oauth2/iac
+  - /awsbackend_oauth2/lambda
+  - /bluesky-replybot
+  - /blueskypost/earthquake
+  - /blueskypost/hello
+  - /go-git-examples
+  - /go-slices-maps
+  - /godockerllm
+  - /gotenberg
+  - /hibp-go/api_server
+  - /hibp-go/bloom
+  - /hibp-go/client
+  - /hibp-go/pebble
+  - /llmsearch
+  - /passwordless-dev-go/server
+  - /pix2sketch/server
+  - /s3-fast-list
+  - /sqsprotobuf/go_to_java/producer
+  schedule:
+    interval: weekly
+    day: monday
+    time: "09:00"
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch-a:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+- package-ecosystem: gomod
+  directories:
+  - /sqsprotobuf/go_to_java_s3/producer
+  - /sqsprotobuf/java_to_go/consumer
+  - /sqsprotobuf/java_to_go_s3/consumer
+  - /transformer-js/import
+  schedule:
+    interval: weekly
+    day: monday
+    time: "09:00"
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch-b:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+- package-ecosystem: maven
+  directories:
+  - /javersdemo
+  - /javersdemo/client
+  - /mongodb-validation
+  - /shedlockdemo
+  - /springai-rag
+  - /springai-tool
+  - /sqsprotobuf/go_to_java/consumer
+  - /sqsprotobuf/go_to_java_s3/consumer
+  - /sqsprotobuf/java_to_go/producer
+  - /sqsprotobuf/java_to_go_s3/producer
+  - /webpush-angular/server
+  - /xodus
+  schedule:
+    interval: weekly
+    day: monday
+    time: "09:00"
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+- package-ecosystem: npm
+  directories:
+  - /awsbackend/client
+  - /awsbackend_oauth2/client
+  - /dexiejs-livequery
+  - /hotupdate
+  - /passwordless-dev-go/client
+  - /pix2sketch/client
+  - /pix2sketch/clienttalk
+  - /pockettodo/todo
+  - /pulumi-hetzner
+  - /sqsprotobuf/iac
+  - /transformer-js/client
+  - /transformers-js-speech
+  - /webpush-angular/client
+  schedule:
+    interval: weekly
+    day: monday
+    time: "09:00"
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+- package-ecosystem: pip
+  directories:
+  - /awsbatchgpu/catboost
+  - /awsbatchgpu/infra
+  - /awsbatchgpu/llm
+  - /python-lambda/iac
+  - /python-lambda/splitpdf
+  - /transformer-js/convert
+  - /transformer-js/finetune
+  - /transformer-js/test
+  schedule:
+    interval: weekly
+    day: monday
+    time: "09:00"
+    timezone: Europe/Zurich
+  open-pull-requests-limit: 5
+  groups:
+    minor-and-patch:
+      applies-to: version-updates
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
