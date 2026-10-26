@@ -9,7 +9,7 @@ package-mode = false
 python = ">=3.11,<3.13"
 boto3 = {extras = ["s3"], version = "1.35.30"}
 boto3-stubs = {extras = ["s3"], version = "1.35.30"}
-pandas = "2.2.3"
+pandas = "3.0.6"
 scikit-learn = "1.5.2"
 catboost = "1.2.7"
 traitlets = "5.14.3"
