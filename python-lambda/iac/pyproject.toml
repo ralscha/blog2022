@@ -7,7 +7,7 @@ build-backend = "poetry.core.masonry.api"
 package-mode = false
 [tool.poetry.dependencies]
 pulumi = ">=3.144.1,<4.0.0"
-pulumi-aws = ">=6.0.2,<7.0.0"
+pulumi-aws = ">=6.65.0,<7.0.0"
 python = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
