@@ -11,6 +11,6 @@ pulumi-aws = ">=6.0.2,<7.0.0"
 python = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.17.1"
+ruff = "^0.17.2"
 mypy = "^1.11.2"
 
