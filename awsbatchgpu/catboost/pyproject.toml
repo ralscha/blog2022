@@ -17,7 +17,7 @@ pandas-stubs = "2.2.2.240909"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "0.17.1"
-mypy = "1.11.2"
+mypy = "2.4.0"
 
 [build-system]
 requires = ["poetry-core"]
