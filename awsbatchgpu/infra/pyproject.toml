@@ -9,7 +9,7 @@ package-mode = false
 pulumi = ">=3.0.0,<4.0.0"
 pulumi-aws = ">=6.0.2,<7.0.0"
 python = "^3.8"
-pulumi-docker-build = "^0.0.6"
+pulumi-docker-build = "^0.0.8"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.17.1"

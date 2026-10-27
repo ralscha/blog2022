@@ -7,16 +7,16 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.13"
-boto3 = {extras = ["s3"], version = "1.35.30"}
-boto3-stubs = {extras = ["s3"], version = "1.35.30"}
+boto3 = {extras = ["s3"], version = "1.43.118"}
+boto3-stubs = {extras = ["s3"], version = "1.43.118"}
 pandas = "2.2.3"
-scikit-learn = "1.5.2"
-catboost = "1.2.7"
-traitlets = "5.14.3"
+scikit-learn = "1.9.1"
+catboost = "1.2.10"
+traitlets = "5.16.1"
 pandas-stubs = "2.2.2.240909"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "0.17.1"
+ruff = "0.17.2"
 mypy = "1.11.2"
 
 [build-system]
