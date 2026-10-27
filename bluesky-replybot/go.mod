@@ -3,7 +3,7 @@ module replybot
 go 1.27.3
 
 require (
-	github.com/bluesky-social/indigo v0.0.0-20261020220836-ff87442ff936
+	github.com/bluesky-social/indigo v0.0.0-20261026141138-acf14990cdd9
 	github.com/firebase/genkit/go v1.14.0
 	github.com/joho/godotenv v1.5.1
 )
@@ -82,9 +82,9 @@ require (
 	golang.org/x/sys v0.49.0 // indirect
 	golang.org/x/text v0.43.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
-	google.golang.org/api v0.307.0 // indirect
-	google.golang.org/genai v1.75.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20261019180522-ce908d29299b // indirect
+	google.golang.org/api v0.309.0 // indirect
+	google.golang.org/genai v1.76.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20261026165753-2ffab32bce7e // indirect
 	google.golang.org/grpc v1.84.0 // indirect
 	google.golang.org/protobuf v1.36.12 // indirect
 	lukechampine.com/blake3 v1.4.1 // indirect
