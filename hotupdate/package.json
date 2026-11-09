@@ -30,15 +30,15 @@
     "@capacitor/keyboard": "8.0.6",
     "@capacitor/splash-screen": "8.0.2",
     "@capacitor/status-bar": "8.0.4",
-    "@capgo/capacitor-updater": "8.54.0",
+    "@capgo/capacitor-updater": "8.54.2",
     "@ionic/angular": "9.0.10",
     "ionicons": "8.1.0",
     "rxjs": "7.8.2",
     "tslib": "2.9.1"
   },
   "devDependencies": {
-    "@angular/build": "22.2.5",
-    "@angular/cli": "22.2.5",
+    "@angular/build": "22.2.6",
+    "@angular/cli": "22.2.6",
     "@angular/compiler-cli": "22.2.4",
     "@capacitor/cli": "8.6.0",
     "@ionic/angular-toolkit": "13.0.0",
