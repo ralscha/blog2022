@@ -11,6 +11,6 @@
     "@pulumi/hcloud": "1.43.4",
     "@pulumi/local": "0.1.6",
     "@pulumi/pulumi": "3.273.0",
-    "node-forge": "1.4.2"
+    "node-forge": "1.4.3"
   }
 }
