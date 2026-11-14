@@ -1,11 +1,11 @@
 module gogitexamples
 
-go 1.27.3
+go 1.27.4
 
 require (
 	github.com/go-git/go-git/v5 v5.19.3
 	github.com/google/go-github/v53 v53.2.0
-	golang.org/x/oauth2 v0.37.0
+	golang.org/x/oauth2 v0.38.0
 )
 
 require (
@@ -25,8 +25,8 @@ require (
 	github.com/sergi/go-diff v1.4.0 // indirect
 	github.com/skeema/knownhosts v1.3.3 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
-	golang.org/x/crypto v0.58.0 // indirect
+	golang.org/x/crypto v0.59.0 // indirect
 	golang.org/x/net v0.62.0 // indirect
-	golang.org/x/sys v0.49.0 // indirect
+	golang.org/x/sys v0.50.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 )

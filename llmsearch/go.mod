@@ -1,10 +1,10 @@
 module llmsearch
 
-go 1.27.3
+go 1.27.4
 
 require (
 	codeberg.org/readeck/go-readability/v2 v2.1.3
-	github.com/ollama/ollama v0.40.13
+	github.com/ollama/ollama v0.40.16
 )
 
 require (
@@ -17,9 +17,9 @@ require (
 	github.com/itlightning/dateparse v0.2.1 // indirect
 	github.com/mailru/easyjson v0.9.2 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
-	golang.org/x/crypto v0.58.0 // indirect
+	golang.org/x/crypto v0.59.0 // indirect
 	golang.org/x/net v0.62.0 // indirect
-	golang.org/x/sys v0.49.0 // indirect
-	golang.org/x/text v0.43.0 // indirect
+	golang.org/x/sys v0.50.0 // indirect
+	golang.org/x/text v0.44.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
