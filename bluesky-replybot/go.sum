@@ -7,8 +7,8 @@ cloud.google.com/go/compute/metadata v0.10.0/go.mod h1:rGFHRrIif570kSibjFTMbt6/4
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/bahlo/generic-list-go v0.2.0 h1:5sz/EEAK+ls5wF+NeqDpk5+iNdMDXrh3z3nPnH1Wvgk=
 github.com/bahlo/generic-list-go v0.2.0/go.mod h1:2KvAjgMlE5NNynlg/5iLrrCCZ2+5xWbdbCW3pNTGyYg=
-github.com/bluesky-social/indigo v0.0.0-20261109211454-42946cbf2164 h1:AwnjE8NRjQ8jUTAwyhoUGSib25r20/RvW9uX0eO/jjU=
-github.com/bluesky-social/indigo v0.0.0-20261109211454-42946cbf2164/go.mod h1:HtudT6YDwEKKe907itpwyl56vixnzY2kPsZmR1WToI8=
+github.com/bluesky-social/indigo v0.0.0-20261114031735-2569a5653710 h1:+NsY1xBl5lApRsEX+1EZ1RUd59VxRdOs35M1Cj1brkI=
+github.com/bluesky-social/indigo v0.0.0-20261114031735-2569a5653710/go.mod h1:HtudT6YDwEKKe907itpwyl56vixnzY2kPsZmR1WToI8=
 github.com/buger/jsonparser v1.6.1 h1:I0phFv0PlbLHnM7TZAVjZ2MJ2/eWRTDyuO7GLR98IEs=
 github.com/buger/jsonparser v1.6.1/go.mod h1:6RYKKt7H4d4+iWqouImQ9R2FZql3VbhNgx27UK13J/0=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
@@ -243,8 +243,8 @@ golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da h1:noIWHXmPHxILtqtCOPIhS
 golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da/go.mod h1:NDW/Ps6MPRej6fsCIbMTohpP40sJ/P/vI1MoTEGwX90=
 gonum.org/v1/gonum v0.17.0 h1:VbpOemQlsSMrYmn7T2OUvQ4dqxQXU+ouZFQsZOx50z4=
 gonum.org/v1/gonum v0.17.0/go.mod h1:El3tOrEuMpv2UdMrbNlKEh9vd86bmQ6vqIcDwxEOc1E=
-google.golang.org/api v0.314.0 h1:1P6RtsfXD7KfUUI7YxdGcJ5Ekw+QHH9dEVTHzWc96p0=
-google.golang.org/api v0.314.0/go.mod h1:kn5kd1IMbs2x4hq99GcaTOumC0fnMYMwLNAfFxzpISU=
+google.golang.org/api v0.315.0 h1:77nwD4sln0GQQqQKb4CY+DJhRwA0AeQ4w0gkbLwRPms=
+google.golang.org/api v0.315.0/go.mod h1:kn5kd1IMbs2x4hq99GcaTOumC0fnMYMwLNAfFxzpISU=
 google.golang.org/genai v1.77.0 h1:/tWupb5vo4FRuktsgas4+Bfk5HhTGsfLoz2DS450aQA=
 google.golang.org/genai v1.77.0/go.mod h1:2j40fGpqPPIZNjaDKmjGGjYwCJi6Nm2ofmyP65GnqtY=
 google.golang.org/genproto v0.0.0-20261012220534-4341edf3f941 h1:CXq2XEi5aEyLjjPZIwqrmQH8ZY4ctUwK7uyAx3mjX/U=
