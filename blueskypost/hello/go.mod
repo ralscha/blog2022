@@ -3,7 +3,7 @@ module bskyhello
 go 1.27.4
 
 require (
-	github.com/bluesky-social/indigo v0.0.0-20261115223828-a39b2f94d516
+	github.com/bluesky-social/indigo v0.0.0-20261119180653-8ed9557b157a
 	github.com/joho/godotenv v1.5.1
 )
 
@@ -45,7 +45,7 @@ require (
 	github.com/polydawn/refmt v0.90.0 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/whyrusleeping/cbor-gen v0.3.1 // indirect
-	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
+	go.opentelemetry.io/auto/sdk v1.2.2 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.72.0 // indirect
 	go.opentelemetry.io/otel v1.47.0 // indirect
 	go.opentelemetry.io/otel/log v1.47.0 // indirect
@@ -57,5 +57,5 @@ require (
 	golang.org/x/crypto v0.59.0 // indirect
 	golang.org/x/sys v0.50.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
-	lukechampine.com/blake3 v1.4.1 // indirect
+	lukechampine.com/blake3 v1.5.1 // indirect
 )
