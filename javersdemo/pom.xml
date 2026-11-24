@@ -61,12 +61,12 @@
     <dependency>
       <groupId>org.javers</groupId>
       <artifactId>javers-persistence-sql</artifactId>
-      <version>7.12.0</version>
+      <version>7.13.0</version>
     </dependency>
     <dependency>
       <groupId>org.javers</groupId>
       <artifactId>javers-spring-jpa</artifactId>
-      <version>7.12.0</version>
+      <version>7.13.0</version>
     </dependency>
     <dependency>
       <groupId>com.auth0</groupId>
@@ -176,7 +176,7 @@
               <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>42.7.14</version>
+                <version>42.7.15</version>
               </dependency>
               <dependency>
                 <groupId>org.flywaydb</groupId>
@@ -223,7 +223,7 @@
               <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>42.7.14</version>
+                <version>42.7.15</version>
               </dependency>
             </dependencies>
             <executions>

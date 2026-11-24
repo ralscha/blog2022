@@ -27,12 +27,12 @@
     <dependency>
       <groupId>net.javacrumbs.shedlock</groupId>
       <artifactId>shedlock-spring</artifactId>
-      <version>7.11.0</version>
+      <version>7.12.0</version>
     </dependency>
     <dependency>
       <groupId>net.javacrumbs.shedlock</groupId>
       <artifactId>shedlock-provider-jooq</artifactId>
-      <version>7.11.0</version>
+      <version>7.12.0</version>
     </dependency>
     <dependency>
       <groupId>org.flywaydb</groupId>
@@ -150,7 +150,7 @@
               <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>42.7.14</version>
+                <version>42.7.15</version>
               </dependency>
               <dependency>
                 <groupId>org.flywaydb</groupId>
@@ -197,7 +197,7 @@
               <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>42.7.14</version>
+                <version>42.7.15</version>
               </dependency>
             </dependencies>
             <executions>

@@ -50,12 +50,11 @@ require (
 	github.com/klauspost/cpuid/v2 v2.4.2 // indirect
 	github.com/mattn/go-isatty v0.0.24 // indirect
 	github.com/mbleigh/raymond v0.0.0-20250414171441-6b3a58ab9e0a // indirect
-	github.com/minio/sha256-simd v1.0.1 // indirect
 	github.com/mr-tron/base58 v1.3.0 // indirect
 	github.com/multiformats/go-base32 v0.1.0 // indirect
 	github.com/multiformats/go-base36 v0.2.0 // indirect
 	github.com/multiformats/go-multibase v0.3.0 // indirect
-	github.com/multiformats/go-multihash v0.2.3 // indirect
+	github.com/multiformats/go-multihash v0.3.0 // indirect
 	github.com/multiformats/go-varint v0.1.0 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/pb33f/go-yaml v0.2.0 // indirect
@@ -84,8 +83,8 @@ require (
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
 	google.golang.org/api v0.316.0 // indirect
 	google.golang.org/genai v1.79.1 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20261118221215-c8830f628b3f // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20261123191846-1e707ab9fbc2 // indirect
 	google.golang.org/grpc v1.85.0 // indirect
 	google.golang.org/protobuf v1.36.12 // indirect
-	lukechampine.com/blake3 v1.5.1 // indirect
+	lukechampine.com/blake3 v1.5.3 // indirect
 )
